@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartas Pokémon — Por Ilustrador</title>
+<style>
+:root{--bg:#0d0d1a;--surf:#141428;--surf2:#1c1c38;--brd:#2a2a50;--acc:#7c5cbf;--gold:#e8c84a;--rev:#ff6b35;--tx:#e8e6f0;--txm:#8885a8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-serif}
+header{background:linear-gradient(135deg,#0d0d1a,#1a0d2e);border-bottom:2px solid var(--acc);padding:18px 24px;display:flex;align-items:center;gap:14px}
+.ball{width:40px;height:40px;background:radial-gradient(circle at 35% 35%,#ff6b6b,#cc0000);border-radius:50%;border:3px solid #fff;flex-shrink:0;position:relative;box-shadow:0 0 16px rgba(204,0,0,.4)}
+.ball::after{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:#fff;transform:translateY(-50%)}
+.ball::before{content:'';position:absolute;top:50%;left:50%;width:11px;height:11px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);border:2px solid #888}
+header h1{font-size:1.4rem;font-weight:700}
+header p{font-size:.8rem;color:var(--txm);margin-top:2px}
+.tabs{display:flex;gap:2px;padding:12px 24px 0;background:var(--surf);border-bottom:1px solid var(--brd);overflow-x:auto}
+.tb{background:none;border:none;color:var(--txm);padding:8px 16px;border-radius:6px 6px 0 0;cursor:pointer;font-size:.87rem;font-weight:500;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s}
+.tb:hover{background:var(--surf2);color:var(--tx)}
+.tb.on{color:var(--gold);border-bottom-color:var(--gold);background:var(--surf2)}
+.tab{display:none;padding:18px 24px}
+.tab.on{display:block}
+.iln{font-size:1.3rem;font-weight:700;color:var(--gold);margin-bottom:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.bar input,.bar select{background:var(--surf2);border:1px solid var(--brd);color:var(--tx);padding:7px 11px;border-radius:6px;font-size:.82rem;outline:none}
+.bar input:focus,.bar select:focus{border-color:var(--acc)}
+.bar input{flex:1;min-width:140px}
+.vb{background:var(--surf2);border:1px solid var(--brd);color:var(--txm);padding:6px 11px;border-radius:6px;cursor:pointer;font-size:.79rem;transition:all .2s}
+.vb.on,.vb:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+.tot{background:linear-gradient(135deg,#1a1040,#0d1a2e);border:1px solid var(--acc);border-radius:7px;padding:9px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.tot .l{font-size:.8rem;color:var(--txm)}
+.tot .a{font-size:1.2rem;font-weight:700;color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.ci{background:var(--surf2);border:1px solid var(--brd);border-radius:10px;overflow:hidden;transition:transform .15s,box-shadow .15s;position:relative}
+.ci:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.5)}
+.ci.rev{border-color:var(--rev);box-shadow:0 0 8px rgba(255,107,53,.2)}
+.imgw{background:#050510;display:flex;align-items:center;justify-content:center;min-height:130px;position:relative;overflow:hidden}
+.imgw img{width:100%;height:auto;display:block}
+.ph{color:var(--txm);font-size:.72rem;text-align:center;padding:10px;line-height:1.4}
+.vbdg{position:absolute;top:5px;right:5px;padding:2px 7px;border-radius:8px;font-size:.67rem;font-weight:700;z-index:2}
+.vnrm{background:#1c1c38;border:1px solid #3a3a60;color:#aaa8d0}
+.vrev{background:#3a1505;border:1px solid #7a3a18;color:#ff8c5a}
+.vjp{background:#0a2218;border:1px solid #1a4832;color:#5cc896}
+.vstm{background:#1a1a08;border:1px solid #4a4a18;color:#c8c838}
+.vfr{background:#0a1820;border:1px solid #1a3850;color:#5898c8}
+.ven{background:#1c1c38;border:1px solid #5050a0;color:#9898e0}
+.info{padding:8px 10px}
+.pn{font-weight:700;font-size:.86rem}
+.sn{font-size:.73rem;color:var(--txm);margin:2px 0}
+.cn{font-family:monospace;font-size:.73rem;color:var(--gold)}
+.pr{display:flex;align-items:center;gap:5px;margin-top:6px}
+.pr label{font-size:.72rem;color:var(--txm)}
+.pi{background:var(--surf);border:1px solid var(--brd);color:var(--tx);padding:4px 6px;border-radius:5px;font-size:.79rem;width:70px;outline:none;text-align:right;font-family:monospace}
+.pi:focus{border-color:var(--acc)}
+table{width:100%;border-collapse:collapse;font-size:.84rem}
+thead th{background:var(--surf2);color:var(--txm);font-weight:600;font-size:.71rem;text-transform:uppercase;letter-spacing:.7px;padding:8px 10px;text-align:left;border-bottom:1px solid var(--brd);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--brd);transition:background .1s}
+tbody tr:hover{background:rgba(124,92,191,.07)}
+tbody tr.rev{border-left:3px solid var(--rev)}
+td{padding:8px 10px;vertical-align:middle}
+.rn{color:var(--txm);font-size:.72rem}
+.pname{font-weight:600}
+.note{font-size:.67rem;color:var(--gold);display:block}
+.cb{background:var(--surf2);border:1px solid var(--brd);border-radius:3px;padding:2px 5px;font-size:.72rem;font-family:monospace;color:var(--gold)}
+.nb{font-family:monospace;font-size:.82rem}
+.vspan{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:10px;font-size:.74rem;font-weight:600}
+.tpi{background:var(--surf2);border:1px solid var(--brd);color:var(--tx);padding:4px 6px;border-radius:5px;font-size:.82rem;width:76px;outline:none;text-align:right;font-family:monospace}
+.tpi:focus{border-color:var(--acc)}
+.nores{text-align:center;padding:36px;color:var(--txm)}
+.dl-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.dlbtn{background:var(--acc);border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;font-weight:600;transition:opacity .2s}
+.dlbtn:hover{opacity:.85}
+.dlbtn.sec{background:var(--surf2);border:1px solid var(--brd);color:var(--txm)}
+</style>
+</head>
+<body>
+<header>
+  <div class="ball"></div>
+  <div>
+    <h1>Cartas Pokémon por Ilustrador</h1>
+    <p>Verifica las imágenes · ingresa precios · descarga</p>
+  </div>
+</header>
+<nav class="tabs">
+  <button class="tb on" onclick="showTab('ym',this)">Yuka Morii</button>
+  <button class="tb" onclick="showTab('tk',this)">Tomokazu Komiya</button>
+  <button class="tb" onclick="showTab('ai',this)">Asako Ito</button>
+  <button class="tb" onclick="showTab('yb',this)">Yukiko Baba</button>
+</nav>
+<div class="tab on" id="tab-ym"></div>
+<div class="tab" id="tab-tk"></div>
+<div class="tab" id="tab-ai"></div>
+<div class="tab" id="tab-yb"></div>
+
+<script>
+// [n, nombre, setId, numCarta, version, ilustrador, setName, nota?]
+var C=[
+[1,"Foongus","sts",12,"Normal","ym","Steam Siege"],
+[2,"Weedle","cpa",2,"Normal","ym","Champion's Path"],
+[3,"Fomantis","sm11",15,"Normal","ym","Unified Minds"],
+[4,"Sewaddle","xy7",9,"Normal","ym","Legendary Treasures"],
+[5,"Metapod","sm1",2,"Normal","ym","Sun & Moon"],
+[6,"Rowlet","sm12",17,"Normal","ym","Cosmic Eclipse"],
+[7,"Wormadam","swsh9",10,"Normal","ym","Brilliant Stars"],
+[8,"Wormadam","swsh9",10,"Reverse","ym","Brilliant Stars"],
+[9,"Bounsweet","swsh3",14,"Normal","ym","Darkness Ablaze"],
+[10,"Seedot","swsh11",11,"Normal","ym","Lost Origin"],
+[11,"Spinarak","pgo",6,"Normal","ym","Pokemon GO"],
+[12,"Smoliv","sv10",21,"Normal","ym","Destined Rivals"],
+[13,"Smoliv","sv10",21,"Reverse","ym","Destined Rivals"],
+[14,"Karrablast","sv9pt5",9,"Normal","ym","Journey Together"],
+[15,"Karrablast","sv9pt5",9,"Reverse","ym","Journey Together"],
+[16,"Nymble","sv8pt5",9,"Normal","ym","Phantasmal Flames"],
+[17,"Nymble","sv8pt5",9,"Reverse","ym","Phantasmal Flames"],
+[18,"Grubbin","sm10",18,"Normal","ym","Unbroken Bonds"],
+[19,"Gulpin","sm7",57,"Normal","ym","Celestial Storm"],
+[20,"Swalot","sm7",58,"Normal","ym","Celestial Storm"],
+[21,"Gothita","sm2",52,"Normal","ym","Guardians Rising"],
+[22,"Pumpkaboo","swsh7",76,"Normal","ym","Evolving Skies"],
+[23,"Trubbish","sm2",50,"Normal","ym","Guardians Rising"],
+[24,"Dedenne","swsh4",77,"Normal","ym","Vivid Voltage"],
+[25,"Dedenne","swsh4",77,"Reverse","ym","Vivid Voltage"],
+[26,"Clefairy","sv3",81,"Normal","ym","Obsidian Flames"],
+[27,"Clefairy","sv3",81,"Reverse","ym","Obsidian Flames"],
+[28,"Sinistea","sv3",97,"Normal","ym","Obsidian Flames"],
+[29,"Sinistea","sv3",97,"Reverse","ym","Obsidian Flames"],
+[30,"Woobat","swsh7",68,"Normal","ym","Evolving Skies"],
+[31,"Woobat","swsh7",68,"Reverse","ym","Evolving Skies"],
+[32,"Baltoy","swsh12",93,"Normal","ym","Silver Tempest"],
+[33,"Stonjourner","sv1",121,"Normal","ym","Scarlet & Violet"],
+[34,"Stonjourner","sv1",121,"Reverse","ym","Scarlet & Violet"],
+[35,"Drilbur","swsh4",91,"Normal","ym","Vivid Voltage"],
+[36,"Sandshrew","swsh8",131,"Normal","ym","Fusion Strike"],
+[37,"Clobbopus","swsh6",91,"Normal","ym","Chilling Reign"],
+[38,"Clobbopus","swsh6",91,"Reverse","ym","Chilling Reign"],
+[39,"Machop","swsh11",86,"Normal","ym","Lost Origin"],
+[40,"Machop","swsh11",86,"Reverse","ym","Lost Origin"],
+[41,"Dunsparce","xy6",68,"Normal","ym","Roaring Skies"],
+[42,"Taillow","swsh4",133,"Normal","ym","Vivid Voltage"],
+[43,"Bunnelby","swsh2",146,"Normal","ym","Rebel Clash"],
+[44,"Starly","sv1",148,"Normal","ym","Scarlet & Violet"],
+[45,"Starly","sv1",148,"Reverse","ym","Scarlet & Violet"],
+[46,"Lillipup","sv3",170,"Normal","ym","Obsidian Flames"],
+[47,"Lillipup","sv3",170,"Reverse","ym","Obsidian Flames"],
+[48,"Minccino","sv5",136,"Normal","ym","Temporal Forces"],
+[49,"Minccino","sv5",136,"Reverse","ym","Temporal Forces"],
+[50,"Beldum","xy7b",47,"Normal","ym","Ancient Origins"],
+[51,"Ferroseed","swsh1",130,"Normal","ym","Sword & Shield"],
+[52,"Pawniard","swsh12pt5",92,"Normal","ym","Crown Zenith"],
+[53,"Shieldon","swsh10",109,"Normal","ym","Astral Radiance"],
+[54,"Durant","sv10pt5",70,"Normal","ym","White Flare"],
+[55,"Durant","sv10pt5",70,"Reverse","ym","White Flare"],
+[56,"Meltan","sv7",102,"Normal","ym","Stellar Crown"],
+[57,"Meltan","sv7",102,"Reverse","ym","Stellar Crown"],
+[58,"Litwick","swsh11",24,"Normal","ym","Lost Origin"],
+[59,"Litwick",null,null,"Stamped","ym","Trick or Trade 2023"],
+[60,"Castform Sunny","swsh6",22,"Normal","ym","Chilling Reign"],
+[61,"Castform Sunny","swsh6",22,"Reverse","ym","Chilling Reign"],
+[62,"Torchic","swsh3",22,"Normal","ym","Darkness Ablaze"],
+[63,"Darumaka","sm10",23,"Normal","ym","Unbroken Bonds"],
+[64,"Sizzlipede","swsh5",29,"Normal","ym","Battle Styles"],
+[65,"Salandit","swsh5",27,"Normal","ym","Battle Styles"],
+[66,"Larvesta","sv3",40,"Normal","ym","Obsidian Flames"],
+[67,"Larvesta","sv3",40,"Reverse","ym","Obsidian Flames"],
+[68,"Murkrow","swsh11",114,"Normal","ym","Lost Origin"],
+[69,"Sandile","sm10",113,"Normal","ym","Unbroken Bonds"],
+[70,"Ducklett","swsh11",46,"Normal","ym","Lost Origin"],
+[71,"Snom","swsh8",84,"Normal","ym","Fusion Strike"],
+[72,"Staryu","swsh9",30,"Normal","ym","Brilliant Stars"],
+[73,"Staryu","swsh9",30,"Reverse","ym","Brilliant Stars"],
+[74,"Octillery","sv4",34,"Normal","ym","Paradox Rift"],
+[75,"Octillery","sv4",34,"Reverse","ym","Paradox Rift"],
+[76,"Froakie","sv6",56,"Normal","ym","Twilight Masquerade"],
+[77,"Froakie","sv6",56,"Reverse","ym","Twilight Masquerade"],
+[78,"Froakie",null,null,"JP","ym","Crimson Haze (JP)"],
+[79,"Chewtle","sv7",43,"Normal","ym","Stellar Crown"],
+[80,"Chewtle","sv7",43,"Reverse","ym","Stellar Crown"],
+[81,"Applin","sv8",138,"Normal","ym","Surging Sparks"],
+[82,"Applin","sv8",138,"Reverse","ym","Surging Sparks"],
+[83,"Pachirisu","sm8",80,"Normal","ym","Lost Thunder"],
+[84,"Helioptile","xy9",52,"Normal","ym","Mega Evolution"],
+[85,"Helioptile","xy9",52,"Reverse","ym","Mega Evolution"],
+[86,"Toxel","sv4",69,"Normal","ym","Paradox Rift"],
+[87,"Toxel","sv4",69,"Reverse","ym","Paradox Rift"],
+[88,"Pincurchin","sv2",72,"Normal","ym","Paldea Evolved"],
+[89,"Pincurchin","sv2",72,"Reverse","ym","Paldea Evolved"],
+[90,"Tynamo","swsh8",95,"Normal","ym","Fusion Strike"],
+[91,"Magnemite","sv3pt5",81,"Normal","ym","151"],
+[92,"Shedinja","swsh4",66,"Normal","tk","Vivid Voltage"],
+[93,"Grumpig","swsh5",56,"Normal","tk","Battle Styles"],
+[94,"Dreepy","swsh12",87,"Normal","tk","Silver Tempest"],
+[95,"Jynx","swsh12",62,"Normal","tk","Silver Tempest"],
+[96,"Malamar","swsh11",78,"Normal","tk","Lost Origin"],
+[97,"Swoobat","sm12",88,"Normal","tk","Cosmic Eclipse","FR: Rhinolove"],
+[98,"Beheeyem","xy8",74,"Normal","tk","BREAKThrough"],
+[99,"Elgyem","sv5",73,"Normal","tk","Temporal Forces"],
+[100,"Elgyem","sv5",73,"Reverse","tk","Temporal Forces"],
+[101,"Brute Bonnet",null,null,"JP","tk","Ancient Roar (JP)"],
+[102,"Oricorio",null,null,"JP","tk","VSTAR Universe (JP)"],
+[103,"Loudred","ex6",39,"Normal","tk","EX Hidden Legends"],
+[104,"Sentret","ex12",62,"Normal","tk","EX Legend Maker"],
+[105,"Aipom","dp4",50,"Normal","tk","Majestic Dawn"],
+[106,"Taillow","ex11",86,"Normal","tk","EX Delta Species"],
+[107,"Bidoof","pgo",59,"Normal","tk","Pokemon GO"],
+[108,"Noctowl","sm11",166,"Normal","tk","Unified Minds"],
+[109,"Farfetchd","swsh9",115,"Normal","tk","Brilliant Stars"],
+[110,"Bunnelby","swsh3",150,"Normal","tk","Darkness Ablaze"],
+[111,"Noibat","sv9pt5",127,"Normal","tk","Journey Together"],
+[112,"Lechonk","sv3",181,"Normal","tk","Obsidian Flames"],
+[113,"Lechonk","sv3",181,"Reverse","tk","Obsidian Flames"],
+[114,"Snubbull","sm1",90,"Normal","tk","Sun & Moon"],
+[115,"Bronzor","swsh11",125,"Normal","tk","Lost Origin"],
+[116,"Pawniard","swsh10",115,"Normal","tk","Astral Radiance"],
+[117,"Sliggoo","sm2",95,"Normal","tk","Guardians Rising"],
+[118,"Drampa","swsh7",119,"Normal","tk","Evolving Skies"],
+[119,"Simisear","swsh8",38,"Normal","tk","Fusion Strike"],
+[120,"Salazzle","swsh1",28,"Normal","tk","Sword & Shield"],
+[121,"Volcarona","sv3",41,"Normal","tk","Obsidian Flames"],
+[122,"Trapinch","xy7b",67,"Normal","tk","Ancient Origins"],
+[123,"Hitmonchan","sm9",74,"Normal","tk","Team Up"],
+[124,"Sandile","sv1",115,"Normal","tk","Scarlet & Violet"],
+[125,"Sandile","sv1",115,"Reverse","tk","Scarlet & Violet"],
+[126,"Onix","sm8",109,"Normal","tk","Lost Thunder"],
+[127,"Onix","sm8",109,"Reverse","tk","Lost Thunder"],
+[128,"Nosepass","sm2",69,"Normal","tk","Guardians Rising"],
+[129,"Rockruff","sm6",75,"Normal","tk","Forbidden Light"],
+[130,"Vibrava","swsh9",75,"Normal","tk","Brilliant Stars"],
+[131,"Claydol","swsh1",103,"Normal","tk","Sword & Shield"],
+[132,"Roggenrola","swsh7",86,"Normal","tk","Evolving Skies"],
+[133,"Grubbin","swsh2",16,"Normal","tk","Rebel Clash"],
+[134,"Ninjask","swsh4",14,"Normal","tk","Vivid Voltage"],
+[135,"Grimer","ex12",54,"Normal","tk","EX Legend Maker","xlsx: Grimmer"],
+[136,"Zubat","ex11",88,"Normal","tk","EX Delta Species"],
+[137,"Treecko","sm8",20,"Normal","tk","Lost Thunder"],
+[138,"Volbeat","xy5",17,"Normal","tk","Primal Clash"],
+[139,"Illumise","xy5",18,"Normal","tk","Primal Clash"],
+[140,"Exeggcute","xy6",1,"Normal","tk","Roaring Skies"],
+[141,"Crustle","sm11",11,"Normal","tk","Unified Minds"],
+[142,"Larvesta","sts",14,"Normal","tk","Steam Siege"],
+[143,"Cacturne","swsh5",5,"Normal","tk","Battle Styles"],
+[144,"Steenee","swsh6",14,"Normal","tk","Chilling Reign"],
+[145,"Steenee","swsh6",14,"Reverse","tk","Chilling Reign"],
+[146,"Pineco","swsh4",8,"Normal","tk","Vivid Voltage"],
+[147,"Gloom","swsh11",2,"Normal","tk","Lost Origin"],
+[148,"Toedscool","sv4",15,"Normal","tk","Paradox Rift"],
+[149,"Toedscool","sv4",15,"Reverse","tk","Paradox Rift"],
+[150,"Rowlet","sv3",13,"Normal","tk","Obsidian Flames"],
+[151,"Rowlet","sv3",13,"Reverse","tk","Obsidian Flames"],
+[152,"Morelull","sv8",8,"Normal","tk","Surging Sparks"],
+[153,"Morelull","sv8",8,"Reverse","tk","Surging Sparks"],
+[154,"Scraggy","xy2",66,"Normal (EN)","tk","Furious Fists"],
+[155,"Scraggy","xy2",66,"Normal (FR)","tk","Furious Fists"],
+[156,"Seviper","swsh11",116,"Normal","tk","Lost Origin"],
+[157,"Skrelp","swsh12pt5",81,"Normal","tk","Crown Zenith"],
+[158,"Impidimp","sv7",94,"Normal","tk","Stellar Crown"],
+[159,"Impidimp","sv7",94,"Reverse","tk","Stellar Crown"],
+[160,"Venipede","sv6",115,"Normal","tk","Twilight Masquerade"],
+[161,"Venipede","sv6",115,"Reverse","tk","Twilight Masquerade"],
+[162,"Lotad","ex2",66,"Normal","tk","EX Sandstorm"],
+[163,"Croconaw","swsh8",56,"Normal","tk","Fusion Strike"],
+[164,"Staryu","xy5",32,"Normal","tk","Primal Clash"],
+[165,"Binacle","xy10",22,"Reverse","tk","Fates Collide"],
+[166,"Mareanie","swsh3",51,"Normal","tk","Darkness Ablaze"],
+[167,"Jellicent","swsh5",42,"Normal","tk","Battle Styles"],
+[168,"Araquanid","sm12",65,"Normal","tk","Cosmic Eclipse"],
+[169,"Wailmer","sm12",45,"Normal","tk","Cosmic Eclipse"],
+[170,"Wimpod","sm11",50,"Normal","tk","Unified Minds"],
+[171,"Pyukumuku","swsh8",77,"Normal","tk","Fusion Strike"],
+[172,"Snorunt","sm2",31,"Normal","tk","Guardians Rising"],
+[173,"Snorunt","sm2",31,"Reverse","tk","Guardians Rising"],
+[174,"Clauncher","xy9",37,"Normal","tk","Mega Evolution"],
+[175,"Wiglett","sv4",52,"Normal","tk","Paradox Rift"],
+[176,"Wiglett","sv4",52,"Reverse","tk","Paradox Rift"],
+[177,"Magneton","xy8",53,"Normal","tk","BREAKThrough"],
+[178,"Voltorb","swsh8",87,"Normal","tk","Fusion Strike"],
+[179,"Moo-Moo Milk","neo1",101,"Normal NO 1er Ed","tk","Neo Genesis"],
+[181,"Cottonee","sm11",143,"Normal","ai","Unified Minds"],
+[182,"Zubat","swsh5",89,"Normal","ai","Battle Styles"],
+[183,"Tynamo","sm3",44,"Normal","ai","Burning Shadows"],
+[184,"Shelgon","sm7",105,"Normal","ai","Celestial Storm"],
+[185,"Goomy","sm2",94,"Normal","ai","Guardians Rising"],
+[186,"Goomy","sm2",94,"Reverse","ai","Guardians Rising"],
+[187,"Luvdisc","sm7",44,"Normal","ai","Celestial Storm"],
+[188,"Poliwag","sm1",30,"Normal","ai","Sun & Moon"],
+[189,"Tympole","sm12",58,"Normal","ai","Cosmic Eclipse"],
+[190,"Marill","sm3",34,"Normal","ai","Burning Shadows"],
+[191,"Oddish","sm10",6,"Normal","ai","Unbroken Bonds"],
+[192,"Seedot","sv5",3,"Normal","ai","Temporal Forces"],
+[193,"Seedot","sv5",3,"Reverse","ai","Temporal Forces"],
+[194,"Cherubi","sm5",10,"Normal","ai","Ultra Prism"],
+[195,"Metapod","swsh2",2,"Normal","ai","Rebel Clash"],
+[196,"Grubbin","swsh8",18,"Normal","ai","Fusion Strike"],
+[197,"Grubbin","swsh8",18,"Reverse","ai","Fusion Strike"],
+[198,"Blipbug","swsh11",18,"Normal","ai","Lost Origin"],
+[199,"Blipbug","swsh11",18,"Reverse","ai","Lost Origin"],
+[200,"Snorlax","swsh12pt5",109,"Normal","ai","Crown Zenith"],
+[201,"Snorlax","swsh12pt5",109,"Reverse","ai","Crown Zenith"],
+[202,"Whismur","sm7",117,"Normal","ai","Celestial Storm"],
+[203,"Castform","swsh6",121,"Normal","ai","Chilling Reign"],
+[204,"Dunsparce","sv9pt5",120,"Normal","ai","Journey Together"],
+[205,"Dunsparce","sv9pt5",120,"Reverse","ai","Journey Together"],
+[206,"Dunsparce",null,null,"JP","ai","Battle Partners (JP)"],
+[207,"Litwick","sm8",101,"Normal","ai","Lost Thunder"],
+[208,"Drifloon","sm5",51,"Normal","ai","Ultra Prism"],
+[209,"Drifloon","sm5",51,"Reverse","ai","Ultra Prism"],
+[210,"Munna","swsh1",87,"Normal","ai","Sword & Shield"],
+[211,"Munna","swsh1",87,"Reverse","ai","Sword & Shield"],
+[212,"Wigglytuff","swsh8",111,"Normal","ai","Fusion Strike"],
+[213,"Chimecho","swsh4",72,"Normal","ai","Vivid Voltage"],
+[214,"Swirlix","swsh12",83,"Normal","ai","Silver Tempest"],
+[215,"Swirlix","swsh12",83,"Reverse","ai","Silver Tempest"],
+[216,"Sandygast","sv6",91,"Normal","ai","Twilight Masquerade"],
+[217,"Sandygast","sv6",91,"Reverse","ai","Twilight Masquerade"],
+[218,"Espurr","swsh12",81,"Normal","ai","Silver Tempest"],
+[219,"Trapinch","swsh3",89,"Normal","ai","Darkness Ablaze"],
+[220,"Gible","sm11",112,"Normal","ai","Unified Minds"],
+[221,"Phanpy","sm8",111,"Normal","ai","Lost Thunder"],
+[222,"Tynamo","swsh11",59,"Normal","yb","Lost Origin"],
+[223,"Mareep","swsh7",54,"Normal","yb","Evolving Skies"],
+[224,"Chinchou","swsh1",68,"Normal","yb","Sword & Shield"],
+[225,"Scrafty","swsh7",99,"Normal","yb","Evolving Skies"],
+[226,"Shroodle","sv8",120,"Normal","yb","Surging Sparks"],
+[227,"Shroodle","sv8",120,"Reverse","yb","Surging Sparks"],
+[228,"Sizzlipede","sv5",36,"Normal","yb","Temporal Forces"],
+[229,"Sizzlipede",null,null,"JP","yb","Wild Force (JP)"],
+[230,"Volcarona","sv3",41,"Normal","yb","Obsidian Flames"],
+[231,"Volcarona","sv3",41,"Reverse","yb","Obsidian Flames"],
+[232,"Rapidash","sts",17,"Normal","yb","Steam Siege"],
+[233,"Axew","sm11",154,"Normal","yb","Unified Minds"],
+[234,"Lairon","pl2",44,"Normal","yb","Rising Rivals"],
+[235,"Staryu","sm4",15,"Normal","yb","Crimson Invasion"],
+[236,"Staryu","ex7",77,"Normal","yb","EX Deoxys"],
+[237,"Horsea","sm75",15,"Normal","yb","Dragon Majesty"],
+[238,"Wailmer","swsh4",31,"Normal","yb","Vivid Voltage"],
+[239,"Finneon","sv7",35,"Normal","yb","Stellar Crown"],
+[240,"Wurmple","ex12",70,"Normal","yb","EX Legend Maker"],
+[241,"Gossifleur","swsh45",14,"Normal","yb","Shining Fates"],
+[242,"Weedle","sm4",1,"Normal","yb","Crimson Invasion"],
+[243,"Masquerain","sm7",16,"Normal","yb","Celestial Storm"],
+[244,"Fomantis","swsh5",14,"Normal","yb","Battle Styles"],
+[245,"Roselia","swsh11",14,"Normal","yb","Lost Origin"],
+[246,"Roselia","swsh11",14,"Reverse","yb","Lost Origin"],
+[247,"Breloom","swsh8",5,"Normal","yb","Fusion Strike"],
+[248,"Petilil","swsh10",15,"Normal","yb","Astral Radiance"],
+[249,"Hoppip","sv2",1,"Normal","yb","Paldea Evolved"],
+[250,"Hoppip","sv2",1,"Reverse","yb","Paldea Evolved"],
+[251,"Cubone","ex11",60,"Normal","yb","EX Delta Species"],
+[252,"Meditite","swsh2",97,"Normal","yb","Rebel Clash"],
+[253,"Dugtrio","swsh3",85,"Normal","yb","Darkness Ablaze"],
+[254,"Sandygast","sm12",126,"Normal","yb","Cosmic Eclipse"],
+[255,"Sudowoodo","swsh1",100,"Normal","yb","Sword & Shield"],
+[256,"Sudowoodo","swsh1",100,"Reverse","yb","Sword & Shield"],
+[257,"Dunsparce","ex14",54,"Normal","yb","EX Crystal Guardians"],
+[258,"Porygon","xy7b",64,"Normal","yb","Ancient Origins"],
+[259,"Swablu","sm75",56,"Normal","yb","Dragon Majesty"],
+[260,"Spearow","sm1",97,"Normal","yb","Sun & Moon"],
+[261,"Lickitung","sm10",152,"Normal","yb","Unbroken Bonds"],
+[262,"Skitty","swsh8",210,"Normal","yb","Fusion Strike"],
+[263,"Wooloo","swsh8",222,"Normal","yb","Fusion Strike"],
+[264,"Teddiursa","swsh3",138,"Normal","yb","Darkness Ablaze"],
+[265,"Fearow","swsh5",112,"Normal","yb","Battle Styles"],
+[266,"Pikipek","swsh4",143,"Normal","yb","Vivid Voltage"],
+[267,"Loudred","sv4",149,"Normal","yb","Paradox Rift"],
+[268,"Loudred","sv4",149,"Reverse","yb","Paradox Rift"],
+[269,"Loudred",null,null,"JP","yb","Ancient Roar (JP)"],
+[270,"Grimer","pl1",75,"Normal","yb","Platinum"],
+[271,"Koffing","pl2",68,"Normal","yb","Rising Rivals"],
+[272,"Skrelp","xy9b",63,"Normal","yb","BREAKPoint"],
+[273,"Kirlia","swsh12",68,"Normal","yb","Silver Tempest"],
+[274,"Sigilyph","swsh8",123,"Normal","yb","Fusion Strike"],
+[275,"Salandit","sm11",98,"Normal","yb","Unified Minds"],
+[276,"Cutiefly","swsh7",78,"Normal","yb","Evolving Skies"],
+[277,"Clefairy","swsh9",53,"Normal","yb","Brilliant Stars"],
+[278,"Flabebe","sv6",86,"Normal","yb","Twilight Masquerade"],
+[279,"Flabebe","sv6",86,"Reverse","yb","Twilight Masquerade"],
+[280,"Tentacool","xy5",70,"Normal","yb","Primal Clash"],
+[281,"Venipede","sm3",56,"Normal (FR)","yb","Burning Shadows"],
+[282,"Shuppet","xy6",30,"Normal","yb","Roaring Skies"]
+];
+
+var TABS={ym:'Yuka Morii',tk:'Tomokazu Komiya',ai:'Asako Ito',yb:'Yukiko Baba'};
+var prices={};
+var vm={ym:'grid',tk:'grid',ai:'grid',yb:'grid'};
+var vfState={ym:'',tk:'',ai:'',yb:''};
+var qState={ym:'',tk:'',ai:'',yb:''};
+
+function imgUrl(r){
+  if(!r[2]||!r[3]) return null;
+  return 'https://images.pokemontcg.io/'+r[2]+'/'+r[3]+'.png';
+}
+function vCls(v){
+  var vl=v.toLowerCase();
+  if(vl.indexOf('reverse')>=0) return 'vrev';
+  if(vl==='jp') return 'vjp';
+  if(vl==='stamped') return 'vstm';
+  if(vl.indexOf('(fr)')>=0) return 'vfr';
+  if(vl.indexOf('(en)')>=0) return 'ven';
+  return 'vnrm';
+}
+function vIcon(v){
+  var vl=v.toLowerCase();
+  if(vl.indexOf('reverse')>=0) return '⬡ ';
+  if(vl==='jp') return '🇯🇵 ';
+  if(vl==='stamped') return '✦ ';
+  return '';
+}
+
+function build(il){
+  var el=document.getElementById('tab-'+il);
+  var rows=C.filter(function(r){return r[5]===il;});
+  var rev=rows.filter(function(r){return r[4].toLowerCase().indexOf('reverse')>=0;}).length;
+  var jp=rows.filter(function(r){return r[4]==='JP';}).length;
+  el.innerHTML='<div class="iln">'+TABS[il]+' <small style="font-size:.75rem;font-weight:400;color:var(--txm)">'+rows.length+' cartas &middot; '+rev+' reverse &middot; '+jp+' JP</small></div>'
+    +'<div class="dl-bar">'
+    +'<button class="dlbtn" onclick="dlAll(\''+il+'\')">&#x2B07; Descargar imágenes visibles</button>'
+    +'<button class="dlbtn sec" onclick="dlScript(\''+il+'\')">&#x1F4C4; Script Python</button>'
+    +'</div>'
+    +'<div class="bar">'
+    +'<input type="text" placeholder="Buscar nombre o set..." oninput="setQ(\''+il+'\',this.value)" id="q-'+il+'">'
+    +'<select onchange="setVF(\''+il+'\',this.value)">'
+    +'<option value="">Todas las versiones</option>'
+    +'<option value="normal">Normal</option>'
+    +'<option value="reverse">Reverse</option>'
+    +'<option value="jp">JP</option>'
+    +'<option value="stamped">Stamped</option>'
+    +'<option value="(fr)">FR</option>'
+    +'<option value="(en)">EN</option>'
+    +'</select>'
+    +'<button class="vb on" id="vbg-'+il+'" onclick="setV(\''+il+'\',\'grid\',this)">&#x229E; Galería</button>'
+    +'<button class="vb" id="vbt-'+il+'" onclick="setV(\''+il+'\',\'table\',this)">&#x2630; Tabla</button>'
+    +'</div>'
+    +'<div class="tot"><span class="l">Total seleccionado</span><span class="a" id="tot-'+il+'">$ 0.00</span></div>'
+    +'<div id="v-'+il+'"></div>';
+  render(il);
+}
+
+function render(il){
+  var rows=C.filter(function(r){return r[5]===il;});
+  var q=qState[il].toLowerCase();
+  var vfv=vfState[il];
+  var filtered=rows.filter(function(r){
+    var mq=!q||r[1].toLowerCase().indexOf(q)>=0||r[6].toLowerCase().indexOf(q)>=0;
+    var mv=!vfv||r[4].toLowerCase().indexOf(vfv)>=0;
+    return mq&&mv;
+  });
+  var cont=document.getElementById('v-'+il);
+  if(!filtered.length){cont.innerHTML='<div class="nores">Sin resultados</div>';return;}
+
+  if(vm[il]==='grid'){
+    var h='<div class="grid">';
+    filtered.forEach(function(r){
+      var isR=r[4].toLowerCase().indexOf('reverse')>=0;
+      var url=imgUrl(r);
+      var uid='img-'+r[0];
+      var imgH;
+      if(url){
+        imgH='<img id="'+uid+'" src="'+url+'" alt="'+r[1]+'" loading="lazy" onerror="handleErr(\''+uid+'\')">';
+      } else {
+        imgH='<div class="ph">No disponible<br><small>'+r[4]+'</small></div>';
+      }
+      var note=r[7]?(' <small style="color:var(--gold);font-size:.65rem">('+r[7]+')</small>'):'';
+      var priceVal=prices[r[0]]||'';
+      h+='<div class="ci'+(isR?' rev':'')+'"><div class="imgw">'+imgH+'</div>'
+        +'<span class="vbdg '+vCls(r[4])+'">'+vIcon(r[4])+r[4]+'</span>'
+        +'<div class="info">'
+        +'<div class="pn">'+r[1]+note+'</div>'
+        +'<div class="sn">'+r[6]+'</div>'
+        +'<div class="cn">'+(r[2]||'—')+' &middot; '+(r[3]||'—')+'</div>'
+        +'<div class="pr"><label>USD $</label>'
+        +'<input type="number" class="pi" placeholder="0.00" step="0.01" min="0" value="'+priceVal+'" oninput="sp(\''+il+'\','+r[0]+',this.value)">'
+        +'</div></div></div>';
+    });
+    h+='</div>';
+    cont.innerHTML=h;
+  } else {
+    var h='<table><thead><tr><th>#</th><th>Img</th><th>Pokemon</th><th>Set</th><th>Cod</th><th>N</th><th>Version</th><th>USD $</th></tr></thead><tbody>';
+    filtered.forEach(function(r){
+      var isR=r[4].toLowerCase().indexOf('reverse')>=0;
+      var url=imgUrl(r);
+      var uid='timg-'+r[0];
+      var th=url?('<img id="'+uid+'" src="'+url+'" alt="'+r[1]+'" loading="lazy" style="width:44px;height:auto;border-radius:4px" onerror="handleErr(\''+uid+'\')")>'):'—';
+      var note=r[7]?('<span class="note">'+r[7]+'</span>'):'';
+      var priceVal=prices[r[0]]||'';
+      h+='<tr class="'+(isR?'rev':'')+'">'
+        +'<td class="rn">'+r[0]+'</td>'
+        +'<td>'+th+'</td>'
+        +'<td class="pname">'+r[1]+note+'</td>'
+        +'<td style="font-size:.79rem;color:var(--txm)">'+r[6]+'</td>'
+        +'<td><span class="cb">'+(r[2]||'—')+'</span></td>'
+        +'<td class="nb">'+(r[3]||'—')+'</td>'
+        +'<td><span class="vspan '+vCls(r[4])+'">'+vIcon(r[4])+r[4]+'</span></td>'
+        +'<td><input type="number" class="tpi" placeholder="0.00" step="0.01" min="0" value="'+priceVal+'" oninput="sp(\''+il+'\','+r[0]+',this.value)"></td>'
+        +'</tr>';
+    });
+    h+='</tbody></table>';
+    cont.innerHTML=h;
+  }
+  recalc(il);
+}
+
+function handleErr(uid){
+  var el=document.getElementById(uid);
+  if(el){
+    var wrap=el.parentNode;
+    el.remove();
+    var ph=document.createElement('div');
+    ph.className='ph';
+    ph.innerHTML='Sin imagen';
+    wrap.appendChild(ph);
+  }
+}
+
+function sp(il,k,v){prices[k]=parseFloat(v)||0;recalc(il);}
+function recalc(il){
+  var t=0;
+  var inputs=document.querySelectorAll('#v-'+il+' .pi, #v-'+il+' .tpi');
+  for(var i=0;i<inputs.length;i++) t+=parseFloat(inputs[i].value)||0;
+  document.getElementById('tot-'+il).textContent='$ '+t.toFixed(2);
+}
+function setQ(il,v){qState[il]=v;render(il);}
+function setVF(il,v){vfState[il]=v;render(il);}
+function setV(il,mode,btn){
+  vm[il]=mode;
+  var btns=document.querySelectorAll('#tab-'+il+' .vb');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('on');
+  btn.classList.add('on');
+  render(il);
+}
+function showTab(il,btn){
+  var tabs=document.querySelectorAll('.tab');
+  for(var i=0;i<tabs.length;i++) tabs[i].classList.remove('on');
+  var tbs=document.querySelectorAll('.tb');
+  for(var i=0;i<tbs.length;i++) tbs[i].classList.remove('on');
+  document.getElementById('tab-'+il).classList.add('on');
+  btn.classList.add('on');
+}
+
+async function dlAll(il){
+  var rows=C.filter(function(r){return r[5]===il&&r[2]&&r[3];});
+  var q=qState[il].toLowerCase();
+  var vfv=vfState[il];
+  var filtered=rows.filter(function(r){
+    var mq=!q||r[1].toLowerCase().indexOf(q)>=0||r[6].toLowerCase().indexOf(q)>=0;
+    var mv=!vfv||r[4].toLowerCase().indexOf(vfv)>=0;
+    return mq&&mv;
+  });
+  var seen={};
+  var count=0;
+  for(var i=0;i<filtered.length;i++){
+    var r=filtered[i];
+    var key=r[2]+'-'+r[3];
+    if(seen[key]) continue;
+    seen[key]=1;
+    var url=imgUrl(r);
+    var fname=String(r[0]).padStart(3,'0')+'_'+r[1].replace(/[^a-zA-Z0-9]/g,'_')+'_'+r[2]+'_'+r[3]+'.png';
+    try{
+      var resp=await fetch(url);
+      var blob=await resp.blob();
+      var a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download=fname;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+      count++;
+      await new Promise(function(res){setTimeout(res,400);});
+    }catch(e){console.warn('Error',fname,e);}
+  }
+  alert('Descargadas: '+count+' imágenes');
+}
+
+function dlScript(il){
+  var rows=C.filter(function(r){return r[5]===il&&r[2]&&r[3];});
+  var seen={};
+  var lines=['#!/usr/bin/env python3','import os,urllib.request,time','os.makedirs("card_images",exist_ok=True)','cards=['];
+  rows.forEach(function(r){
+    var key=r[2]+'-'+r[3];
+    if(seen[key]) return;
+    seen[key]=1;
+    var fname=String(r[0]).padStart(3,'0')+'_'+r[1].replace(/[^a-zA-Z0-9]/g,'_')+'_'+r[2]+'_'+r[3]+'.png';
+    lines.push('  ("https://images.pokemontcg.io/'+r[2]+'/'+r[3]+'.png","card_images/'+fname+'"),');
+  });
+  lines.push(']');
+  lines.push('for url,fname in cards:');
+  lines.push('  if os.path.exists(fname): print("skip",fname); continue');
+  lines.push('  try: urllib.request.urlretrieve(url,fname); print("OK",fname); time.sleep(0.2)');
+  lines.push('  except Exception as e: print("ERR",fname,e)');
+  lines.push('print("Listo")');
+  var blob=new Blob([lines.join('\n')],{type:'text/plain'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='download_'+il+'.py';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+Object.keys(TABS).forEach(function(il){build(il);});
+</script>
+</body>
+</html>
