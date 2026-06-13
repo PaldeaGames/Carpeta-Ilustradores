@@ -466,12 +466,14 @@ async function preloadTab(il){
   var rows=CARDS.filter(function(r){return r[5]===il&&r[2]&&r[3];});
   var uniq={};
   rows.forEach(function(r){if(!uniq[ck(r)])uniq[ck(r)]=r;});
-  var keys=Object.keys(uniq);
-  var total=keys.length, done=0;
+  // Only fetch cards NOT already in cache
+  var missing=Object.keys(uniq).filter(function(k){return IMG_CACHE[k]===undefined;});
+  if(!missing.length){render(il);return;}
+  var total=missing.length, done=0;
   var pb=document.getElementById('pbar'),pg=document.getElementById('prog'),pp=document.getElementById('ppct');
   pb.className='pbar show';
-  for(var i=0;i<keys.length;i+=5){
-    var batch=keys.slice(i,i+5);
+  for(var i=0;i<missing.length;i+=5){
+    var batch=missing.slice(i,i+5);
     await Promise.all(batch.map(function(key){
       var r=uniq[key];
       return fetchImg(r[2],r[3]).then(function(){
