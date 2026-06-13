@@ -110,7 +110,7 @@ progress{flex:1;max-width:300px;height:7px}
   <div class="ball"></div>
   <div>
     <h1>Cartas Pokémon por Ilustrador</h1>
-    <p>Haz clic en cualquier imagen para corregirla · Descarga todo junto</p>
+    <p>Haz clic en cualquier imagen para corregirla · Descarga todo junto · <button onclick="clearState()" style="background:none;border:1px solid #555;color:#888;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:.72rem;margin-left:4px">&#x1F5D1; Borrar progreso</button></p>
   </div>
 </header>
 <div class="pbar" id="pbar">
@@ -455,9 +455,10 @@ async function fetchImg(setId,num){
   try{
     var r=await fetch('https://api.pokemontcg.io/v2/cards?q=set.id%3A'+setId+'+number%3A'+num+'&select=id,images');
     var d=await r.json();
-    if(d.data&&d.data.length>0){IMG_CACHE[key]=d.data[0].images.small;return IMG_CACHE[key];}
+    if(d.data&&d.data.length>0){IMG_CACHE[key]=d.data[0].images.small;saveState();return IMG_CACHE[key];}
   }catch(e){}
   IMG_CACHE[key]=null;
+  saveState();
   return null;
 }
 
@@ -563,7 +564,7 @@ function render(il){
   recalc(il);
 }
 
-function sp(il,k,v){PRICES[k]=parseFloat(v)||0;recalc(il);}
+function sp(il,k,v){PRICES[k]=parseFloat(v)||0;recalc(il);saveState();}
 function recalc(il){
   var t=0;
   document.querySelectorAll('#v-'+il+' .pi').forEach(function(i){t+=parseFloat(i.value)||0;});
@@ -638,6 +639,7 @@ function applyModal(){
   if(modalCard[2]&&modalCard[3]) IMG_CACHE[ck(modalCard)]=modalSelected.img;
   // Update all visible elements for this card
   updateCardImgEl(modalCard);
+  saveState();
   closeModal();
 }
 
@@ -684,9 +686,37 @@ function dlScript(il){
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
 }
 
+// ── LOCALSTORAGE PERSISTENCE ──
+function saveState(){
+  try{
+    localStorage.setItem('ptcg_overrides', JSON.stringify(OVERRIDES));
+    localStorage.setItem('ptcg_imgcache', JSON.stringify(IMG_CACHE));
+    localStorage.setItem('ptcg_prices', JSON.stringify(PRICES));
+  }catch(e){}
+}
+function loadState(){
+  try{
+    var ov=localStorage.getItem('ptcg_overrides');
+    if(ov) OVERRIDES=JSON.parse(ov);
+    var ic=localStorage.getItem('ptcg_imgcache');
+    if(ic) IMG_CACHE=JSON.parse(ic);
+    var pr=localStorage.getItem('ptcg_prices');
+    if(pr) PRICES=JSON.parse(pr);
+  }catch(e){}
+}
+function clearState(){
+  if(!confirm('¿Borrar todo el progreso guardado?')) return;
+  localStorage.removeItem('ptcg_overrides');
+  localStorage.removeItem('ptcg_imgcache');
+  localStorage.removeItem('ptcg_prices');
+  OVERRIDES={}; IMG_CACHE={}; PRICES={};
+  Object.keys(TABS).forEach(function(il){render(il);});
+}
+
 // Close modal on bg click
 document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 
+loadState();
 Object.keys(TABS).forEach(function(il){build(il);});
 </script>
 </body>
