@@ -414,6 +414,10 @@ var CARDS=[
 [282,"Shuppet","xy6","30","Normal","yb","Roaring Skies"]
 ];
 
+// pokemoncard.io set ID map
+var PCIO={"sts":"xy11","cpa":"swsh35","sm11":"sm11","xy7":"bw11","sm1":"sm1","sm12":"sm12","swsh9":"swsh9","swsh3":"swsh3","swsh11":"swsh11","pgo":"pgo","sv10":"sv10","sv9pt5":"sv9pt5","sv8pt5":"sv8pt5","sm10":"sm10","sm7":"sm7","sm2":"sm2","swsh7":"swsh7","swsh4":"swsh4","sv3":"sv3","swsh12":"swsh12","sv1":"sv1","swsh8":"swsh8","swsh6":"swsh6","xy6":"xy6","sv7":"sv7","xy7b":"xy7b","swsh1":"swsh1","swsh12pt5":"swsh12pt5","swsh10":"swsh10","sv10pt5":"sv10pt5","sv3pt5":"sv3pt5","sv5":"sv5","swsh5":"swsh5","sv4":"sv4","sv6":"sv6","sv8":"sv8","sm8":"sm8","xy9":"xy9","sv2":"sv2","swsh2":"swsh2","xy8":"xy8","ex6":"ex6","ex12":"ex12","dp4":"dp4","ex11":"ex11","sm9":"sm9","sm6":"sm6","sm3":"sm3","sm5":"sm5","xy5":"xy5","xy10":"xy10","sm75":"sm75","swsh45":"swsh45","sm4":"sm4","ex7":"ex7","ex14":"ex14","neo1":"neo1","pl2":"pl2","pl1":"pl1","xy2":"xy2","ex2":"ex2","xy9b":"xy9b"};
+function directImg(code,num){var p=PCIO[code];if(!p||!num)return null;return 'https://images.pokemoncard.io/images/'+p+'/'+p+'-'+num+'.png';}
+
 // IMG_CACHE: cacheKey -> url string (or null if not found)
 // OVERRIDES: cardN -> url string (manual corrections)
 var IMG_CACHE={}, OVERRIDES={}, PRICES={};
@@ -428,9 +432,10 @@ var modalCard=null, modalSelected=null;
 function ck(r){return r[2]+'-'+r[3];}
 function imgForCard(r){
   if(OVERRIDES[r[0]]) return OVERRIDES[r[0]];
-  var key=r[2]&&r[3]?ck(r):null;
-  if(!key) return null;
-  return IMG_CACHE[key]||null;
+  if(!r[2]||!r[3]) return null;
+  var key=ck(r);
+  if(IMG_CACHE[key]) return IMG_CACHE[key];
+  return directImg(r[2],r[3]);
 }
 function vCls(v){
   var l=v.toLowerCase();
@@ -462,31 +467,7 @@ async function fetchImg(setId,num){
   return null;
 }
 
-async function preloadTab(il){
-  var rows=CARDS.filter(function(r){return r[5]===il&&r[2]&&r[3];});
-  var uniq={};
-  rows.forEach(function(r){if(!uniq[ck(r)])uniq[ck(r)]=r;});
-  // Only fetch cards NOT already in cache
-  var missing=Object.keys(uniq).filter(function(k){return IMG_CACHE[k]===undefined;});
-  if(!missing.length){render(il);return;}
-  var total=missing.length, done=0;
-  var pb=document.getElementById('pbar'),pg=document.getElementById('prog'),pp=document.getElementById('ppct');
-  pb.className='pbar show';
-  for(var i=0;i<missing.length;i+=5){
-    var batch=missing.slice(i,i+5);
-    await Promise.all(batch.map(function(key){
-      var r=uniq[key];
-      return fetchImg(r[2],r[3]).then(function(){
-        done++;
-        var pct=Math.round(done/total*100);
-        pg.value=pct; pp.textContent=pct+'%';
-        updateCardImgEl(r);
-      });
-    }));
-  }
-  pb.className='pbar';
-  render(il);
-}
+async function preloadTab(il){render(il);}
 
 function updateCardImgEl(r){
   var url=imgForCard(r);
