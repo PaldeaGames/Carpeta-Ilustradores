@@ -30,9 +30,6 @@ progress{flex:1;max-width:300px;height:7px}
 .bar input{flex:1;min-width:130px}
 .vb{background:var(--surf2);border:1px solid var(--brd);color:var(--txm);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:.78rem;transition:all .2s}
 .vb.on,.vb:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
-.tot{background:linear-gradient(135deg,#1a1040,#0d1a2e);border:1px solid var(--acc);border-radius:7px;padding:8px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
-.tot .l{font-size:.79rem;color:var(--txm)}
-.tot .a{font-size:1.15rem;font-weight:700;color:var(--gold)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px}
 .ci{background:var(--surf2);border:1px solid var(--brd);border-radius:10px;overflow:hidden;position:relative;transition:transform .15s}
 .ci:hover{transform:translateY(-2px)}
@@ -54,9 +51,6 @@ progress{flex:1;max-width:300px;height:7px}
 .pn{font-weight:700;font-size:.84rem}
 .sn{font-size:.71rem;color:var(--txm);margin:2px 0}
 .cn{font-family:monospace;font-size:.71rem;color:var(--gold)}
-.pr{display:flex;align-items:center;gap:5px;margin-top:5px}
-.pr label{font-size:.7rem;color:var(--txm)}
-.pi{background:var(--surf);border:1px solid var(--brd);color:var(--tx);padding:4px 5px;border-radius:5px;font-size:.78rem;width:68px;outline:none;text-align:right;font-family:monospace}
 .dl-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .dlbtn{background:var(--acc);border:none;color:#fff;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:.8rem;font-weight:600}
 .dlbtn:hover{opacity:.85}
@@ -309,7 +303,7 @@ var CARDS=[
 [176,"Wiglett","sv4","52","Reverse","tk","Paradox Rift"],
 [177,"Magneton","xy8","53","Normal","tk","BREAKThrough"],
 [178,"Voltorb","swsh8","87","Normal","tk","Fusion Strike"],
-[179,"Moo-Moo Milk","neo1","101","Normal NO 1er Ed","tk","Neo Genesis"],
+[179,"Moo-Moo Milk","neo1","101","Normal","tk","Neo Genesis"],
 [181,"Cottonee","sm11","143","Normal","ai","Unified Minds"],
 [182,"Zubat","swsh5","89","Normal","ai","Battle Styles"],
 [183,"Tynamo","sm3","44","Normal","ai","Burning Shadows"],
@@ -420,7 +414,7 @@ function directImg(code,num){var p=PCIO[code];if(!p||!num)return null;return 'ht
 
 // IMG_CACHE: cacheKey -> url string (or null if not found)
 // OVERRIDES: cardN -> url string (manual corrections)
-var IMG_CACHE={}, OVERRIDES={}, PRICES={};
+var IMG_CACHE={}, OVERRIDES={};
 var VM={ym:'grid',tk:'grid',ai:'grid',yb:'grid'};
 var VF={ym:'',tk:'',ai:'',yb:''}, QF={ym:'',tk:'',ai:'',yb:''};
 var TABS={ym:'Yuka Morii',tk:'Tomokazu Komiya',ai:'Asako Ito',yb:'Yukiko Baba'};
@@ -489,8 +483,8 @@ function build(il){
   var jp=rows.filter(function(r){return r[4]==='JP';}).length;
   el.innerHTML='<div class="iln">'+TABS[il]+' <small style="font-size:.74rem;font-weight:400;color:var(--txm)">'+rows.length+' cartas &middot; '+rev+' reverse &middot; '+jp+' JP</small></div>'
     +'<div class="dl-bar">'
-    +'<button class="dlbtn" onclick="dlAll(\''+il+'\')">&#x2B07; Descargar todas</button>'
-    +'<button class="dlbtn sec" onclick="dlScript(\''+il+'\')">&#x1F4C4; Script Python</button>'
+    +'<button class="dlbtn" onclick="dlAll(\''+il+'\')">&#x2B07; Descargar imágenes</button>'
+    
     +'</div>'
     +'<div class="bar">'
     +'<input type="text" placeholder="Buscar..." oninput="setQ(\''+il+'\',this.value)">'
@@ -502,7 +496,6 @@ function build(il){
     +'<button class="vb on" onclick="setV(\''+il+'\',\'grid\',this)">&#x229E; Galería</button>'
     +'<button class="vb" onclick="setV(\''+il+'\',\'table\',this)">&#x2630; Tabla</button>'
     +'</div>'
-    +'<div class="tot"><span class="l">Total</span><span class="a" id="tot-'+il+'">$ 0.00</span></div>'
     +'<div id="v-'+il+'"></div>';
   render(il);
   preloadTab(il);
@@ -532,27 +525,18 @@ function render(il){
       imgContent='<div class="ph"><div class="spin"></div></div>';
     }
     var note=r[7]?' <small style="color:var(--gold);font-size:.63rem">('+r[7]+')</small>':'';
-    var pv=PRICES[r[0]]||'';
     h+='<div class="ci'+(isR?' rev':'')+'"><div class="imgw" data-cn="'+r[0]+'" onclick="openEdit('+r[0]+')">'+imgContent+'</div>'
       +'<span class="vbdg '+vCls(r[4])+'">'+vIcon(r[4])+r[4]+'</span>'
       +'<div class="info"><div class="pn">'+r[1]+note+'</div>'
       +'<div class="sn">'+r[6]+'</div>'
       +'<div class="cn">'+(r[2]||'—')+' &middot; '+(r[3]||'—')+'</div>'
-      +'<div class="pr"><label>USD $</label>'
-      +'<input type="number" class="pi" placeholder="0.00" step="0.01" min="0" value="'+pv+'" oninput="sp(\''+il+'\','+r[0]+',this.value)">'
-      +'</div></div></div>';
+      +'</div></div>';
   });
   h+='</div>';
   cont.innerHTML=h;
-  recalc(il);
 }
 
-function sp(il,k,v){PRICES[k]=parseFloat(v)||0;recalc(il);saveState();}
-function recalc(il){
-  var t=0;
-  document.querySelectorAll('#v-'+il+' .pi').forEach(function(i){t+=parseFloat(i.value)||0;});
-  document.getElementById('tot-'+il).textContent='$ '+t.toFixed(2);
-}
+
 function setQ(il,v){QF[il]=v;render(il);}
 function setVF(il,v){VF[il]=v;render(il);}
 function setV(il,mode,btn){
@@ -635,46 +619,53 @@ async function dlAll(il){
         &&(!vfv||r[4].toLowerCase().indexOf(vfv)>=0);
   });
   var count=0;
+  var seen={};
   for(var i=0;i<filtered.length;i++){
     var r=filtered[i];
-    var url=imgForCard(r)||(r[2]&&r[3]?await fetchImg(r[2],r[3]):null);
+    var url=imgForCard(r);
     if(!url) continue;
+    var key=(r[2]||'')+'_'+(r[3]||'');
+    if(seen[key]) continue;
+    seen[key]=1;
+    var fname=String(r[0]).padStart(3,'0')+'_'+r[1].replace(/[^a-zA-Z0-9]/g,'_')+'_'+(r[2]||'jp')+'_'+(r[3]||r[0])+'.png';
     try{
-      var resp=await fetch(url); var blob=await resp.blob();
-      var a=document.createElement('a');
-      a.href=URL.createObjectURL(blob);
-      a.download=String(r[0]).padStart(3,'0')+'_'+r[1].replace(/[^a-zA-Z0-9]/g,'_')+'_'+(r[2]||'jp')+'_'+(r[3]||r[0])+'.png';
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      URL.revokeObjectURL(a.href); count++;
-      await new Promise(function(res){setTimeout(res,350);});
-    }catch(e){console.warn(e);}
+      // Use canvas proxy to bypass CORS
+      var img2=new Image();
+      img2.crossOrigin='anonymous';
+      var downloaded=await new Promise(function(resolve){
+        img2.onload=function(){
+          try{
+            var canvas=document.createElement('canvas');
+            canvas.width=img2.naturalWidth;
+            canvas.height=img2.naturalHeight;
+            var ctx=canvas.getContext('2d');
+            ctx.drawImage(img2,0,0);
+            canvas.toBlob(function(blob){
+              var a=document.createElement('a');
+              a.href=URL.createObjectURL(blob);
+              a.download=fname;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(a.href);
+              resolve(true);
+            },'image/png');
+          }catch(e){resolve(false);}
+        };
+        img2.onerror=function(){resolve(false);};
+        img2.src=url+'?t='+Date.now();
+      });
+      if(downloaded) count++;
+    }catch(e){}
+    await new Promise(function(res){setTimeout(res,400);});
   }
   alert('Listo: '+count+' imágenes descargadas');
 }
-function dlScript(il){
-  var rows=CARDS.filter(function(r){return r[5]===il;});
-  var lines=['#!/usr/bin/env python3','import os,urllib.request,time','os.makedirs("card_images",exist_ok=True)','cards=['];
-  rows.forEach(function(r){
-    var url=imgForCard(r);
-    if(!url) return;
-    var fname=String(r[0]).padStart(3,'0')+'_'+r[1].replace(/[^a-zA-Z0-9]/g,'_')+'_'+(r[2]||'jp')+'_'+(r[3]||r[0])+'.png';
-    lines.push('  ("'+url+'","card_images/'+fname+'"),');
-  });
-  lines.push(']','for url,fname in cards:','  if os.path.exists(fname): continue',
-    '  try: urllib.request.urlretrieve(url,fname); print("OK",fname); time.sleep(0.2)',
-    '  except Exception as e: print("ERR",fname,e)');
-  var blob=new Blob([lines.join('\n')],{type:'text/plain'});
-  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download='download_'+il+'.py';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-}
-
 // ── LOCALSTORAGE PERSISTENCE ──
 function saveState(){
   try{
     localStorage.setItem('ptcg_overrides', JSON.stringify(OVERRIDES));
     localStorage.setItem('ptcg_imgcache', JSON.stringify(IMG_CACHE));
-    localStorage.setItem('ptcg_prices', JSON.stringify(PRICES));
   }catch(e){}
 }
 function loadState(){
@@ -683,16 +674,13 @@ function loadState(){
     if(ov) OVERRIDES=JSON.parse(ov);
     var ic=localStorage.getItem('ptcg_imgcache');
     if(ic) IMG_CACHE=JSON.parse(ic);
-    var pr=localStorage.getItem('ptcg_prices');
-    if(pr) PRICES=JSON.parse(pr);
   }catch(e){}
 }
 function clearState(){
   if(!confirm('¿Borrar todo el progreso guardado?')) return;
   localStorage.removeItem('ptcg_overrides');
   localStorage.removeItem('ptcg_imgcache');
-  localStorage.removeItem('ptcg_prices');
-  OVERRIDES={}; IMG_CACHE={}; PRICES={};
+  OVERRIDES={}; IMG_CACHE={};
   Object.keys(TABS).forEach(function(il){render(il);});
 }
 
