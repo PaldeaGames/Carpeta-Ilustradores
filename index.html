@@ -84,6 +84,17 @@ progress{flex:1;max-width:300px;height:7px}
 .btn-ok{background:var(--acc);color:#fff}
 .modal-info{font-size:.78rem;color:var(--txm);margin-bottom:10px}
 .modal-status{font-size:.78rem;color:var(--txm);padding:8px 0;text-align:center}
+.stk-badge{display:inline-block;font-size:.63rem;font-weight:700;padding:2px 7px;border-radius:8px;margin-top:4px}
+.stk-ok{background:rgba(71,200,120,.15);color:#47c878}
+.stk-agotado{background:rgba(255,80,80,.15);color:#ff5050}
+.ci.agotado{opacity:.45;filter:grayscale(.6)}
+.ci.agotado .imgw{cursor:default}
+.prow{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.ptag{font-size:.7rem;background:var(--surf);border:1px solid var(--brd);border-radius:5px;padding:3px 7px;color:var(--gold);font-family:monospace;white-space:nowrap}
+.ptag.agotado-tag{color:#555;border-color:#333;text-decoration:line-through}
+.sync-bar{font-size:.73rem;color:var(--txm);padding:4px 10px;text-align:right;display:none}
+.sync-bar.show{display:block}
+
 </style>
 </head>
 <body>
@@ -118,6 +129,8 @@ progress{flex:1;max-width:300px;height:7px}
   <progress id="prog" max="100" value="0"></progress>
   <span id="ppct">0%</span>
 </div>
+
+<div class="sync-bar" id="syncBar">⏳ Cargando precios...</div>
 <nav class="tabs">
   <button class="tb on" onclick="showTab('ym',this)">Yuka Morii</button>
   <button class="tb" onclick="showTab('tk',this)">Tomokazu Komiya</button>
@@ -705,6 +718,99 @@ var VF={ym:'',tk:'',ai:'',yb:''}, QF={ym:'',tk:'',ai:'',yb:''};
 var currentIl='ym';
 var modalCard=null, modalSelected=null;
 
+var STOCK={};   // clave: "nombre|rareza|idioma" → cantidad
+var PRICES={};  // clave: "nombre|rareza|idioma" → precio CLP
+var GAS_LOADED=false;
+var GAS_URL='https://script.google.com/macros/s/AKfycbymkq81nv85-kf3QIbjnkPfYyQwN6PZIn9r8GsJ7iVMYbgL5CtvLCADHc9c5CCXtMCl/exec';
+
+function stockKey(nombre,rareza,idioma){
+  return nombre.trim().toLowerCase()+'|'+rareza.toLowerCase()+'|'+idioma.toUpperCase();
+}
+function getStock(r){
+  // r = CARDS row: [id,nombre,set_code,numero,variante,il,set_nombre]
+  var v=r[4].toLowerCase();
+  var nombre=r[1];
+  if(v==='jp'||v.indexOf('jp')>=0) return STOCK[stockKey(nombre,'jp','JP')]||0;
+  if(v.indexOf('reverse')>=0){
+    var esp=STOCK[stockKey(nombre,'reverse','ESP')]||0;
+    var eng=STOCK[stockKey(nombre,'reverse','ENG')]||0;
+    return esp+eng;
+  }
+  // Normal (incluye stamped, fr, en, etc)
+  var esp=STOCK[stockKey(nombre,'normal','ESP')]||0;
+  var eng=STOCK[stockKey(nombre,'normal','ENG')]||0;
+  return esp+eng;
+}
+function getPrecioTags(r){
+  var v=r[4].toLowerCase();
+  var nombre=r[1];
+  var tags=[];
+  if(v==='jp'||v.indexOf('jp')>=0){
+    var p=PRICES[stockKey(nombre,'jp','JP')];
+    var s=STOCK[stockKey(nombre,'jp','JP')]||0;
+    if(p>0) tags.push({label:'JP',precio:p,stk:s});
+  } else if(v.indexOf('reverse')>=0){
+    var pe=PRICES[stockKey(nombre,'reverse','ESP')];
+    var se=STOCK[stockKey(nombre,'reverse','ESP')]||0;
+    var pen=PRICES[stockKey(nombre,'reverse','ENG')];
+    var sen=STOCK[stockKey(nombre,'reverse','ENG')]||0;
+    if(pe>0) tags.push({label:'ESP',precio:pe,stk:se});
+    if(pen>0&&pen!==pe) tags.push({label:'ENG',precio:pen,stk:sen});
+    if(!pe&&!pen&&(se>0||sen>0)) tags.push({label:'ESP/ENG',precio:0,stk:se+sen});
+  } else {
+    var pe=PRICES[stockKey(nombre,'normal','ESP')];
+    var se=STOCK[stockKey(nombre,'normal','ESP')]||0;
+    var pen=PRICES[stockKey(nombre,'normal','ENG')];
+    var sen=STOCK[stockKey(nombre,'normal','ENG')]||0;
+    if(pe>0) tags.push({label:'ESP',precio:pe,stk:se});
+    if(pen>0&&pen!==pe) tags.push({label:'ENG',precio:pen,stk:sen});
+    if(!pe&&!pen&&(se>0||sen>0)) tags.push({label:'ESP/ENG',precio:0,stk:se+sen});
+  }
+  return tags;
+}
+
+async function syncGAS(){
+  var bar=document.getElementById('syncBar');
+  if(bar){bar.textContent='⏳ Cargando precios...';bar.className='sync-bar show';}
+  try{
+    var url=GAS_URL+'?carpeta=IL';
+    var resp=await fetch(url);
+    var data=await resp.json();
+    if(data.ok&&data.data){
+      STOCK={};PRICES={};
+      data.data.forEach(function(item){
+        var nombre=item.nombre;
+        var rareza=(item.rareza||'Normal').toLowerCase();
+        if(rareza==='jp'){
+          var k=stockKey(nombre,'jp','JP');
+          STOCK[k]=(STOCK[k]||0)+(item.stk_jp||0);
+          if(item.prc_jp>0) PRICES[k]=item.prc_jp;
+        } else {
+          if((item.stk_esp||0)>0||(item.prc_esp||0)>0){
+            var k=stockKey(nombre,rareza,'ESP');
+            STOCK[k]=(STOCK[k]||0)+(item.stk_esp||0);
+            if(item.prc_esp>0) PRICES[k]=item.prc_esp;
+          }
+          if((item.stk_eng||0)>0||(item.prc_eng||0)>0){
+            var k=stockKey(nombre,rareza,'ENG');
+            STOCK[k]=(STOCK[k]||0)+(item.stk_eng||0);
+            if(item.prc_eng>0) PRICES[k]=item.prc_eng;
+          }
+        }
+      });
+      GAS_LOADED=true;
+      var now=new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
+      if(bar){bar.textContent='✅ Precios sincronizados — '+now;setTimeout(function(){bar.className='sync-bar';},4000);}
+      Object.keys(TABS).forEach(function(il){render(il);});
+    } else {
+      if(bar){bar.textContent='⚠ Sin datos del servidor';setTimeout(function(){bar.className='sync-bar';},3000);}
+    }
+  }catch(e){
+    if(bar){bar.textContent='⚠ Error al cargar precios';setTimeout(function(){bar.className='sync-bar';},3000);}
+  }
+}
+
+
 function imgForCard(r){
   if(OVERRIDES[r[0]]) return OVERRIDES[r[0]];
   return IMGS[r[0]]||null;
@@ -774,11 +880,29 @@ function render(il){
       imgContent='<div class="ph">Sin imagen<br><small style="font-size:.65rem">Click para buscar</small></div>';
     }
     var note=r[7]?' <small style="color:var(--gold);font-size:.63rem">('+r[7]+')</small>':'';
-    h+='<div class="ci'+(isR?' rev':'')+'"><div class="imgw" data-cn="'+r[0]+'" onclick="openEdit('+r[0]+')">'+imgContent+'</div>'
+    var stk=GAS_LOADED?getStock(r):-1;
+    var isAgotado=GAS_LOADED&&stk===0;
+    var priceTags=GAS_LOADED?getPrecioTags(r):[];
+    var priceHtml='';
+    if(GAS_LOADED){
+      if(priceTags.length>0){
+        priceHtml='<div class="prow">';
+        priceTags.forEach(function(t){
+          var cls=t.stk===0?'ptag agotado-tag':'ptag';
+          priceHtml+='<span class="'+cls+'">'+t.label+': '+(t.precio>0?'$'+t.precio.toLocaleString('es-CL'):'—')+'</span>';
+        });
+        priceHtml+='</div>';
+      }
+      if(isAgotado) priceHtml+='<span class="stk-badge stk-agotado">Agotado</span>';
+      else if(stk>0) priceHtml+='<span class="stk-badge stk-ok">En stock</span>';
+    }
+    var imgClick=isAgotado?'':' onclick="openEdit('+r[0]+')"';
+    h+='<div class="ci'+(isR?' rev':'')+(isAgotado?' agotado':'')+'"><div class="imgw" data-cn="'+r[0]+'"'+imgClick+'>'+imgContent+'</div>'
       +'<span class="vbdg '+vCls(r[4])+'">'+vIcon(r[4])+r[4]+'</span>'
       +'<div class="info"><div class="pn">'+r[1]+note+'</div>'
       +'<div class="sn">'+r[6]+'</div>'
       +'<div class="cn">'+(r[2]||'—')+' &middot; '+(r[3]||'—')+'</div>'
+      +priceHtml
       +'</div></div>';
   });
   h+='</div>';
@@ -928,6 +1052,7 @@ document.getElementById('editModal').addEventListener('click',function(e){if(e.t
 
 loadState();
 Object.keys(TABS).forEach(function(il){build(il);});
+syncGAS();
 </script>
 </body>
 </html>
