@@ -778,20 +778,19 @@ async function syncGAS(){
       STOCK={};PRICES={};
       data.data.forEach(function(item){
         var nom=item.nombre;
-        var st=(item.set||'').trim().toLowerCase();
+        var setNom=(item.set_nombre||'').trim().toLowerCase();
         var num=String(item.numero||'').trim();
         var rarItem=(item.rareza||'Normal').toLowerCase();
-        // Si nombre+set+numero coincide con una carta que tiene clave de identidad
-        // propia (homonimos), usamos esa clave en vez del nombre simple.
-        // La rareza del item desambigua casos donde dos cartas distintas
-        // comparten el mismo numero (ej: una Normal y otra Trick or Trade).
         var candidatos=CARDS.filter(function(c){
           return c[1].toLowerCase()===nom.toLowerCase()
             && String(c[3]||'').trim()===num
             && IDENTIDAD_PROPIA[c[0]];
         });
         var match=candidatos.length>1
-          ? candidatos.find(function(c){ return varianteTipo(c[4])===(rarItem==='trickortrade'?'stamped':rarItem==='jp'?'jp':'normal'); })||candidatos[0]
+          ? candidatos.find(function(c){
+              return (c[6]||'').trim().toLowerCase()===setNom
+                && varianteTipo(c[4])===(rarItem==='trickortrade'?'stamped':rarItem==='jp'?'jp':'normal');
+            })||candidatos.find(function(c){ return varianteTipo(c[4])===(rarItem==='trickortrade'?'stamped':rarItem==='jp'?'jp':'normal'); })||candidatos[0]
           : candidatos[0];
         if(match) nom=IDENTIDAD_PROPIA[match[0]];
         var rar=rarItem;
