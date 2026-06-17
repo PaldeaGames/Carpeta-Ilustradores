@@ -3,20 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Paldea Games — Ilustradores</title>
+<title>Carpeta Ilustradores</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0d0d1a;--surf:#141428;--surf2:#1c1c38;--brd:rgba(255,255,255,0.08);--brd2:rgba(255,255,255,0.15);--acc:#7c5cbf;--gold:#e8c84a;--rev:#ff6b35;--tx:#e8e6f0;--txm:#8885a8;--red:#ff4d4d;--accent:#e8ff47;--accent-dim:rgba(232,255,71,0.12);--accent-text:#0d0d0f;--radius:10px;--radius-sm:7px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:15px}
-header{background:linear-gradient(135deg,#0d0d1a,#1a0d2e);border-bottom:2px solid var(--acc);padding:14px 20px;display:flex;align-items:center;gap:14px;justify-content:space-between}
+header{background:linear-gradient(135deg,#0d0d1a,#1a0d2e);border-bottom:2px solid var(--acc);padding:14px 20px;display:flex;align-items:center;gap:14px;justify-content:space-between;position:sticky;top:0;z-index:150}
 .head-left{display:flex;align-items:center;gap:14px}
-.head-cart-btn{background:var(--accent);color:var(--accent-text);border:none;border-radius:50px;padding:10px 18px;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 2px 12px rgba(232,255,71,.3);transition:all .2s;flex-shrink:0}
+.head-cart-btn{background:var(--accent);color:var(--accent-text);border:none;border-radius:50px;padding:10px 16px 10px 14px;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 2px 12px rgba(232,255,71,.3);transition:all .2s;flex-shrink:0;position:relative}
 .head-cart-btn:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(232,255,71,.45)}
-.head-cart-btn .cart-count{background:var(--accent-text);color:var(--accent);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
-.ball{width:34px;height:34px;background:radial-gradient(circle at 35% 35%,#ff6b6b,#cc0000);border-radius:50%;border:3px solid #fff;flex-shrink:0;position:relative}
-.ball::after{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:#fff;transform:translateY(-50%)}
-.ball::before{content:'';position:absolute;top:50%;left:50%;width:9px;height:9px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);border:2px solid #888}
+.head-cart-btn svg{width:19px;height:19px;flex-shrink:0}
+.head-cart-btn .cart-count{position:absolute;top:-7px;right:-7px;background:var(--red);color:#fff;border-radius:999px;min-width:20px;height:20px;padding:0 5px;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;border:2px solid var(--bg);line-height:1}
+.head-cart-btn .cart-count.zero{display:none}
+.brand-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--acc),#4a3a7a);border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(124,92,191,.4)}
+.brand-icon svg{width:21px;height:21px}
 header h1{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800}
 header p{font-size:.75rem;color:var(--txm);margin-top:1px}
 .sync-bar{font-size:.72rem;color:var(--txm);padding:5px 20px;text-align:right;background:var(--surf);border-bottom:1px solid var(--brd);display:none}
@@ -29,6 +30,12 @@ header p{font-size:.75rem;color:var(--txm);margin-top:1px}
 .tab.on{display:block}
 .iln{font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:10px;font-family:'Syne',sans-serif}
 .bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.bar-sticky{position:sticky;top:63px;z-index:120;background:var(--bg);padding-top:10px;margin-bottom:0}
+.bar-sticky2{position:sticky;top:113px;z-index:119;background:var(--bg);padding-bottom:10px;margin-bottom:0;border-bottom:1px solid var(--brd)}
+.search-wrap{position:relative;flex:1;min-width:130px;display:flex}
+.search-wrap input{width:100%;padding-right:30px}
+.search-clear{position:absolute;right:4px;top:50%;transform:translateY(-50%);background:var(--surf2);border:none;color:var(--txm);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;line-height:1;padding:0}
+.search-clear:hover{background:var(--acc);color:#fff}
 .bar input,.bar select{background:var(--surf2);border:1px solid var(--brd2);color:var(--tx);padding:6px 10px;border-radius:6px;font-size:.81rem;outline:none;font-family:'DM Sans',sans-serif}
 .bar input:focus,.bar select:focus{border-color:var(--acc)}
 .bar input{flex:1;min-width:130px}
@@ -39,7 +46,12 @@ header p{font-size:.75rem;color:var(--txm);margin-top:1px}
 .ci:hover{transform:translateY(-2px)}
 .ci.rev{border-color:var(--rev);box-shadow:0 0 7px rgba(255,107,53,.2)}
 .ci.agotado{opacity:.38;filter:grayscale(.7)}
-.imgw{background:#050510;display:flex;align-items:center;justify-content:center;min-height:125px;overflow:hidden}
+.imgw{background:#050510;display:flex;align-items:center;justify-content:center;min-height:125px;overflow:hidden;position:relative}
+.agotado-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(20,10,10,.88);border:1px solid rgba(255,80,80,.5);color:#ff8080;font-family:'Syne',sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:7px 16px;border-radius:20px;z-index:3;pointer-events:none;box-shadow:0 2px 14px rgba(0,0,0,.5)}
+.rev-tag{position:absolute;top:5px;left:5px;background:rgba(13,13,26,.85);backdrop-filter:blur(2px);border:1px solid rgba(180,200,255,.35);color:#dce6ff;font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.03em;padding:3px 8px 3px 6px;border-radius:6px;z-index:2;display:flex;align-items:center;gap:4px;pointer-events:none}
+.rev-tag::before{content:'';width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#b9d4ff,#7c5cbf,#ffb6e6);flex-shrink:0}
+.ci.rev .imgw img{filter:saturate(1.15) contrast(1.02)}
+.ci.rev .imgw::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 38%,rgba(200,215,255,.16) 50%,transparent 62%);z-index:1;pointer-events:none;mix-blend-mode:screen}
 .imgw img{width:100%;height:auto;display:block}
 .ph{color:var(--txm);font-size:.71rem;text-align:center;padding:10px;line-height:1.5}
 .vbdg{position:absolute;top:5px;right:5px;padding:2px 6px;border-radius:8px;font-size:.65rem;font-weight:700;z-index:2;pointer-events:none}
@@ -146,13 +158,13 @@ header p{font-size:.75rem;color:var(--txm);margin-top:1px}
 <body>
 <header>
   <div class="head-left">
-    <div class="ball"></div>
+    <div class="brand-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="#e8c84a"/></svg></div>
     <div>
-      <h1>Paldea Games — Ilustradores</h1>
+      <h1>Carpeta Ilustradores</h1>
       <p>Elige tu idioma en cada carta y agrégala al carrito</p>
     </div>
   </div>
-  <button class="head-cart-btn" onclick="abrirCarrito()">Carrito <span class="cart-count" id="cart-count">0</span></button>
+  <button class="head-cart-btn" onclick="abrirCarrito()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>Carrito <span class="cart-count zero" id="cart-count">0</span></button>
 </header>
 <div class="sync-bar" id="syncBar">Cargando precios...</div>
 <div class="tab on" id="tab-main"></div>
@@ -248,7 +260,7 @@ var CARDS=[
 [75,"Octillery","sv4","34","Reverse","ym","Paradox Rift"],
 [76,"Froakie","sv6","56","Normal","ym","Twilight Masquerade"],
 [77,"Froakie","sv6","56","Reverse","ym","Twilight Masquerade"],
-[78,"Froakie",null,null,"JP","ym","Crimson Haze (JP)"],
+[78,"Froakie","SV5A","23","JP","ym","Crimson Haze (JP)"],
 [79,"Chewtle","sv7","43","Normal","ym","Stellar Crown"],
 [80,"Chewtle","sv7","43","Reverse","ym","Stellar Crown"],
 [81,"Applin","sv8","138","Normal","ym","Surging Sparks"],
@@ -267,19 +279,19 @@ var CARDS=[
 [94,"Dreepy","swsh12","87","Normal","tk","Silver Tempest"],
 [95,"Jynx","swsh12","62","Normal","tk","Silver Tempest"],
 [96,"Malamar","swsh11","78","Normal","tk","Lost Origin"],
-[97,"Swoobat","sm12","88","Normal","tk","Cosmic Eclipse","FR: Rhinolove"],
+[97,"Rhinolove","sm12","88","Normal","tk","Cosmic Eclipse"],
 [98,"Beheeyem","xy8","74","Normal","tk","BREAKThrough"],
 [99,"Elgyem","sv5","73","Normal","tk","Temporal Forces"],
 [100,"Elgyem","sv5","73","Reverse","tk","Temporal Forces"],
-[101,"Brute Bonnet",null,null,"JP","tk","Ancient Roar (JP)"],
-[102,"Oricorio",null,null,"JP","tk","VSTAR Universe (JP)"],
+[101,"Brute Bonnet","SV4K","77","JP","tk","Ancient Roar (JP)"],
+[102,"Oricorio","S12A","176","JP","tk","VSTAR Universe (JP)"],
 [103,"Loudred","ex6","39","Normal","tk","EX Hidden Legends"],
 [104,"Sentret","ex12","62","Normal","tk","EX Legend Maker"],
 [105,"Aipom","dp4","50","Normal","tk","Majestic Dawn"],
 [106,"Taillow","ex11","86","Normal","tk","EX Delta Species"],
 [107,"Bidoof","pgo","59","Normal","tk","Pokemon GO"],
 [108,"Noctowl","sm11","166","Normal","tk","Unified Minds"],
-[109,"Farfetchd","swsh9","115","Normal","tk","Brilliant Stars"],
+[109,"Farfetch'd","swsh9","115","Normal","tk","Brilliant Stars"],
 [110,"Bunnelby","swsh3","150","Normal","tk","Darkness Ablaze"],
 [111,"Noibat","sv9pt5","127","Normal","tk","Journey Together"],
 [112,"Lechonk","sv3","181","Normal","tk","Obsidian Flames"],
@@ -305,7 +317,7 @@ var CARDS=[
 [132,"Roggenrola","swsh7","86","Normal","tk","Evolving Skies"],
 [133,"Grubbin","swsh2","16","Normal","tk","Rebel Clash"],
 [134,"Ninjask","swsh4","14","Normal","tk","Vivid Voltage"],
-[135,"Grimer","ex12","54","Normal","tk","EX Legend Maker","xlsx: Grimmer"],
+[135,"Grimmer","ex12","54","Normal","tk","EX Legend Maker"],
 [136,"Zubat","ex11","88","Normal","tk","EX Delta Species"],
 [137,"Treecko","sm8","20","Normal","tk","Lost Thunder"],
 [138,"Volbeat","xy5","17","Normal","tk","Primal Clash"],
@@ -324,8 +336,7 @@ var CARDS=[
 [151,"Rowlet","sv3","13","Reverse","tk","Obsidian Flames"],
 [152,"Morelull","sv8","8","Normal","tk","Surging Sparks"],
 [153,"Morelull","sv8","8","Reverse","tk","Surging Sparks"],
-[154,"Scraggy","xy2","66","Normal (EN)","tk","Furious Fists"],
-[155,"Scraggy","xy2","66","Normal (FR)","tk","Furious Fists"],
+[154,"Scraggy","xy2","66","Normal","tk","Furious Fists"],
 [156,"Seviper","swsh11","116","Normal","tk","Lost Origin"],
 [157,"Skrelp","swsh12pt5","81","Normal","tk","Crown Zenith"],
 [158,"Impidimp","sv7","94","Normal","tk","Stellar Crown"],
@@ -375,7 +386,7 @@ var CARDS=[
 [203,"Castform","swsh6","121","Normal","ai","Chilling Reign"],
 [204,"Dunsparce","sv9pt5","120","Normal","ai","Journey Together"],
 [205,"Dunsparce","sv9pt5","120","Reverse","ai","Journey Together"],
-[206,"Dunsparce",null,null,"JP","ai","Battle Partners (JP)"],
+[206,"Dunsparce","SV9","78","JP","ai","Battle Partners (JP)"],
 [207,"Litwick","sm8","101","Normal","ai","Lost Thunder"],
 [208,"Drifloon","sm5","51","Normal","ai","Ultra Prism"],
 [209,"Drifloon","sm5","51","Reverse","ai","Ultra Prism"],
@@ -398,7 +409,7 @@ var CARDS=[
 [226,"Shroodle","sv8","120","Normal","yb","Surging Sparks"],
 [227,"Shroodle","sv8","120","Reverse","yb","Surging Sparks"],
 [228,"Sizzlipede","sv5","36","Normal","yb","Temporal Forces"],
-[229,"Sizzlipede",null,null,"JP","yb","Wild Force (JP)"],
+[229,"Sizzlipede","SV5K","10","JP","yb","Wild Force (JP)"],
 [230,"Volcarona","sv3","41","Normal","yb","Obsidian Flames"],
 [231,"Volcarona","sv3","41","Reverse","yb","Obsidian Flames"],
 [232,"Rapidash","sts","17","Normal","yb","Steam Siege"],
@@ -438,7 +449,7 @@ var CARDS=[
 [266,"Pikipek","swsh4","143","Normal","yb","Vivid Voltage"],
 [267,"Loudred","sv4","149","Normal","yb","Paradox Rift"],
 [268,"Loudred","sv4","149","Reverse","yb","Paradox Rift"],
-[269,"Loudred",null,null,"JP","yb","Ancient Roar (JP)"],
+[269,"Loudred","SV4K","56","JP","yb","Ancient Roar (JP)"],
 [270,"Grimer","pl1","75","Normal","yb","Platinum"],
 [271,"Koffing","pl2","68","Normal","yb","Rising Rivals"],
 [272,"Skrelp","xy9b","63","Normal","yb","BREAKPoint"],
@@ -450,10 +461,10 @@ var CARDS=[
 [278,"Flabebe","sv6","86","Normal","yb","Twilight Masquerade"],
 [279,"Flabebe","sv6","86","Reverse","yb","Twilight Masquerade"],
 [280,"Tentacool","xy5","70","Normal","yb","Primal Clash"],
-[281,"Venipede","sm3","56","Normal (FR)","yb","Burning Shadows"],
+[281,"Venipede","BUS","56","Normal","yb","Burning Shadows"],
 [282,"Shuppet","xy6","30","Normal","yb","Roaring Skies"]
 ];
-var IMGS={1:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/001_Foongus_sts_12.png",2:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/002_Weedle_cpa_2.png",3:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/003_Fomantis_sm11_15.png",4:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/004_Sewaddle_xy7_9.png",5:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/005_Metapod_sm1_2.png",6:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/006_Rowlet_sm12_17.png",7:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/007_Wormadam_swsh9_10.png",8:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/008_Wormadam_swsh9_10.png",9:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/009_Bounsweet_swsh3_14.png",10:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/010_Seedot_swsh11_11.png",11:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/011_Spinarak_pgo_6.png",12:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/012_Smoliv_sv10_21.png",13:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/013_Smoliv_sv10_21.png",14:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/014_Karrablast_sv9pt5_9.png",15:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/015_Karrablast_sv9pt5_9.png",16:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/016_Nymble_sv8pt5_9.png",17:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/017_Nymble_sv8pt5_9.png",18:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/018_Grubbin_sm10_18.png",19:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/019_Gulpin_sm7_57.png",20:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/020_Swalot_sm7_58.png",21:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/021_Gothita_sm2_52.png",22:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/022_Pumpkaboo_swsh7_76.png",23:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/023_Trubbish_sm2_50.png",24:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/024_Dedenne_swsh4_77.png",25:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/025_Dedenne_swsh4_77.png",26:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/026_Clefairy_sv3_81.png",27:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/027_Clefairy_sv3_81.png",28:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/028_Sinistea_sv3_97.png",29:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/029_Sinistea_sv3_97.png",30:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/030_Woobat_swsh7_68.png",31:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/031_Woobat_swsh7_68.png",32:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/032_Baltoy_swsh12_93.png",33:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/033_Stonjourner_sv1_121.png",34:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/034_Stonjourner_sv1_121.png",35:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/035_Drilbur_swsh4_91.png",36:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/036_Sandshrew_swsh8_131.png",37:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/037_Clobbopus_swsh6_91.png",38:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/038_Clobbopus_swsh6_91.png",39:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/039_Machop_swsh11_86.png",40:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/040_Machop_swsh11_86.png",41:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/041_Dunsparce_xy6_68.png",42:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/042_Taillow_swsh4_133.png",43:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/043_Bunnelby_swsh2_146.png",44:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/044_Starly_sv1_148.png",45:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/045_Starly_sv1_148.png",46:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/046_Lillipup_sv3_170.png",47:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/047_Lillipup_sv3_170.png",48:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/048_Minccino_sv5_136.png",49:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/049_Minccino_sv5_136.png",50:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/050_Beldum_xy7b_47.png",51:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/051_Ferroseed_swsh1_130.png",52:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/052_Pawniard_swsh12pt5_92.png",53:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/053_Shieldon_swsh10_109.png",54:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/054_Durant_sv10pt5_70.png",55:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/055_Durant_sv10pt5_70.png",56:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/056_Meltan_sv7_102.png",57:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/057_Meltan_sv7_102.png",58:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/058_Litwick_swsh11_24.png",59:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/059_Litwick_jp_59.png",60:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/060_Castform_Sunny_swsh6_22.png",61:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/061_Castform_Sunny_swsh6_22.png",62:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/062_Torchic_swsh3_22.png",63:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/063_Darumaka_sm10_23.png",64:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/064_Sizzlipede_swsh5_29.png",65:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/065_Salandit_swsh5_27.png",66:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/066_Larvesta_sv3_40.png",67:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/067_Larvesta_sv3_40.png",68:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/068_Murkrow_swsh11_114.png",69:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/069_Sandile_sm10_113.png",70:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/070_Ducklett_swsh11_46.png",71:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/071_Snom_swsh8_84.png",72:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/072_Staryu_swsh9_30.png",73:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/073_Staryu_swsh9_30.png",74:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/074_Octillery_sv4_34.png",75:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/075_Octillery_sv4_34.png",76:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/076_Froakie_sv6_56.png",77:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/077_Froakie_sv6_56.png",78:null,79:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/079_Chewtle_sv7_43.png",80:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/080_Chewtle_sv7_43.png",81:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/081_Applin_sv8_138.png",82:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/082_Applin_sv8_138.png",83:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/083_Pachirisu_sm8_80.png",84:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/084_Helioptile_xy9_52.png",85:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/085_Helioptile_xy9_52.png",86:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/086_Toxel_sv4_69.png",87:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/087_Toxel_sv4_69.png",88:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/088_Pincurchin_sv2_72.png",89:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/089_Pincurchin_sv2_72.png",90:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/090_Tynamo_swsh8_95.png",91:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/091_Magnemite_sv3pt5_81.png",92:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/092_Shedinja_swsh4_66.png",93:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/093_Grumpig_swsh5_56.png",94:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/094_Dreepy_swsh12_87.png",95:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/095_Jynx_swsh12_62.png",96:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/096_Malamar_swsh11_78.png",97:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/097_Swoobat_sm12_88.png",98:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/098_Beheeyem_xy8_74.png",99:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/099_Elgyem_sv5_73.png",100:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/100_Elgyem_sv5_73.png",101:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/101_Brute_Bonnet_jp_101.png",102:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/102_Oricorio_jp_102.png",103:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/103_Loudred_ex6_39.png",104:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/104_Sentret_ex12_62.png",105:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/105_Aipom_dp4_50.png",106:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/106_Taillow_ex11_86.png",107:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/107_Bidoof_pgo_59.png",108:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/108_Noctowl_sm11_166.png",109:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/109_Farfetchd_swsh9_115.png",110:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/110_Bunnelby_swsh3_150.png",111:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/111_Noibat_sv9pt5_127.png",112:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/112_Lechonk_sv3_181.png",113:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/113_Lechonk_sv3_181.png",114:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/114_Snubbull_sm1_90.png",115:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/115_Bronzor_swsh11_125.png",116:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/116_Pawniard_swsh10_115.png",117:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/117_Sliggoo_sm2_95.png",118:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/118_Drampa_swsh7_119.png",119:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/119_Simisear_swsh8_38.png",120:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/120_Salazzle_swsh1_28.png",121:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/121_Volcarona_sv3_41.png",122:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/122_Trapinch_xy7b_67.png",123:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/123_Hitmonchan_sm9_74.png",124:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/124_Sandile_sv1_115.png",125:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/125_Sandile_sv1_115.png",126:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/126_Onix_sm8_109.png",127:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/127_Onix_sm8_109.png",128:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/128_Nosepass_sm2_69.png",129:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/129_Rockruff_sm6_75.png",130:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/130_Vibrava_swsh9_75.png",131:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/131_Claydol_swsh1_103.png",132:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/132_Roggenrola_swsh7_86.png",133:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/133_Grubbin_swsh2_16.png",134:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/134_Ninjask_swsh4_14.png",135:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/135_Grimer_ex12_54.png",136:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/136_Zubat_ex11_88.png",137:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/137_Treecko_sm8_20.png",138:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/138_Volbeat_xy5_17.png",139:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/139_Illumise_xy5_18.png",140:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/140_Exeggcute_xy6_1.png",141:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/141_Crustle_sm11_11.png",142:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/142_Larvesta_sts_14.png",143:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/143_Cacturne_swsh5_5.png",144:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/144_Steenee_swsh6_14.png",145:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/145_Steenee_swsh6_14.png",146:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/146_Pineco_swsh4_8.png",147:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/147_Gloom_swsh11_2.png",148:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/148_Toedscool_sv4_15.png",149:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/149_Toedscool_sv4_15.png",150:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/150_Rowlet_sv3_13.png",151:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/151_Rowlet_sv3_13.png",152:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/152_Morelull_sv8_8.png",153:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/153_Morelull_sv8_8.png",154:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/154_Scraggy_xy2_66.png",155:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/155_Scraggy_xy2_66.png",156:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/156_Seviper_swsh11_116.png",157:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/157_Skrelp_swsh12pt5_81.png",158:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/158_Impidimp_sv7_94.png",159:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/159_Impidimp_sv7_94.png",160:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/160_Venipede_sv6_115.png",161:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/161_Venipede_sv6_115.png",162:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/162_Lotad_ex2_66.png",163:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/163_Croconaw_swsh8_56.png",164:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/164_Staryu_xy5_32.png",165:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/165_Binacle_xy10_22.png",166:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/166_Mareanie_swsh3_51.png",167:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/167_Jellicent_swsh5_42.png",168:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/168_Araquanid_sm12_65.png",169:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/169_Wailmer_sm12_45.png",170:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/170_Wimpod_sm11_50.png",171:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/171_Pyukumuku_swsh8_77.png",172:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/172_Snorunt_sm2_31.png",173:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/173_Snorunt_sm2_31.png",174:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/174_Clauncher_xy9_37.png",175:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/175_Wiglett_sv4_52.png",176:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/176_Wiglett_sv4_52.png",177:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/177_Magneton_xy8_53.png",178:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/178_Voltorb_swsh8_87.png",179:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/179_Moo_Moo_Milk_neo1_101.png",181:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/181_Cottonee_sm11_143.png",182:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/182_Zubat_swsh5_89.png",183:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/183_Tynamo_sm3_44.png",184:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/184_Shelgon_sm7_105.png",185:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/185_Goomy_sm2_94.png",186:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/186_Goomy_sm2_94.png",187:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/187_Luvdisc_sm7_44.png",188:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/188_Poliwag_sm1_30.png",189:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/189_Tympole_sm12_58.png",190:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/190_Marill_sm3_34.png",191:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/191_Oddish_sm10_6.png",192:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/192_Seedot_sv5_3.png",193:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/193_Seedot_sv5_3.png",194:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/194_Cherubi_sm5_10.png",195:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/195_Metapod_swsh2_2.png",196:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/196_Grubbin_swsh8_18.png",197:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/197_Grubbin_swsh8_18.png",198:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/198_Blipbug_swsh11_18.png",199:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/199_Blipbug_swsh11_18.png",200:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/200_Snorlax_swsh12pt5_109.png",201:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/201_Snorlax_swsh12pt5_109.png",202:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/202_Whismur_sm7_117.png",203:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/203_Castform_swsh6_121.png",204:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/204_Dunsparce_sv9pt5_120.png",205:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/205_Dunsparce_sv9pt5_120.png",206:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/206_Dunsparce_jp_206.png",207:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/207_Litwick_sm8_101.png",208:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/208_Drifloon_sm5_51.png",209:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/209_Drifloon_sm5_51.png",210:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/210_Munna_swsh1_87.png",211:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/211_Munna_swsh1_87.png",212:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/212_Wigglytuff_swsh8_111.png",213:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/213_Chimecho_swsh4_72.png",214:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/214_Swirlix_swsh12_83.png",215:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/215_Swirlix_swsh12_83.png",216:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/216_Sandygast_sv6_91.png",217:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/217_Sandygast_sv6_91.png",218:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/218_Espurr_swsh12_81.png",219:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/219_Trapinch_swsh3_89.png",220:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/220_Gible_sm11_112.png",221:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/221_Phanpy_sm8_111.png",222:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/222_Tynamo_swsh11_59.png",223:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/223_Mareep_swsh7_54.png",224:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/224_Chinchou_swsh1_68.png",225:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/225_Scrafty_swsh7_99.png",226:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/226_Shroodle_sv8_120.png",227:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/227_Shroodle_sv8_120.png",228:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/228_Sizzlipede_sv5_36.png",229:null,230:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/230_Volcarona_sv3_41.png",231:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/231_Volcarona_sv3_41.png",232:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/232_Rapidash_sts_17.png",233:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/233_Axew_sm11_154.png",234:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/234_Lairon_pl2_44.png",235:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/235_Staryu_sm4_15.png",236:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/236_Staryu_ex7_77.png",237:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/237_Horsea_sm75_15.png",238:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/238_Wailmer_swsh4_31.png",239:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/239_Finneon_sv7_35.png",240:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/240_Wurmple_ex12_70.png",241:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/241_Gossifleur_swsh45_14.png",242:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/242_Weedle_sm4_1.png",243:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/243_Masquerain_sm7_16.png",244:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/244_Fomantis_swsh5_14.png",245:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/245_Roselia_swsh11_14.png",246:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/246_Roselia_swsh11_14.png",247:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/247_Breloom_swsh8_5.png",248:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/248_Petilil_swsh10_15.png",249:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/249_Hoppip_sv2_1.png",250:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/250_Hoppip_sv2_1.png",251:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/251_Cubone_ex11_60.png",252:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/252_Meditite_swsh2_97.png",253:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/253_Dugtrio_swsh3_85.png",254:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/254_Sandygast_sm12_126.png",255:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/255_Sudowoodo_swsh1_100.png",256:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/256_Sudowoodo_swsh1_100.png",257:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/257_Dunsparce_ex14_54.png",258:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/258_Porygon_xy7b_64.png",259:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/259_Swablu_sm75_56.png",260:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/260_Spearow_sm1_97.png",261:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/261_Lickitung_sm10_152.png",262:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/262_Skitty_swsh8_210.png",263:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/263_Wooloo_swsh8_222.png",264:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/264_Teddiursa_swsh3_138.png",265:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/265_Fearow_swsh5_112.png",266:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/266_Pikipek_swsh4_143.png",267:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/267_Loudred_sv4_149.png",268:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/268_Loudred_sv4_149.png",269:null,270:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/270_Grimer_pl1_75.png",271:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/271_Koffing_pl2_68.png",272:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/272_Skrelp_xy9b_63.png",273:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/273_Kirlia_swsh12_68.png",274:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/274_Sigilyph_swsh8_123.png",275:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/275_Salandit_sm11_98.png",276:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/276_Cutiefly_swsh7_78.png",277:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/277_Clefairy_swsh9_53.png",278:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/278_Flabebe_sv6_86.png",279:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/279_Flabebe_sv6_86.png",280:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/280_Tentacool_xy5_70.png",281:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/281_Venipede_sm3_56.png",282:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/282_Shuppet_xy6_30.png"};
+var IMGS={1:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/001_Foongus_sts_12.png",2:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/002_Weedle_cpa_2.png",3:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/003_Fomantis_sm11_15.png",4:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/004_Sewaddle_xy7_9.png",5:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/005_Metapod_sm1_2.png",6:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/006_Rowlet_sm12_17.png",7:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/007_Wormadam_swsh9_10.png",8:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/008_Wormadam_swsh9_10.png",9:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/009_Bounsweet_swsh3_14.png",10:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/010_Seedot_swsh11_11.png",11:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/011_Spinarak_pgo_6.png",12:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/012_Smoliv_sv10_21.png",13:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/013_Smoliv_sv10_21.png",14:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/014_Karrablast_sv9pt5_9.png",15:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/015_Karrablast_sv9pt5_9.png",16:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/016_Nymble_sv8pt5_9.png",17:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/017_Nymble_sv8pt5_9.png",18:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/018_Grubbin_sm10_18.png",19:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/019_Gulpin_sm7_57.png",20:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/020_Swalot_sm7_58.png",21:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/021_Gothita_sm2_52.png",22:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/022_Pumpkaboo_swsh7_76.png",23:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/023_Trubbish_sm2_50.png",24:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/024_Dedenne_swsh4_77.png",25:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/025_Dedenne_swsh4_77.png",26:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/026_Clefairy_sv3_81.png",27:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/027_Clefairy_sv3_81.png",28:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/028_Sinistea_sv3_97.png",29:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/029_Sinistea_sv3_97.png",30:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/030_Woobat_swsh7_68.png",31:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/031_Woobat_swsh7_68.png",32:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/032_Baltoy_swsh12_93.png",33:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/033_Stonjourner_sv1_121.png",34:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/034_Stonjourner_sv1_121.png",35:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/035_Drilbur_swsh4_91.png",36:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/036_Sandshrew_swsh8_131.png",37:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/037_Clobbopus_swsh6_91.png",38:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/038_Clobbopus_swsh6_91.png",39:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/039_Machop_swsh11_86.png",40:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/040_Machop_swsh11_86.png",41:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/041_Dunsparce_xy6_68.png",42:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/042_Taillow_swsh4_133.png",43:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/043_Bunnelby_swsh2_146.png",44:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/044_Starly_sv1_148.png",45:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/045_Starly_sv1_148.png",46:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/046_Lillipup_sv3_170.png",47:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/047_Lillipup_sv3_170.png",48:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/048_Minccino_sv5_136.png",49:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/049_Minccino_sv5_136.png",50:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/050_Beldum_xy7b_47.png",51:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/051_Ferroseed_swsh1_130.png",52:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/052_Pawniard_swsh12pt5_92.png",53:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/053_Shieldon_swsh10_109.png",54:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/054_Durant_sv10pt5_70.png",55:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/055_Durant_sv10pt5_70.png",56:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/056_Meltan_sv7_102.png",57:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/057_Meltan_sv7_102.png",58:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/059_Litwick_jp_59.png",59:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/059_Litwick_jp_59_TT.png",60:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/060_Castform_Sunny_swsh6_22.png",61:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/061_Castform_Sunny_swsh6_22.png",62:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/062_Torchic_swsh3_22.png",63:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/063_Darumaka_sm10_23.png",64:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/064_Sizzlipede_swsh5_29.png",65:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/065_Salandit_swsh5_27.png",66:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/066_Larvesta_sv3_40.png",67:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/067_Larvesta_sv3_40.png",68:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/068_Murkrow_swsh11_114.png",69:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/069_Sandile_sm10_113.png",70:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/070_Ducklett_swsh11_46.png",71:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/071_Snom_swsh8_84.png",72:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/072_Staryu_swsh9_30.png",73:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/073_Staryu_swsh9_30.png",74:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/074_Octillery_sv4_34.png",75:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/075_Octillery_sv4_34.png",76:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/076_Froakie_sv6_56_JP.png",77:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/077_Froakie_sv6_56.png",78:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/076_Froakie_sv6_56_JP.png",79:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/079_Chewtle_sv7_43.png",80:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/080_Chewtle_sv7_43.png",81:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/081_Applin_sv8_138.png",82:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/082_Applin_sv8_138.png",83:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/083_Pachirisu_sm8_80.png",84:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/084_Helioptile_xy9_52.png",85:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/085_Helioptile_xy9_52.png",86:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/086_Toxel_sv4_69.png",87:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/087_Toxel_sv4_69.png",88:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/088_Pincurchin_sv2_72.png",89:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/089_Pincurchin_sv2_72.png",90:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/090_Tynamo_swsh8_95.png",91:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/091_Magnemite_sv3pt5_81.png",92:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/092_Shedinja_swsh4_66.png",93:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/093_Grumpig_swsh5_56.png",94:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/094_Dreepy_swsh12_87.png",95:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/095_Jynx_swsh12_62.png",96:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/096_Malamar_swsh11_78.png",97:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/097_Swoobat_sm12_88.png",98:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/098_Beheeyem_xy8_74.png",99:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/099_Elgyem_sv5_73.png",100:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/100_Elgyem_sv5_73.png",101:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/101_Brute_Bonnet_jp_101.png",102:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/102_Oricorio_jp_102.png",103:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/103_Loudred_ex6_39_JP.png",104:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/104_Sentret_ex12_62.png",105:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/105_Aipom_dp4_50.png",106:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/106_Taillow_ex11_86.png",107:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/107_Bidoof_pgo_59.png",108:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/108_Noctowl_sm11_166.png",109:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/109_Farfetchd_swsh9_115.png",110:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/110_Bunnelby_swsh3_150.png",111:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/111_Noibat_sv9pt5_127.png",112:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/112_Lechonk_sv3_181.png",113:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/113_Lechonk_sv3_181.png",114:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/114_Snubbull_sm1_90.png",115:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/115_Bronzor_swsh11_125.png",116:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/116_Pawniard_swsh10_115.png",117:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/117_Sliggoo_sm2_95.png",118:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/118_Drampa_swsh7_119.png",119:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/119_Simisear_swsh8_38.png",120:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/120_Salazzle_swsh1_28.png",121:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/121_Volcarona_sv3_41.png",122:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/122_Trapinch_xy7b_67.png",123:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/123_Hitmonchan_sm9_74.png",124:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/124_Sandile_sv1_115.png",125:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/125_Sandile_sv1_115.png",126:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/126_Onix_sm8_109.png",127:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/127_Onix_sm8_109.png",128:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/128_Nosepass_sm2_69.png",129:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/129_Rockruff_sm6_75.png",130:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/130_Vibrava_swsh9_75.png",131:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/131_Claydol_swsh1_103.png",132:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/132_Roggenrola_swsh7_86.png",133:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/133_Grubbin_swsh2_16.png",134:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/134_Ninjask_swsh4_14.png",135:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/135_Grimer_ex12_54.png",136:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/136_Zubat_ex11_88.png",137:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/137_Treecko_sm8_20.png",138:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/138_Volbeat_xy5_17.png",139:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/139_Illumise_xy5_18.png",140:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/140_Exeggcute_xy6_1.png",141:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/141_Crustle_sm11_11.png",142:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/142_Larvesta_xy11_14.png",143:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/143_Cacturne_swsh5_5.png",144:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/144_Steenee_swsh6_14.png",145:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/145_Steenee_swsh6_14.png",146:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/146_Pineco_swsh4_8.png",147:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/147_Gloom_swsh11_2.png",148:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/148_Toedscool_sv4_15.png",149:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/149_Toedscool_sv4_15.png",150:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/150_Rowlet_sv3_13.png",151:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/151_Rowlet_sv3_13.png",152:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/152_Morelull_sv8_8.png",153:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/153_Morelull_sv8_8.png",154:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/154_Scraggy_xy2_66_FR.jpg",156:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/156_Seviper_swsh11_116.png",157:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/157_Skrelp_swsh12pt5_81.png",158:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/158_Impidimp_sv7_94.png",159:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/159_Impidimp_sv7_94.png",160:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/160_Venipede_sv6_115.png",161:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/161_Venipede_sv6_115.png",162:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/162_Lotad_ex2_66.png",163:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/163_Croconaw_swsh8_56.png",164:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/164_Staryu_xy5_32.png",165:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/165_Binacle_xy10_22.png",166:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/166_Mareanie_swsh3_51.png",167:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/167_Jellicent_swsh5_42.png",168:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/168_Araquanid_sm12_65.png",169:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/169_Wailmer_sm12_45.png",170:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/170_Wimpod_sm11_50.png",171:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/171_Pyukumuku_swsh8_77.png",172:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/172_Snorunt_sm2_31.png",173:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/173_Snorunt_sm2_31.png",174:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/174_Clauncher_xy9_37.png",175:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/175_Wiglett_sv4_52.png",176:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/176_Wiglett_sv4_52.png",177:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/177_Magneton_xy8_53.png",178:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/178_Voltorb_swsh8_87.png",179:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/179_Moo_Moo_Milk_neo1_101.png",181:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/181_Cottonee_sm11_143.png",182:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/182_Zubat_swsh5_89.png",183:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/183_Tynamo_sm3_44.png",184:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/184_Shelgon_sm7_105.png",185:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/185_Goomy_sm2_94.png",186:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/186_Goomy_sm2_94.png",187:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/187_Luvdisc_sm7_44.png",188:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/188_Poliwag_sm1_30.png",189:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/189_Tympole_sm12_58.png",190:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/190_Marill_sm3_34.png",191:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/191_Oddish_sm10_6.png",192:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/192_Seedot_sv5_3.png",193:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/193_Seedot_sv5_3.png",194:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/194_Cherubi_sm5_10.png",195:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/195_Metapod_swsh2_2.png",196:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/196_Grubbin_swsh8_18.png",197:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/197_Grubbin_swsh8_18.png",198:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/198_Blipbug_swsh11_18.png",199:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/199_Blipbug_swsh11_18.png",200:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/200_Snorlax_swsh12pt5_109.png",201:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/201_Snorlax_swsh12pt5_109.png",202:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/202_Whismur_sm7_117.png",203:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/203_Castform_swsh6_121.png",204:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/204_Dunsparce_sv9pt5_120_JP.png",205:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/205_Dunsparce_sv9pt5_120.png",206:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/204_Dunsparce_sv9pt5_120_JP.png",207:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/207_Litwick_sm8_101.png",208:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/208_Drifloon_sm5_51.png",209:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/209_Drifloon_sm5_51.png",210:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/210_Munna_swsh1_87.png",211:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/211_Munna_swsh1_87.png",212:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/212_Wigglytuff_swsh8_111.png",213:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/213_Chimecho_swsh4_72.png",214:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/214_Swirlix_swsh12_83.png",215:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/215_Swirlix_swsh12_83.png",216:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/216_Sandygast_sv6_91.png",217:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/217_Sandygast_sv6_91.png",218:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/218_Espurr_swsh12_81.png",219:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/219_Trapinch_swsh3_89.png",220:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/220_Gible_sm11_112.png",221:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/221_Phanpy_sm8_111.png",222:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/222_Tynamo_swsh11_59.png",223:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/223_Mareep_swsh7_54.png",224:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/224_Chinchou_swsh1_68.png",225:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/225_Scrafty_swsh7_99.png",226:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/226_Shroodle_sv8_120.png",227:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/227_Shroodle_sv8_120.png",228:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/228_Sizzlipede_sv5_36_JP.png",229:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/228_Sizzlipede_sv5_36_JP.png",230:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/230_Volcarona_sv3_41.png",231:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/231_Volcarona_sv3_41.png",232:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/232_Rapidash_xy11_17.png",233:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/233_Axew_sm11_154.png",234:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/234_Lairon_pl2_44.png",235:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/235_Staryu_sm4_15.png",236:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/236_Staryu_ex7_77.png",237:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/237_Horsea_sm75_15.png",238:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/238_Wailmer_swsh4_31.png",239:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/239_Finneon_sv7_35.png",240:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/240_Wurmple_ex12_70.png",241:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/241_Gossifleur_swsh45_14.png",242:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/242_Weedle_sm4_1.png",243:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/243_Masquerain_sm7_16.png",244:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/244_Fomantis_swsh5_14.png",245:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/245_Roselia_swsh11_14.png",246:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/246_Roselia_swsh11_14.png",247:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/247_Breloom_swsh8_5.png",248:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/248_Petilil_swsh10_15.png",249:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/249_Hoppip_sv2_1.png",250:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/250_Hoppip_sv2_1.png",251:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/251_Cubone_ex11_60.png",252:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/252_Meditite_swsh2_97.png",253:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/253_Dugtrio_swsh3_85.png",254:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/254_Sandygast_sm12_126.png",255:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/255_Sudowoodo_swsh1_100.png",256:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/256_Sudowoodo_swsh1_100.png",257:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/257_Dunsparce_ex14_54.png",258:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/258_Porygon_xy7b_64.png",259:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/259_Swablu_sm75_56.png",260:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/260_Spearow_sm1_97.png",261:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/261_Lickitung_sm10_152.png",262:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/262_Skitty_swsh8_210.png",263:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/263_Wooloo_swsh8_222.png",264:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/264_Teddiursa_swsh3_138.png",265:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/265_Fearow_swsh5_112.png",266:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/266_Pikipek_swsh4_143.png",267:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/267_Loudred_sv4_149.png",268:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/268_Loudred_sv4_149.png",269:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/103_Loudred_ex6_39_JP.png",270:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/270_Grimer_pl1_75.png",271:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/271_Koffing_pl2_68.png",272:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/272_Skrelp_xy9b_63.png",273:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/273_Kirlia_swsh12_68.png",274:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/274_Sigilyph_swsh8_123.png",275:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/275_Salandit_sm11_98.png",276:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/276_Cutiefly_swsh7_78.png",277:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/277_Clefairy_swsh9_53.png",278:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/278_Flabebe_sv6_86.png",279:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/279_Flabebe_sv6_86.png",280:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/280_Tentacool_xy5_70.png",281:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/281_Venipede_sm3_56.png",282:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/282_Shuppet_xy6_30.png"};
 
 function shuffleArray(arr){
   for(var i=arr.length-1;i>0;i--){
@@ -472,45 +483,105 @@ var STOCK={}, PRICES={};
 var CARD_IDIOMA={};
 var CARRITO=[];
 
+// Nombres alternos cuando el idioma activo cambia el nombre impreso en la carta
+// clave: cardId -> {IDIOMA: 'Nombre alterno'}
+var NOMBRES_ALT={154:{FR:'Baggiguane'}};
+function nombreMostrar(r,idioma){
+  return (NOMBRES_ALT[r[0]]&&NOMBRES_ALT[r[0]][idioma])||r[1];
+}
+
+// Cartas con el mismo nombre que corresponden a fisicamente distintas en el inventario
+// (mismo Pokemon, set diferente). Se les da una clave de identidad propia para no
+// mezclar su stock con el de su homonima. El resto del catalogo no se ve afectado.
+var IDENTIDAD_PROPIA={
+  103:'Loudred__exhiddenlegends',
+  267:'Loudred__paradoxrift',
+  268:'Loudred__paradoxrift',
+  269:'Loudred__paradoxrift',
+  160:'Venipede__twilightmasquerade',
+  161:'Venipede__twilightmasquerade',
+  281:'Venipede__burningshadows'
+};
+function nombreClave(r){
+  return IDENTIDAD_PROPIA[r[0]]||r[1];
+}
+
+// Para cartas Reverse: usar siempre la imagen de su contraparte Normal
+// (mismo nombre + mismo set + mismo numero), ya que no existen fotos reverse reales
+// y los archivos asignados a su propio id no existen en el repo.
+function imgUrlFor(r){
+  var isR=r[4].toLowerCase().indexOf('reverse')>=0;
+  if(isR){
+    var par=CARDS.find(function(c){
+      return c[1]===r[1]&&c[2]===r[2]&&c[3]===r[3]&&c[4].toLowerCase()==='normal';
+    });
+    if(par&&IMGS[par[0]]) return IMGS[par[0]];
+  }
+  return IMGS[r[0]]||null;
+}
+
 function clp(n){return '$ '+Math.round(n).toLocaleString('es-CL');}
 
 function skey(nombre,rareza,idioma){
   return nombre.trim().toLowerCase()+'|'+rareza.toLowerCase()+'|'+idioma.toUpperCase();
 }
 
+// Tipo base de la variante (a que bloque del inventario pertenece)
 function varianteTipo(v){
   var l=v.toLowerCase();
   if(l==='jp') return 'jp';
   if(l.indexOf('reverse')>=0) return 'reverse';
+  if(l==='stamped') return 'stamped';
   return 'normal';
 }
 function rarezaGAS(v){
   var t=varianteTipo(v);
-  if(t==='jp') return 'JP';
+  if(t==='jp') return 'Normal';
   if(t==='reverse') return 'Reverse';
+  if(t==='stamped') return 'TrickOrTrade';
   return 'Normal';
+}
+
+// Idiomas posibles segun el tipo de bloque del inventario
+var IDIOMAS_POR_TIPO={normal:['ENG','ESP','JP','FR'],reverse:['ENG','ESP'],jp:['JP'],stamped:['UNICO']};
+
+// Devuelve la lista de idiomas que tienen stock o precio cargado para esta carta
+function idiomasDisponibles(r){
+  var v=varianteTipo(r[4]);
+  var nombre=nombreClave(r);
+  var posibles=IDIOMAS_POR_TIPO[v]||['ENG'];
+  if(v==='jp'||v==='stamped') return posibles;
+  var disp=[];
+  posibles.forEach(function(idm){
+    var k=skey(nombre,v,idm);
+    if((STOCK[k]||0)>0||(PRICES[k]||0)>0) disp.push(idm);
+  });
+  return disp;
 }
 
 function getStockCard(r,idioma){
   var v=varianteTipo(r[4]);
-  var nombre=r[1];
-  if(v==='jp') return STOCK[skey(nombre,'jp','JP')]||0;
+  var nombre=nombreClave(r);
+  if(v==='jp') return STOCK[skey(nombre,'normal','JP')]||0;
+  if(v==='stamped') return STOCK[skey(nombre,'stamped','UNICO')]||0;
   return STOCK[skey(nombre,v,idioma)]||0;
 }
 function getPrecioCard(r,idioma){
   var v=varianteTipo(r[4]);
-  var nombre=r[1];
-  if(v==='jp') return PRICES[skey(nombre,'jp','JP')]||0;
+  var nombre=nombreClave(r);
+  if(v==='jp') return PRICES[skey(nombre,'normal','JP')]||0;
+  if(v==='stamped') return PRICES[skey(nombre,'stamped','UNICO')]||0;
   return PRICES[skey(nombre,v,idioma)]||0;
 }
 
 function idiomaActivo(r){
-  if(CARD_IDIOMA[r[0]]) return CARD_IDIOMA[r[0]];
   var v=varianteTipo(r[4]);
   if(v==='jp') return 'JP';
-  var eng=STOCK[skey(r[1],v,'ENG')]||0;
-  var esp=STOCK[skey(r[1],v,'ESP')]||0;
-  return (eng>0||!GAS_LOADED)?'ENG':(esp>0?'ESP':'ENG');
+  if(v==='stamped') return 'UNICO';
+  if(CARD_IDIOMA[r[0]]) return CARD_IDIOMA[r[0]];
+  var disp=idiomasDisponibles(r);
+  if(disp.length) return disp[0];
+  return 'ENG';
 }
 
 function setIdioma(cardId,idioma){
@@ -530,8 +601,8 @@ function vCls(v){
 function vIcon(v){
   var l=v.toLowerCase();
   if(l.indexOf('reverse')>=0)return '\u2B21 ';
-  if(l==='jp')return 'JP ';
-  if(l==='stamped')return '* ';
+  if(l==='jp')return '';
+  if(l==='stamped')return '\u2605 ';
   return '';
 }
 
@@ -545,11 +616,25 @@ async function syncGAS(){
       STOCK={};PRICES={};
       data.data.forEach(function(item){
         var nom=item.nombre;
+        var st=(item.set||'').trim().toLowerCase();
+        var num=String(item.numero||'').trim();
+        // Si nombre+set+numero coincide con una carta que tiene clave de identidad
+        // propia (homonimos), usamos esa clave en vez del nombre simple.
+        var match=CARDS.find(function(c){
+          return c[1].toLowerCase()===nom.toLowerCase()
+            && String(c[3]||'').trim()===num
+            && IDENTIDAD_PROPIA[c[0]];
+        });
+        if(match) nom=IDENTIDAD_PROPIA[match[0]];
         var rar=(item.rareza||'Normal').toLowerCase();
         if(rar==='jp'){
           var k=skey(nom,'jp','JP');
           STOCK[k]=(STOCK[k]||0)+(item.stk_jp||0);
           if(item.prc_jp>0) PRICES[k]=item.prc_jp;
+        } else if(rar==='trickortrade'){
+          var k=skey(nom,'stamped','UNICO');
+          STOCK[k]=(STOCK[k]||0)+(item.stk_single||0);
+          if(item.prc_single>0) PRICES[k]=item.prc_single;
         } else {
           if((item.stk_esp||0)+(item.prc_esp||0)>0){
             var k=skey(nom,rar,'ESP');
@@ -560,6 +645,16 @@ async function syncGAS(){
             var k=skey(nom,rar,'ENG');
             STOCK[k]=(STOCK[k]||0)+(item.stk_eng||0);
             if(item.prc_eng>0) PRICES[k]=item.prc_eng;
+          }
+          if(rar==='normal'&&(item.stk_jp||0)+(item.prc_jp||0)>0){
+            var k=skey(nom,'normal','JP');
+            STOCK[k]=(STOCK[k]||0)+(item.stk_jp||0);
+            if(item.prc_jp>0) PRICES[k]=item.prc_jp;
+          }
+          if(rar==='normal'&&(item.stk_fr||0)+(item.prc_fr||0)>0){
+            var k=skey(nom,'normal','FR');
+            STOCK[k]=(STOCK[k]||0)+(item.stk_fr||0);
+            if(item.prc_fr>0) PRICES[k]=item.prc_fr;
           }
         }
       });
@@ -578,22 +673,24 @@ async function syncGAS(){
 function build(){
   var el=document.getElementById('tab-main');
   el.innerHTML=
-    '<div class="bar">'
+    '<div class="bar bar-sticky">'
     +'<select class="il-select" onchange="setILF(this.value)">'
     +'<option value="">Todos los ilustradores</option>'
     +Object.keys(TABS).map(function(k){return '<option value="'+k+'">'+TABS[k]+'</option>';}).join('')
     +'</select>'
     +'</div>'
-    +'<div class="bar">'
-    +'<input type="text" placeholder="Buscar..." oninput="setQ(this.value)">'
+    +'<div class="bar bar-sticky2">'
+    +'<div class="search-wrap">'
+    +'<input type="text" id="search-input" placeholder="Buscar..." oninput="setQ(this.value)">'
+    +'<button class="search-clear" id="search-clear" onclick="clearQ()" style="display:none">&times;</button>'
+    +'</div>'
     +'<select onchange="setVF(this.value)">'
     +'<option value="">Todas las variantes</option>'
     +'<option value="normal">Normal</option>'
     +'<option value="reverse">Reverse</option>'
-    +'<option value="jp">JP</option>'
-    +'<option value="stamped">Stamped</option>'
-    +'<option value="(fr)">Francés</option>'
-    +'<option value="(en)">Inglés especial</option>'
+    +'<option value="jp">Japonés</option>'
+    +'<option value="fr">Francés</option>'
+    +'<option value="stamped">Trick or Trade</option>'
     +'</select>'
     +'<button class="vb on" onclick="setV(\'grid\',this)">Galería</button>'
     +'<button class="vb" onclick="setV(\'table\',this)">Tabla</button>'
@@ -602,7 +699,17 @@ function build(){
   renderAll();
 }
 
-function setQ(v){QF=v;renderAll();}
+function setQ(v){
+  QF=v;
+  var btn=document.getElementById('search-clear');
+  if(btn) btn.style.display=v?'flex':'none';
+  renderAll();
+}
+function clearQ(){
+  var inp=document.getElementById('search-input');
+  if(inp) inp.value='';
+  setQ('');
+}
 function setVF(v){VF=v;renderAll();}
 function setILF(v){ILF=v;renderAll();}
 function setV(mode,btn){
@@ -642,70 +749,62 @@ function renderGrid(rows,cont){
 
 function buildCardHtml(r){
   var isR=r[4].toLowerCase().indexOf('reverse')>=0;
-  var isJP=r[4]==='JP';
-  var url=IMGS[r[0]]||null;
+  var vt=varianteTipo(r[4]);
+  var isUnico=(vt==='jp'||vt==='stamped');
+  var url=imgUrlFor(r);
   var imgHtml=url
     ?'<img src="'+url+'" alt="'+r[1]+'" style="width:100%;height:auto;display:block" onerror="this.onerror=null;this.parentElement.innerHTML=\'<div class=&quot;ph&quot;>Imagen no encontrada<br><small style=&quot;opacity:.6&quot;>'+r[0]+'</small></div>\'">'
     :'<div class="ph">Sin imagen</div>';
   var note=r[7]?' <small style="color:var(--gold);font-size:.63rem">('+r[7]+')</small>':'';
 
-  var agotado=false, precio=0, stk=0;
   var idioma=idiomaActivo(r);
-  var langHtml='';
+  var disp=idiomasDisponibles(r);
+  var stockTotal=0;
+  if(isUnico){
+    stockTotal=getStockCard(r,idioma);
+  } else {
+    disp.forEach(function(idm){ stockTotal+=STOCK[skey(nombreClave(r),vt,idm)]||0; });
+  }
+  var agotado=GAS_LOADED&&stockTotal===0;
 
-  if(GAS_LOADED){
-    if(isJP){
-      stk=getStockCard(r,'JP');
-      precio=getPrecioCard(r,'JP');
-      agotado=stk===0;
-    } else {
-      var vt=varianteTipo(r[4]);
-      var stkENG=STOCK[skey(r[1],vt,'ENG')]||0;
-      var stkESP=STOCK[skey(r[1],vt,'ESP')]||0;
-      var prcENG=PRICES[skey(r[1],vt,'ENG')]||0;
-      var prcESP=PRICES[skey(r[1],vt,'ESP')]||0;
-      agotado=stkENG===0&&stkESP===0;
-      var engAct=idioma==='ENG';
-      var espAct=idioma==='ESP';
-      stk=engAct?stkENG:stkESP;
-      precio=engAct?prcENG:prcESP;
-      langHtml='<div class="lang-row">';
-      if(prcENG>0||stkENG>0){
-        langHtml+='<button class="lang-btn'+(engAct?' active':'')+(stkENG===0?' agotado-lang':'')+'"'
-          +(stkENG>0?' onclick="setIdioma('+r[0]+',\'ENG\')"':'')+'>ENG</button>';
-      }
-      if(prcESP>0||stkESP>0){
-        langHtml+='<button class="lang-btn'+(espAct?' active':'')+(stkESP===0?' agotado-lang':'')+'"'
-          +(stkESP>0?' onclick="setIdioma('+r[0]+',\'ESP\')"':'')+'>ESP</button>';
-      }
-      langHtml+='</div>';
-    }
+  var stk=GAS_LOADED?getStockCard(r,idioma):0;
+  var precio=GAS_LOADED?getPrecioCard(r,idioma):0;
+
+  var langHtml='';
+  if(GAS_LOADED&&!isUnico&&disp.length){
+    langHtml='<div class="lang-row">';
+    disp.forEach(function(idm){
+      var sIdm=STOCK[skey(nombreClave(r),vt,idm)]||0;
+      var act=idioma===idm;
+      langHtml+='<button class="lang-btn'+(act?' active':'')+(sIdm===0?' agotado-lang':'')+'"'
+        +(sIdm>0?' onclick="setIdioma('+r[0]+',\''+idm+'\')"':'')+'>'+idm+'</button>';
+    });
+    langHtml+='</div>';
   }
 
   var enCarrito=CARRITO.find(function(c){return c.cardId===r[0]&&c.idioma===idioma;});
   var qty=enCarrito?enCarrito.qty:0;
 
   var precioHtml='';
-  if(GAS_LOADED){
-    if(agotado){
-      precioHtml='<div class="agotado-badge">Agotado</div>';
-    } else {
-      precioHtml='<div class="precio-row">'
-        +'<div><div class="precio-val">'+(precio>0?clp(precio):'Sin precio')+'</div>'
-        +'<div class="stk-disp">'+stk+' disp.</div></div>'
-        +'<div class="qty-wrap">'
-        +'<button class="qty-btn" onclick="cambiarQty('+r[0]+','+(qty>0?-1:0)+',\''+idioma+'\')" '+(qty===0?'disabled':'')+'>-</button>'
-        +'<span class="qty-num" style="color:'+(qty>0?'var(--accent)':'var(--txm)')+'">'+qty+'</span>'
-        +'<button class="qty-btn" onclick="cambiarQty('+r[0]+',1,\''+idioma+'\')" '+(qty>=stk||precio===0?'disabled':'')+'>+</button>'
-        +'</div></div>';
-    }
+  if(GAS_LOADED&&!agotado){
+    precioHtml='<div class="precio-row">'
+      +'<div><div class="precio-val">'+(precio>0?clp(precio):'Sin precio')+'</div>'
+      +'<div class="stk-disp">'+stk+' disp.</div></div>'
+      +'<div class="qty-wrap">'
+      +'<button class="qty-btn" onclick="cambiarQty('+r[0]+','+(qty>0?-1:0)+',\''+idioma+'\')" '+(qty===0?'disabled':'')+'>-</button>'
+      +'<span class="qty-num" style="color:'+(qty>0?'var(--accent)':'var(--txm)')+'">'+qty+'</span>'
+      +'<button class="qty-btn" onclick="cambiarQty('+r[0]+',1,\''+idioma+'\')" '+(qty>=stk||precio===0?'disabled':'')+'>+</button>'
+      +'</div></div>';
   }
 
+  var agotadoOverlay=agotado?'<div class="agotado-center">Agotado</div>':'';
+  var revTag=isR?'<div class="rev-tag">Reverse</div>':'';
+
   return '<div class="ci'+(isR?' rev':'')+(agotado?' agotado':'')+'">'
-    +'<div class="imgw">'+imgHtml+'</div>'
+    +'<div class="imgw">'+imgHtml+revTag+agotadoOverlay+'</div>'
     +'<span class="vbdg '+vCls(r[4])+'">'+vIcon(r[4])+r[4]+'</span>'
     +'<div class="info">'
-    +'<div class="pn">'+r[1]+note+'</div>'
+    +'<div class="pn">'+nombreMostrar(r,idioma)+note+'</div>'
     +'<div class="sn">'+r[6]+'</div>'
     +'<div class="cn">'+(r[2]||'\u2014')+' - '+(r[3]||'\u2014')+'</div>'
     +langHtml
@@ -730,13 +829,13 @@ function renderTable(rows,cont){
   rows.forEach(function(r){
     var rowClass='';
     if(GAS_LOADED){
-      var isJP=r[4]==='JP';
-      if(isJP){ rowClass=getStockCard(r,'JP')===0?'agotado-row':''; }
-      else{
-        var vt=varianteTipo(r[4]);
-        var sE=STOCK[skey(r[1],vt,'ENG')]||0;
-        var sS=STOCK[skey(r[1],vt,'ESP')]||0;
-        rowClass=(sE===0&&sS===0)?'agotado-row':'';
+      var vt=varianteTipo(r[4]);
+      if(vt==='jp'||vt==='stamped'){
+        rowClass=getStockCard(r,idiomaActivo(r))===0?'agotado-row':'';
+      } else {
+        var total=0;
+        idiomasDisponibles(r).forEach(function(idm){ total+=STOCK[skey(nombreClave(r),vt,idm)]||0; });
+        rowClass=total===0?'agotado-row':'';
       }
     }
     h+='<tr id="tr-'+r[0]+'" class="'+rowClass+'">'+buildRowHtml(r)+'</tr>';
@@ -746,40 +845,39 @@ function renderTable(rows,cont){
 }
 
 function buildRowHtml(r){
-  var url=IMGS[r[0]]||null;
+  var url=imgUrlFor(r);
   var imgHtml=url?'<img src="'+url+'" alt="'+r[1]+'" style="width:44px;border-radius:4px">':'\u2014';
   var note=r[7]?' <small style="color:var(--gold);font-size:.63rem">('+r[7]+')</small>':'';
-  var isJP=r[4]==='JP';
+  var vt=varianteTipo(r[4]);
+  var isUnico=(vt==='jp'||vt==='stamped');
   var idioma=idiomaActivo(r);
 
   var langCell='\u2014',precioCell='\u2014',stkCell='\u2014',cartCell='';
   if(GAS_LOADED){
-    if(isJP){
-      var stk=getStockCard(r,'JP');
-      var prc=getPrecioCard(r,'JP');
-      langCell='JP';
+    if(isUnico){
+      var stk=getStockCard(r,idioma);
+      var prc=getPrecioCard(r,idioma);
+      langCell=vt==='jp'?'JP':'\u2014';
       precioCell=prc>0?clp(prc):'Sin precio';
       stkCell=String(stk);
       if(stk>0&&prc>0){
-        var en=CARRITO.find(function(c){return c.cardId===r[0]&&c.idioma==='JP';});
+        var en=CARRITO.find(function(c){return c.cardId===r[0]&&c.idioma===idioma;});
         var q=en?en.qty:0;
         cartCell='<div class="qty-wrap">'
-          +'<button class="qty-btn" onclick="cambiarQty('+r[0]+','+(q>0?-1:0)+',\'JP\')" '+(q===0?'disabled':'')+'>-</button>'
+          +'<button class="qty-btn" onclick="cambiarQty('+r[0]+','+(q>0?-1:0)+',\''+idioma+'\')" '+(q===0?'disabled':'')+'>-</button>'
           +'<span class="qty-num">'+q+'</span>'
-          +'<button class="qty-btn" onclick="cambiarQty('+r[0]+',1,\'JP\')" '+(q>=stk?'disabled':'')+'>+</button></div>';
+          +'<button class="qty-btn" onclick="cambiarQty('+r[0]+',1,\''+idioma+'\')" '+(q>=stk?'disabled':'')+'>+</button></div>';
       }
     } else {
-      var vt=varianteTipo(r[4]);
-      var sE=STOCK[skey(r[1],vt,'ENG')]||0;
-      var sS=STOCK[skey(r[1],vt,'ESP')]||0;
-      var pE=PRICES[skey(r[1],vt,'ENG')]||0;
-      var pS=PRICES[skey(r[1],vt,'ESP')]||0;
-      var engAct=idioma==='ENG';
-      var stk=engAct?sE:sS;
-      var prc=engAct?pE:pS;
+      var disp=idiomasDisponibles(r);
+      var stk=STOCK[skey(nombreClave(r),vt,idioma)]||0;
+      var prc=PRICES[skey(nombreClave(r),vt,idioma)]||0;
       var langBtns='';
-      if(pE>0||sE>0) langBtns+='<button class="lang-btn'+(engAct?' active':'')+(sE===0?' agotado-lang':'')+'"'+(sE>0?' onclick="setIdioma('+r[0]+',\'ENG\')"':'')+'>ENG</button> ';
-      if(pS>0||sS>0) langBtns+='<button class="lang-btn'+(engAct?'':' active')+(sS===0?' agotado-lang':'')+'"'+(sS>0?' onclick="setIdioma('+r[0]+',\'ESP\')"':'')+'>ESP</button>';
+      disp.forEach(function(idm){
+        var sIdm=STOCK[skey(nombreClave(r),vt,idm)]||0;
+        var act=idioma===idm;
+        langBtns+='<button class="lang-btn'+(act?' active':'')+(sIdm===0?' agotado-lang':'')+'"'+(sIdm>0?' onclick="setIdioma('+r[0]+',\''+idm+'\')"':'')+'>'+idm+'</button> ';
+      });
       langCell=langBtns||'\u2014';
       precioCell=prc>0?clp(prc):'Sin precio';
       stkCell=String(stk);
@@ -795,7 +893,7 @@ function buildRowHtml(r){
   }
 
   return '<td>'+imgHtml+'</td>'
-    +'<td><strong>'+r[1]+'</strong>'+note+'</td>'
+    +'<td><strong>'+nombreMostrar(r,idioma)+'</strong>'+note+'</td>'
     +'<td style="font-size:.78rem;color:var(--txm)">'+r[6]+'</td>'
     +'<td><span class="vbdg '+vCls(r[4])+'" style="position:static;display:inline-block">'+vIcon(r[4])+r[4]+'</span></td>'
     +(GAS_LOADED?'<td>'+langCell+'</td><td>'+precioCell+'</td><td>'+stkCell+'</td><td>'+cartCell+'</td>':'');
@@ -812,7 +910,7 @@ function cambiarQty(cardId,delta,idioma){
     if(nueva<=0) CARRITO.splice(idx,1);
     else CARRITO[idx].qty=Math.min(nueva,stk);
   } else if(delta>0&&precio>0&&stk>0){
-    CARRITO.push({cardId:cardId,nombre:r[1],variante:r[4],idioma:idioma,precio:precio,qty:1,img:IMGS[cardId]||null,set:r[2]||'',num:r[3]||''});
+    CARRITO.push({cardId:cardId,nombre:r[1],variante:r[4],idioma:idioma,precio:precio,qty:1,img:imgUrlFor(r),set:r[2]||'',num:r[3]||''});
   }
   actualizarCarritoBtn();
   renderCard(cardId);
@@ -822,6 +920,7 @@ function actualizarCarritoBtn(){
   var total=CARRITO.reduce(function(s,c){return s+c.qty;},0);
   var cnt=document.getElementById('cart-count');
   cnt.textContent=total;
+  cnt.className='cart-count'+(total===0?' zero':'');
   if(document.getElementById('carrito-panel').classList.contains('show')) renderCarritoPanel();
 }
 
