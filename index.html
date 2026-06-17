@@ -986,7 +986,7 @@ function buildCardHtml(r){
       var sIdm=STOCK[skey(nombreClave(r),vt,idm)]||0;
       var act=idioma===idm;
       langHtml+='<button class="lang-btn'+(act?' active':'')+(sIdm===0?' agotado-lang':'')+'"'
-        +(sIdm>0?' onclick="setIdioma('+r[0]+',\''+idm+'\')"':'')+'>'+idm+'</button>';
+        +' onclick="setIdioma('+r[0]+',\''+idm+'\')">'+idm+'</button>';
     });
     langHtml+='</div>';
   }
@@ -1027,7 +1027,10 @@ function renderCard(cardId){
   var wrap=document.getElementById('cw-'+cardId);
   if(wrap) wrap.innerHTML=buildCardHtml(r);
   var tr=document.getElementById('tr-'+cardId);
-  if(tr) tr.outerHTML=buildRowHtml(r);
+  if(tr){
+    var rowClass=tr.className;
+    tr.outerHTML='<tr id="tr-'+cardId+'" class="'+rowClass+'">'+buildRowHtml(r)+'</tr>';
+  }
 }
 
 function renderTable(rows,cont){
@@ -1085,7 +1088,7 @@ function buildRowHtml(r){
       disp.forEach(function(idm){
         var sIdm=STOCK[skey(nombreClave(r),vt,idm)]||0;
         var act=idioma===idm;
-        langBtns+='<button class="lang-btn'+(act?' active':'')+(sIdm===0?' agotado-lang':'')+'"'+(sIdm>0?' onclick="setIdioma('+r[0]+',\''+idm+'\')"':'')+'>'+idm+'</button> ';
+        langBtns+='<button class="lang-btn'+(act?' active':'')+(sIdm===0?' agotado-lang':'')+'" onclick="setIdioma('+r[0]+',\''+idm+'\')">'+idm+'</button> ';
       });
       langCell=langBtns||'\u2014';
       precioCell=prc>0?clp(prc):'Sin precio';
