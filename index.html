@@ -1506,6 +1506,18 @@ function usarMismoCorreoIL(){
   ckErr('ck-correoEnvio',false);
 }
 
+
+function actualizarHorasRetiroIL(){
+  var dia=document.getElementById('ck-retiroDia').value;
+  var sel=document.getElementById('ck-retiroHora');
+  if(!sel) return;
+  var max=(dia==='Sabado')?'14:00':'18:00';
+  var todas=['10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00'];
+  var html='<option value="">Elige una hora</option>';
+  todas.forEach(function(h){ if(h<=max) html+='<option>'+h+'</option>'; });
+  sel.innerHTML=html;
+}
+
 function validarFormularioIL(){
   var ok=true;
   if(!ckVal('ck-nombre')){ckErr('ck-nombre',true);ok=false;}else ckErr('ck-nombre',false);
@@ -1568,16 +1580,9 @@ async function enviarPedidoIL(){
   };
 
   try{
-    var url=GAS_URL+'?carpeta=IL&data='+encodeURIComponent(JSON.stringify(orderData));
-    var res=await fetch(url);
-    var data=await res.json();
-    if(data.success===false){
-      alert('Error al enviar el pedido: '+(data.error||'intenta de nuevo'));
-      btn.disabled=false; btn.textContent='Enviar pedido';
-      return;
-    }
+    await fetch(GAS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(orderData)});
     CHECKOUT_VIEW='success';
-    window.LAST_ORDER_ID=data.id||'IL-0001';
+    window.LAST_ORDER_ID='IL-0001';
     CARRITO=[];
     actualizarCarritoBtn();
     renderCarritoPanel();
