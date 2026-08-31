@@ -450,10 +450,10 @@ header p{font-size:.75rem;color:var(--txm);margin-top:1px}
     <div class="paste-body">
       <div class="paste-izq">
         <div class="lista-hint">Pega tu lista, <b>una carta por línea</b>. Reconoce varios formatos:
-          <div class="lista-ej">Froakie x2<br>Venipede x1<br>Loudred ex6 39<br>Froakie sv6 56</div>
+          <div class="lista-ej">4 Mareep EVS 54<br>2 Mareep Evolving Skies<br>Shroodle SSP 120<br>Dunsparce x3<br>Tynamo 59</div>
           <div class="lista-tip" id="lista-tip-zoom"></div>
         </div>
-        <textarea id="paste-textarea" placeholder="Froakie x2&#10;Venipede x1&#10;Loudred"></textarea>
+        <textarea id="paste-textarea" placeholder="4 Mareep EVS 54&#10;2 Mareep Evolving Skies&#10;Dunsparce x3&#10;Tynamo 59"></textarea>
         <div style="display:flex;gap:8px">
           <button class="vb btn-cotizar" style="flex:1;padding:9px" onclick="cotizarListaPK()">Cotizar lista</button>
           <button class="vb" style="padding:9px 14px" onclick="limpiarListaPK()" title="Vacia el texto, la cotizacion y el carrito">Limpiar todo</button>
@@ -469,410 +469,11 @@ header p{font-size:.75rem;color:var(--txm);margin-top:1px}
 <script>
 /* ===================== CONFIG ===================== */
 var GAS_URL='https://script.google.com/macros/s/AKfycbymkq81nv85-kf3QIbjnkPfYyQwN6PZIn9r8GsJ7iVMYbgL5CtvLCADHc9c5CCXtMCl/exec';
-var IMG_BASE='https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/';
+var IMG_BASE='https://raw.githubusercontent.com/PaldeaGames/Carpeta-Ilustradores/main/Imagenes/';
 var CARPETA='IL';
 var IDIOMA_DEFAULT='ENG';
-var IDIOMA_PRIORIDAD=['ENG','ESP','JP','FR'];
-var RAREZAS_BRILLO=['REVERSE'];
-
-/* ===================== CATALOGO ESTATICO ILUSTRADORES =====================
-   A diferencia de las otras carpetas, el catalogo de Ilustradores es
-   CURADO y vive aqui (281 filas, una por variante). La planilla solo
-   aporta stock y precios, que se fusionan en syncGAS por nombre +
-   numero + variante (con desambiguacion de homonimas via
-   IDENTIDAD_PROPIA). Las imagenes tambien son estaticas (jsDelivr).
-   CARDS_IL: [0]=id [1]=nombre [2]=codSet [3]=numero [4]=variante
-             [5]=codIlustrador [6]=setNombre
-   Variantes: Normal | Reverse | JP | Stamped (=TrickOrTrade en planilla)
-   ================================================================ */
-var CARDS_IL=[
-[1,"Foongus","sts","12","Normal","ym","Steam Siege"],
-[2,"Weedle","cpa","2","Normal","ym","Champion's Path"],
-[3,"Fomantis","sm11","15","Normal","ym","Unified Minds"],
-[4,"Sewaddle","xy7","9","Normal","ym","Legendary Treasures"],
-[5,"Metapod","sm1","2","Normal","ym","Sun & Moon"],
-[6,"Rowlet","sm12","17","Normal","ym","Cosmic Eclipse"],
-[7,"Wormadam","swsh9","10","Normal","ym","Brilliant Stars"],
-[8,"Wormadam","swsh9","10","Reverse","ym","Brilliant Stars"],
-[9,"Bounsweet","swsh3","14","Normal","ym","Darkness Ablaze"],
-[10,"Seedot","swsh11","11","Normal","ym","Lost Origin"],
-[11,"Spinarak","pgo","6","Normal","ym","Pokemon GO"],
-[12,"Smoliv","sv10","21","Normal","ym","Destined Rivals"],
-[13,"Smoliv","sv10","21","Reverse","ym","Destined Rivals"],
-[14,"Karrablast","sv9pt5","9","Normal","ym","Journey Together"],
-[15,"Karrablast","sv9pt5","9","Reverse","ym","Journey Together"],
-[16,"Nymble","sv8pt5","9","Normal","ym","Phantasmal Flames"],
-[17,"Nymble","sv8pt5","9","Reverse","ym","Phantasmal Flames"],
-[18,"Grubbin","sm10","18","Normal","ym","Unbroken Bonds"],
-[19,"Gulpin","sm7","57","Normal","ym","Celestial Storm"],
-[20,"Swalot","sm7","58","Normal","ym","Celestial Storm"],
-[21,"Gothita","sm2","52","Normal","ym","Guardians Rising"],
-[22,"Pumpkaboo","swsh7","76","Normal","ym","Evolving Skies"],
-[23,"Trubbish","sm2","50","Normal","ym","Guardians Rising"],
-[24,"Dedenne","swsh4","77","Normal","ym","Vivid Voltage"],
-[25,"Dedenne","swsh4","77","Reverse","ym","Vivid Voltage"],
-[26,"Clefairy","sv3","81","Normal","ym","Obsidian Flames"],
-[27,"Clefairy","sv3","81","Reverse","ym","Obsidian Flames"],
-[28,"Sinistea","sv3","97","Normal","ym","Obsidian Flames"],
-[29,"Sinistea","sv3","97","Reverse","ym","Obsidian Flames"],
-[30,"Woobat","swsh7","68","Normal","ym","Evolving Skies"],
-[31,"Woobat","swsh7","68","Reverse","ym","Evolving Skies"],
-[32,"Baltoy","swsh12","93","Normal","ym","Silver Tempest"],
-[33,"Stonjourner","sv1","121","Normal","ym","Scarlet & Violet"],
-[34,"Stonjourner","sv1","121","Reverse","ym","Scarlet & Violet"],
-[35,"Drilbur","swsh4","91","Normal","ym","Vivid Voltage"],
-[36,"Sandshrew","swsh8","131","Normal","ym","Fusion Strike"],
-[37,"Clobbopus","swsh6","91","Normal","ym","Chilling Reign"],
-[38,"Clobbopus","swsh6","91","Reverse","ym","Chilling Reign"],
-[39,"Machop","swsh11","86","Normal","ym","Lost Origin"],
-[40,"Machop","swsh11","86","Reverse","ym","Lost Origin"],
-[41,"Dunsparce","xy6","68","Normal","ym","Roaring Skies"],
-[42,"Taillow","swsh4","133","Normal","ym","Vivid Voltage"],
-[43,"Bunnelby","swsh2","146","Normal","ym","Rebel Clash"],
-[44,"Starly","sv1","148","Normal","ym","Scarlet & Violet"],
-[45,"Starly","sv1","148","Reverse","ym","Scarlet & Violet"],
-[46,"Lillipup","sv3","170","Normal","ym","Obsidian Flames"],
-[47,"Lillipup","sv3","170","Reverse","ym","Obsidian Flames"],
-[48,"Minccino","sv5","136","Normal","ym","Temporal Forces"],
-[49,"Minccino","sv5","136","Reverse","ym","Temporal Forces"],
-[50,"Beldum","xy7b","47","Normal","ym","Ancient Origins"],
-[51,"Ferroseed","swsh1","130","Normal","ym","Sword & Shield"],
-[52,"Pawniard","swsh12pt5","92","Normal","ym","Crown Zenith"],
-[53,"Shieldon","swsh10","109","Normal","ym","Astral Radiance"],
-[54,"Durant","sv10pt5","70","Normal","ym","White Flare"],
-[55,"Durant","sv10pt5","70","Reverse","ym","White Flare"],
-[56,"Meltan","sv7","102","Normal","ym","Stellar Crown"],
-[57,"Meltan","sv7","102","Reverse","ym","Stellar Crown"],
-[58,"Litwick","swsh11","24","Normal","ym","Lost Origin"],
-[59,"Litwick","TRTK","24","Stamped","ym","Trick or Trade 2023"],
-[60,"Castform Sunny","swsh6","22","Normal","ym","Chilling Reign"],
-[61,"Castform Sunny","swsh6","22","Reverse","ym","Chilling Reign"],
-[62,"Torchic","swsh3","22","Normal","ym","Darkness Ablaze"],
-[63,"Darumaka","sm10","23","Normal","ym","Unbroken Bonds"],
-[64,"Sizzlipede","swsh5","29","Normal","ym","Battle Styles"],
-[65,"Salandit","swsh5","27","Normal","ym","Battle Styles"],
-[66,"Larvesta","sv3","40","Normal","ym","Obsidian Flames"],
-[67,"Larvesta","sv3","40","Reverse","ym","Obsidian Flames"],
-[68,"Murkrow","swsh11","114","Normal","ym","Lost Origin"],
-[69,"Sandile","sm10","113","Normal","ym","Unbroken Bonds"],
-[70,"Ducklett","swsh11","46","Normal","ym","Lost Origin"],
-[71,"Snom","swsh8","84","Normal","ym","Fusion Strike"],
-[72,"Staryu","swsh9","30","Normal","ym","Brilliant Stars"],
-[73,"Staryu","swsh9","30","Reverse","ym","Brilliant Stars"],
-[74,"Octillery","sv4","34","Normal","ym","Paradox Rift"],
-[75,"Octillery","sv4","34","Reverse","ym","Paradox Rift"],
-[76,"Froakie","sv6","56","Normal","ym","Twilight Masquerade"],
-[77,"Froakie","sv6","56","Reverse","ym","Twilight Masquerade"],
-[78,"Froakie","SV5A","23","JP","ym","Crimson Haze (JP)"],
-[79,"Chewtle","sv7","43","Normal","ym","Stellar Crown"],
-[80,"Chewtle","sv7","43","Reverse","ym","Stellar Crown"],
-[81,"Applin","sv8","138","Normal","ym","Surging Sparks"],
-[82,"Applin","sv8","138","Reverse","ym","Surging Sparks"],
-[83,"Pachirisu","sm8","80","Normal","ym","Lost Thunder"],
-[84,"Helioptile","xy9","52","Normal","ym","Mega Evolution"],
-[85,"Helioptile","xy9","52","Reverse","ym","Mega Evolution"],
-[86,"Toxel","sv4","69","Normal","ym","Paradox Rift"],
-[87,"Toxel","sv4","69","Reverse","ym","Paradox Rift"],
-[88,"Pincurchin","sv2","72","Normal","ym","Paldea Evolved"],
-[89,"Pincurchin","sv2","72","Reverse","ym","Paldea Evolved"],
-[90,"Tynamo","swsh8","95","Normal","ym","Fusion Strike"],
-[91,"Magnemite","sv3pt5","81","Normal","ym","151"],
-[92,"Shedinja","swsh4","66","Normal","tk","Vivid Voltage"],
-[93,"Grumpig","swsh5","56","Normal","tk","Battle Styles"],
-[94,"Dreepy","swsh12","87","Normal","tk","Silver Tempest"],
-[95,"Jynx","swsh12","62","Normal","tk","Silver Tempest"],
-[96,"Malamar","swsh11","78","Normal","tk","Lost Origin"],
-[97,"Rhinolove","sm12","88","Normal","tk","Cosmic Eclipse"],
-[98,"Beheeyem","xy8","74","Normal","tk","BREAKThrough"],
-[99,"Elgyem","sv5","73","Normal","tk","Temporal Forces"],
-[100,"Elgyem","sv5","73","Reverse","tk","Temporal Forces"],
-[101,"Brute Bonnet","SV4K","77","JP","tk","Ancient Roar (JP)"],
-[102,"Oricorio","S12A","176","JP","tk","VSTAR Universe (JP)"],
-[103,"Loudred","ex6","39","Normal","tk","EX Hidden Legends"],
-[104,"Sentret","ex12","62","Normal","tk","EX Legend Maker"],
-[105,"Aipom","dp4","50","Normal","tk","Majestic Dawn"],
-[106,"Taillow","ex11","86","Normal","tk","EX Delta Species"],
-[107,"Bidoof","pgo","59","Normal","tk","Pokemon GO"],
-[108,"Noctowl","sm11","166","Normal","tk","Unified Minds"],
-[109,"Farfetch'd","swsh9","115","Normal","tk","Brilliant Stars"],
-[110,"Bunnelby","swsh3","150","Normal","tk","Darkness Ablaze"],
-[111,"Noibat","sv9pt5","127","Normal","tk","Journey Together"],
-[112,"Lechonk","sv3","181","Normal","tk","Obsidian Flames"],
-[113,"Lechonk","sv3","181","Reverse","tk","Obsidian Flames"],
-[114,"Snubbull","sm1","90","Normal","tk","Sun & Moon"],
-[115,"Bronzor","swsh11","125","Normal","tk","Lost Origin"],
-[116,"Pawniard","swsh10","115","Normal","tk","Astral Radiance"],
-[117,"Sliggoo","sm2","95","Normal","tk","Guardians Rising"],
-[118,"Drampa","swsh7","119","Normal","tk","Evolving Skies"],
-[119,"Simisear","swsh8","38","Normal","tk","Fusion Strike"],
-[120,"Salazzle","swsh1","28","Normal","tk","Sword & Shield"],
-[121,"Volcarona","sv3","41","Normal","tk","Obsidian Flames"],
-[122,"Trapinch","xy7b","67","Normal","tk","Ancient Origins"],
-[123,"Hitmonchan","sm9","74","Normal","tk","Team Up"],
-[124,"Sandile","sv1","115","Normal","tk","Scarlet & Violet"],
-[125,"Sandile","sv1","115","Reverse","tk","Scarlet & Violet"],
-[126,"Onix","sm8","109","Normal","tk","Lost Thunder"],
-[127,"Onix","sm8","109","Reverse","tk","Lost Thunder"],
-[128,"Nosepass","sm2","69","Normal","tk","Guardians Rising"],
-[129,"Rockruff","sm6","75","Normal","tk","Forbidden Light"],
-[130,"Vibrava","swsh9","75","Normal","tk","Brilliant Stars"],
-[131,"Claydol","swsh1","103","Normal","tk","Sword & Shield"],
-[132,"Roggenrola","swsh7","86","Normal","tk","Evolving Skies"],
-[133,"Grubbin","swsh2","16","Normal","tk","Rebel Clash"],
-[134,"Ninjask","swsh4","14","Normal","tk","Vivid Voltage"],
-[135,"Grimmer","ex12","54","Normal","tk","EX Legend Maker"],
-[136,"Zubat","ex11","88","Normal","tk","EX Delta Species"],
-[137,"Treecko","sm8","20","Normal","tk","Lost Thunder"],
-[138,"Volbeat","xy5","17","Normal","tk","Primal Clash"],
-[139,"Illumise","xy5","18","Normal","tk","Primal Clash"],
-[140,"Exeggcute","xy6","1","Normal","tk","Roaring Skies"],
-[141,"Crustle","sm11","11","Normal","tk","Unified Minds"],
-[142,"Larvesta","sts","14","Normal","tk","Steam Siege"],
-[143,"Cacturne","swsh5","5","Normal","tk","Battle Styles"],
-[144,"Steenee","swsh6","14","Normal","tk","Chilling Reign"],
-[145,"Steenee","swsh6","14","Reverse","tk","Chilling Reign"],
-[146,"Pineco","swsh4","8","Normal","tk","Vivid Voltage"],
-[147,"Gloom","swsh11","2","Normal","tk","Lost Origin"],
-[148,"Toedscool","sv4","15","Normal","tk","Paradox Rift"],
-[149,"Toedscool","sv4","15","Reverse","tk","Paradox Rift"],
-[150,"Rowlet","sv3","13","Normal","tk","Obsidian Flames"],
-[151,"Rowlet","sv3","13","Reverse","tk","Obsidian Flames"],
-[152,"Morelull","sv8","8","Normal","tk","Surging Sparks"],
-[153,"Morelull","sv8","8","Reverse","tk","Surging Sparks"],
-[154,"Scraggy","xy2","66","Normal","tk","Furious Fists"],
-[156,"Seviper","swsh11","116","Normal","tk","Lost Origin"],
-[157,"Skrelp","swsh12pt5","81","Normal","tk","Crown Zenith"],
-[158,"Impidimp","sv7","94","Normal","tk","Stellar Crown"],
-[159,"Impidimp","sv7","94","Reverse","tk","Stellar Crown"],
-[160,"Venipede","sv6","115","Normal","tk","Twilight Masquerade"],
-[161,"Venipede","sv6","115","Reverse","tk","Twilight Masquerade"],
-[162,"Lotad","ex2","66","Normal","tk","EX Sandstorm"],
-[163,"Croconaw","swsh8","56","Normal","tk","Fusion Strike"],
-[164,"Staryu","xy5","32","Normal","tk","Primal Clash"],
-[165,"Binacle","xy10","22","Reverse","tk","Fates Collide"],
-[166,"Mareanie","swsh3","51","Normal","tk","Darkness Ablaze"],
-[167,"Jellicent","swsh5","42","Normal","tk","Battle Styles"],
-[168,"Araquanid","sm12","65","Normal","tk","Cosmic Eclipse"],
-[169,"Wailmer","sm12","45","Normal","tk","Cosmic Eclipse"],
-[170,"Wimpod","sm11","50","Normal","tk","Unified Minds"],
-[171,"Pyukumuku","swsh8","77","Normal","tk","Fusion Strike"],
-[172,"Snorunt","sm2","31","Normal","tk","Guardians Rising"],
-[173,"Snorunt","sm2","31","Reverse","tk","Guardians Rising"],
-[174,"Clauncher","xy9","37","Normal","tk","Mega Evolution"],
-[175,"Wiglett","sv4","52","Normal","tk","Paradox Rift"],
-[176,"Wiglett","sv4","52","Reverse","tk","Paradox Rift"],
-[177,"Magneton","xy8","53","Normal","tk","BREAKThrough"],
-[178,"Voltorb","swsh8","87","Normal","tk","Fusion Strike"],
-[179,"Moo-Moo Milk","neo1","101","Normal","tk","Neo Genesis"],
-[181,"Cottonee","sm11","143","Normal","ai","Unified Minds"],
-[182,"Zubat","swsh5","89","Normal","ai","Battle Styles"],
-[183,"Tynamo","sm3","44","Normal","ai","Burning Shadows"],
-[184,"Shelgon","sm7","105","Normal","ai","Celestial Storm"],
-[185,"Goomy","sm2","94","Normal","ai","Guardians Rising"],
-[186,"Goomy","sm2","94","Reverse","ai","Guardians Rising"],
-[187,"Luvdisc","sm7","44","Normal","ai","Celestial Storm"],
-[188,"Poliwag","sm1","30","Normal","ai","Sun & Moon"],
-[189,"Tympole","sm12","58","Normal","ai","Cosmic Eclipse"],
-[190,"Marill","sm3","34","Normal","ai","Burning Shadows"],
-[191,"Oddish","sm10","6","Normal","ai","Unbroken Bonds"],
-[192,"Seedot","sv5","3","Normal","ai","Temporal Forces"],
-[193,"Seedot","sv5","3","Reverse","ai","Temporal Forces"],
-[194,"Cherubi","sm5","10","Normal","ai","Ultra Prism"],
-[195,"Metapod","swsh2","2","Normal","ai","Rebel Clash"],
-[196,"Grubbin","swsh8","18","Normal","ai","Fusion Strike"],
-[197,"Grubbin","swsh8","18","Reverse","ai","Fusion Strike"],
-[198,"Blipbug","swsh11","18","Normal","ai","Lost Origin"],
-[199,"Blipbug","swsh11","18","Reverse","ai","Lost Origin"],
-[200,"Snorlax","swsh12pt5","109","Normal","ai","Crown Zenith"],
-[201,"Snorlax","swsh12pt5","109","Reverse","ai","Crown Zenith"],
-[202,"Whismur","sm7","117","Normal","ai","Celestial Storm"],
-[203,"Castform","swsh6","121","Normal","ai","Chilling Reign"],
-[204,"Dunsparce","sv9pt5","120","Normal","ai","Journey Together"],
-[205,"Dunsparce","sv9pt5","120","Reverse","ai","Journey Together"],
-[206,"Dunsparce","SV9","78","JP","ai","Battle Partners (JP)"],
-[207,"Litwick","sm8","101","Normal","ai","Lost Thunder"],
-[208,"Drifloon","sm5","51","Normal","ai","Ultra Prism"],
-[209,"Drifloon","sm5","51","Reverse","ai","Ultra Prism"],
-[210,"Munna","swsh1","87","Normal","ai","Sword & Shield"],
-[211,"Munna","swsh1","87","Reverse","ai","Sword & Shield"],
-[212,"Wigglytuff","swsh8","111","Normal","ai","Fusion Strike"],
-[213,"Chimecho","swsh4","72","Normal","ai","Vivid Voltage"],
-[214,"Swirlix","swsh12","83","Normal","ai","Silver Tempest"],
-[215,"Swirlix","swsh12","83","Reverse","ai","Silver Tempest"],
-[216,"Sandygast","sv6","91","Normal","ai","Twilight Masquerade"],
-[217,"Sandygast","sv6","91","Reverse","ai","Twilight Masquerade"],
-[218,"Espurr","swsh12","81","Normal","ai","Silver Tempest"],
-[219,"Trapinch","swsh3","89","Normal","ai","Darkness Ablaze"],
-[220,"Gible","sm11","112","Normal","ai","Unified Minds"],
-[221,"Phanpy","sm8","111","Normal","ai","Lost Thunder"],
-[222,"Tynamo","swsh11","59","Normal","yb","Lost Origin"],
-[223,"Mareep","swsh7","54","Normal","yb","Evolving Skies"],
-[224,"Chinchou","swsh1","68","Normal","yb","Sword & Shield"],
-[225,"Scrafty","swsh7","99","Normal","yb","Evolving Skies"],
-[226,"Shroodle","sv8","120","Normal","yb","Surging Sparks"],
-[227,"Shroodle","sv8","120","Reverse","yb","Surging Sparks"],
-[228,"Sizzlipede","sv5","36","Normal","yb","Temporal Forces"],
-[229,"Sizzlipede","SV5K","10","JP","yb","Wild Force (JP)"],
-[230,"Volcarona","sv3","41","Normal","yb","Obsidian Flames"],
-[231,"Volcarona","sv3","41","Reverse","yb","Obsidian Flames"],
-[232,"Rapidash","sts","17","Normal","yb","Steam Siege"],
-[233,"Axew","sm11","154","Normal","yb","Unified Minds"],
-[234,"Lairon","pl2","44","Normal","yb","Rising Rivals"],
-[235,"Staryu","sm4","15","Normal","yb","Crimson Invasion"],
-[236,"Staryu","ex7","77","Normal","yb","EX Deoxys"],
-[237,"Horsea","sm75","15","Normal","yb","Dragon Majesty"],
-[238,"Wailmer","swsh4","31","Normal","yb","Vivid Voltage"],
-[239,"Finneon","sv7","35","Normal","yb","Stellar Crown"],
-[240,"Wurmple","ex12","70","Normal","yb","EX Legend Maker"],
-[241,"Gossifleur","swsh45","14","Normal","yb","Shining Fates"],
-[242,"Weedle","sm4","1","Normal","yb","Crimson Invasion"],
-[243,"Masquerain","sm7","16","Normal","yb","Celestial Storm"],
-[244,"Fomantis","swsh5","14","Normal","yb","Battle Styles"],
-[245,"Roselia","swsh11","14","Normal","yb","Lost Origin"],
-[246,"Roselia","swsh11","14","Reverse","yb","Lost Origin"],
-[247,"Breloom","swsh8","5","Normal","yb","Fusion Strike"],
-[248,"Petilil","swsh10","15","Normal","yb","Astral Radiance"],
-[249,"Hoppip","sv2","1","Normal","yb","Paldea Evolved"],
-[250,"Hoppip","sv2","1","Reverse","yb","Paldea Evolved"],
-[251,"Cubone","ex11","60","Normal","yb","EX Delta Species"],
-[252,"Meditite","swsh2","97","Normal","yb","Rebel Clash"],
-[253,"Dugtrio","swsh3","85","Normal","yb","Darkness Ablaze"],
-[254,"Sandygast","sm12","126","Normal","yb","Cosmic Eclipse"],
-[255,"Sudowoodo","swsh1","100","Normal","yb","Sword & Shield"],
-[256,"Sudowoodo","swsh1","100","Reverse","yb","Sword & Shield"],
-[257,"Dunsparce","ex14","54","Normal","yb","EX Crystal Guardians"],
-[258,"Porygon","xy7b","64","Normal","yb","Ancient Origins"],
-[259,"Swablu","sm75","56","Normal","yb","Dragon Majesty"],
-[260,"Spearow","sm1","97","Normal","yb","Sun & Moon"],
-[261,"Lickitung","sm10","152","Normal","yb","Unbroken Bonds"],
-[262,"Skitty","swsh8","210","Normal","yb","Fusion Strike"],
-[263,"Wooloo","swsh8","222","Normal","yb","Fusion Strike"],
-[264,"Teddiursa","swsh3","138","Normal","yb","Darkness Ablaze"],
-[265,"Fearow","swsh5","112","Normal","yb","Battle Styles"],
-[266,"Pikipek","swsh4","143","Normal","yb","Vivid Voltage"],
-[267,"Loudred","sv4","149","Normal","yb","Paradox Rift"],
-[268,"Loudred","sv4","149","Reverse","yb","Paradox Rift"],
-[269,"Loudred","SV4K","56","JP","yb","Ancient Roar (JP)"],
-[270,"Grimer","pl1","75","Normal","yb","Platinum"],
-[271,"Koffing","pl2","68","Normal","yb","Rising Rivals"],
-[272,"Skrelp","xy9b","63","Normal","yb","BREAKPoint"],
-[273,"Kirlia","swsh12","68","Normal","yb","Silver Tempest"],
-[274,"Sigilyph","swsh8","123","Normal","yb","Fusion Strike"],
-[275,"Salandit","sm11","98","Normal","yb","Unified Minds"],
-[276,"Cutiefly","swsh7","78","Normal","yb","Evolving Skies"],
-[277,"Clefairy","swsh9","53","Normal","yb","Brilliant Stars"],
-[278,"Flabebe","sv6","86","Normal","yb","Twilight Masquerade"],
-[279,"Flabebe","sv6","86","Reverse","yb","Twilight Masquerade"],
-[280,"Tentacool","xy5","70","Normal","yb","Primal Clash"],
-[281,"Venipede","BUS","56","Normal","yb","Burning Shadows"],
-[282,"Shuppet","xy6","30","Normal","yb","Roaring Skies"],
-[283,"Shaymin","swsh12pt5","115","Normal","yb","Crown Zenith"]
-];
-var IMGS_IL={1:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/001_Foongus_sts_12.png",2:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/002_Weedle_cpa_2.png",3:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/003_Fomantis_sm11_15.png",4:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/004_Sewaddle_xy7_9.png",5:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/005_Metapod_sm1_2.png",6:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/006_Rowlet_sm12_17.png",7:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/007_Wormadam_swsh9_10.png",9:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/009_Bounsweet_swsh3_14.png",10:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/010_Seedot_swsh11_11.png",11:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/011_Spinarak_pgo_6.png",12:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/012_Smoliv_sv10_21.png",14:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/014_Karrablast_sv9pt5_9.png",16:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/016_Nymble_sv8pt5_9.png",18:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/018_Grubbin_sm10_18.png",19:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/019_Gulpin_sm7_57.png",20:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/020_Swalot_sm7_58.png",21:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/021_Gothita_sm2_52.png",22:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/022_Pumpkaboo_swsh7_76.png",23:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/023_Trubbish_sm2_50.png",24:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/024_Dedenne_swsh4_77.png",26:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/026_Clefairy_sv3_81.png",28:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/028_Sinistea_sv3_97.png",30:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/030_Woobat_swsh7_68.png",32:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/032_Baltoy_swsh12_93.png",33:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/033_Stonjourner_sv1_121.png",35:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/035_Drilbur_swsh4_91.png",36:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/036_Sandshrew_swsh8_131.png",37:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/037_Clobbopus_swsh6_91.png",39:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/039_Machop_swsh11_86.png",41:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/041_Dunsparce_xy6_68.png",42:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/042_Taillow_swsh4_133.png",43:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/043_Bunnelby_swsh2_146.png",44:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/044_Starly_sv1_148.png",46:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/046_Lillipup_sv3_170.png",48:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/048_Minccino_sv5_136.png",50:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/050_Beldum_xy7b_47.png",51:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/051_Ferroseed_swsh1_130.png",52:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/052_Pawniard_swsh12pt5_92.png",53:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/053_Shieldon_swsh10_109.png",54:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/054_Durant_sv10pt5_70.png",56:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/056_Meltan_sv7_102.png",58:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/058_Litwick_swsh11_24.png",59:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/059_Litwick_jp_59_TT.png",60:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/060_Castform_Sunny_swsh6_22.png",62:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/062_Torchic_swsh3_22.png",63:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/063_Darumaka_sm10_23.png",64:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/064_Sizzlipede_swsh5_29.png",65:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/065_Salandit_swsh5_27.png",66:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/066_Larvesta_sv3_40.png",68:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/068_Murkrow_swsh11_114.png",69:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/069_Sandile_sm10_113.png",70:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/070_Ducklett_swsh11_46.png",71:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/071_Snom_swsh8_84.png",72:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/072_Staryu_swsh9_30.png",74:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/074_Octillery_sv4_34.png",76:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/076_Froakie_sv6_56.png",78:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/076_Froakie_sv6_56_JP.png",79:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/079_Chewtle_sv7_43.png",81:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/081_Applin_sv8_138.png",83:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/083_Pachirisu_sm8_80.png",84:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/084_Helioptile_xy9_52.png",86:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/086_Toxel_sv4_69.png",88:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/088_Pincurchin_sv2_72.png",90:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/090_Tynamo_swsh8_95.png",91:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/091_Magnemite_sv3pt5_81.png",92:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/092_Shedinja_swsh4_66.png",93:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/093_Grumpig_swsh5_56.png",94:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/094_Dreepy_swsh12_87.png",95:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/095_Jynx_swsh12_62.png",96:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/096_Malamar_swsh11_78.png",97:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/097_Swoobat_sm12_88.png",98:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/098_Beheeyem_xy8_74.png",99:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/099_Elgyem_sv5_73.png",101:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/101_Brute_Bonnet_jp_101.png",102:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/102_Oricorio_jp_102.png",103:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/103_Loudred_ex6_39.png",104:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/104_Sentret_ex12_62.png",105:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/105_Aipom_dp4_50.png",106:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/106_Taillow_ex11_86.png",107:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/107_Bidoof_pgo_59.png",108:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/108_Noctowl_sm11_166.png",109:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/109_Farfetchd_swsh9_115.png",110:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/110_Bunnelby_swsh3_150.png",111:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/111_Noibat_sv9pt5_127.png",112:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/112_Lechonk_sv3_181.png",114:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/114_Snubbull_sm1_90.png",115:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/115_Bronzor_swsh11_125.png",116:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/116_Pawniard_swsh10_115.png",117:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/117_Sliggoo_sm2_95.png",118:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/118_Drampa_swsh7_119.png",119:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/119_Simisear_swsh8_38.png",120:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/120_Salazzle_swsh1_28.png",121:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/121_Volcarona_sv3_41.png",122:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/122_Trapinch_xy7b_67.png",123:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/123_Hitmonchan_sm9_74.png",124:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/124_Sandile_sv1_115.png",126:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/126_Onix_sm8_109.png",128:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/128_Nosepass_sm2_69.png",129:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/129_Rockruff_sm6_75.png",130:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/130_Vibrava_swsh9_75.png",131:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/131_Claydol_swsh1_103.png",132:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/132_Roggenrola_swsh7_86.png",133:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/133_Grubbin_swsh2_16.png",134:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/134_Ninjask_swsh4_14.png",135:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/135_Grimer_ex12_54.png",136:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/136_Zubat_ex11_88.png",137:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/137_Treecko_sm8_20.png",138:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/138_Volbeat_xy5_17.png",139:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/139_Illumise_xy5_18.png",140:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/140_Exeggcute_xy6_1.png",141:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/141_Crustle_sm11_11.png",142:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/142_Larvesta_xy11_14.png",143:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/143_Cacturne_swsh5_5.png",144:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/144_Steenee_swsh6_14.png",146:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/146_Pineco_swsh4_8.png",147:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/147_Gloom_swsh11_2.png",148:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/148_Toedscool_sv4_15.png",150:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/150_Rowlet_sv3_13.png",152:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/152_Morelull_sv8_8.png",154:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/154_Scraggy_xy2_66.png",156:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/156_Seviper_swsh11_116.png",157:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/157_Skrelp_swsh12pt5_81.png",158:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/158_Impidimp_sv7_94.png",160:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/160_Venipede_sv6_115.png",162:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/162_Lotad_ex2_66.png",163:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/163_Croconaw_swsh8_56.png",164:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/164_Staryu_xy5_32.png",165:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/165_Binacle_xy10_22.png",166:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/166_Mareanie_swsh3_51.png",167:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/167_Jellicent_swsh5_42.png",168:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/168_Araquanid_sm12_65.png",169:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/169_Wailmer_sm12_45.png",170:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/170_Wimpod_sm11_50.png",171:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/171_Pyukumuku_swsh8_77.png",172:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/172_Snorunt_sm2_31.png",174:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/174_Clauncher_xy9_37.png",175:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/175_Wiglett_sv4_52.png",177:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/177_Magneton_xy8_53.png",178:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/178_Voltorb_swsh8_87.png",179:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/179_Moo_Moo_Milk_neo1_101.png",181:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/181_Cottonee_sm11_143.png",182:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/182_Zubat_swsh5_89.png",183:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/183_Tynamo_sm3_44.png",184:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/184_Shelgon_sm7_105.png",185:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/185_Goomy_sm2_94.png",187:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/187_Luvdisc_sm7_44.png",188:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/188_Poliwag_sm1_30.png",189:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/189_Tympole_sm12_58.png",190:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/190_Marill_sm3_34.png",191:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/191_Oddish_sm10_6.png",192:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/192_Seedot_sv5_3.png",194:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/194_Cherubi_sm5_10.png",195:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/195_Metapod_swsh2_2.png",196:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/196_Grubbin_swsh8_18.png",198:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/198_Blipbug_swsh11_18.png",200:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/200_Snorlax_swsh12pt5_109.png",202:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/202_Whismur_sm7_117.png",203:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/203_Castform_swsh6_121.png",204:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/204_Dunsparce_sv9pt5_120.png",206:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/204_Dunsparce_sv9pt5_120_JP.png",207:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/207_Litwick_sm8_101.png",208:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/208_Drifloon_sm5_51.png",210:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/210_Munna_swsh1_87.png",212:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/212_Wigglytuff_swsh8_111.png",213:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/213_Chimecho_swsh4_72.png",214:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/214_Swirlix_swsh12_83.png",216:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/216_Sandygast_sv6_91.png",218:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/218_Espurr_swsh12_81.png",219:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/219_Trapinch_swsh3_89.png",220:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/220_Gible_sm11_112.png",221:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/221_Phanpy_sm8_111.png",222:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/222_Tynamo_swsh11_59.png",223:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/223_Mareep_swsh7_54.png",224:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/224_Chinchou_swsh1_68.png",225:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/225_Scrafty_swsh7_99.png",226:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/226_Shroodle_sv8_120.png",228:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/228_Sizzlipede_sv5_36.png",229:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/228_Sizzlipede_sv5_36_JP.png",230:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/230_Volcarona_sv3_41.png",232:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/232_Rapidash_xy11_17.png",233:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/233_Axew_sm11_154.png",234:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/234_Lairon_pl2_44.png",235:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/235_Staryu_sm4_15.png",236:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/236_Staryu_ex7_77.png",237:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/237_Horsea_sm75_15.png",238:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/238_Wailmer_swsh4_31.png",239:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/239_Finneon_sv7_35.png",240:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/240_Wurmple_ex12_70.png",241:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/241_Gossifleur_swsh45_14.png",242:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/242_Weedle_sm4_1.png",243:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/243_Masquerain_sm7_16.png",244:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/244_Fomantis_swsh5_14.png",245:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/245_Roselia_swsh11_14.png",247:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/247_Breloom_swsh8_5.png",248:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/248_Petilil_swsh10_15.png",249:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/249_Hoppip_sv2_1.png",251:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/251_Cubone_ex11_60.png",252:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/252_Meditite_swsh2_97.png",253:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/253_Dugtrio_swsh3_85.png",254:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/254_Sandygast_sm12_126.png",255:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/255_Sudowoodo_swsh1_100.png",257:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/257_Dunsparce_ex14_54.png",258:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/258_Porygon_xy7b_64.png",259:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/259_Swablu_sm75_56.png",260:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/260_Spearow_sm1_97.png",261:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/261_Lickitung_sm10_152.png",262:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/262_Skitty_swsh8_210.png",263:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/263_Wooloo_swsh8_222.png",264:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/264_Teddiursa_swsh3_138.png",265:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/265_Fearow_swsh5_112.png",266:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/266_Pikipek_swsh4_143.png",267:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/267_Loudred_sv4_149.png",269:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/103_Loudred_ex6_39_JP.png",270:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/270_Grimer_pl1_75.png",271:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/271_Koffing_pl2_68.png",272:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/272_Skrelp_xy9b_63.png",273:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/273_Kirlia_swsh12_68.png",274:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/274_Sigilyph_swsh8_123.png",275:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/275_Salandit_sm11_98.png",276:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/276_Cutiefly_swsh7_78.png",277:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/277_Clefairy_swsh9_53.png",278:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/278_Flabebe_sv6_86.png",280:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/280_Tentacool_xy5_70.png",281:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/281_Venipede_sm3_56.png",282:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/282_Shuppet_xy6_30.png",283:"https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/283_Shaymin_crownzenith_115.png"};
-var IMGS_ALT={76:{JP:'https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/076_Froakie_sv6_56_JP.png'},103:{JP:'https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/103_Loudred_ex6_39_JP.png'},154:{FR:'https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/154_Scraggy_xy2_66_FR.png'},160:{FR:'https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/160_Venipede_sv6_115_FR.png'},204:{JP:'https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/204_Dunsparce_sv9pt5_120_JP.png'},228:{JP:'https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Ilustradores@main/228_Sizzlipede_sv5_36_JP.png'}};
-var NOMBRES_ALT={154:{FR:'Baggiguane'}};
-var IDENTIDAD_PROPIA={
-  2:'Weedle__championspath',
-  3:'Fomantis__unifiedminds',
-  5:'Metapod__sunmoon',
-  6:'Rowlet__cosmiceclipse',
-  10:'Seedot__lostorigin',
-  18:'Grubbin__unbrokenbonds',
-  26:'Clefairy__obsidianflames',
-  27:'Clefairy__obsidianflames',
-  41:'Dunsparce__roaringskies',
-  42:'Taillow__vividvoltage',
-  43:'Bunnelby__rebelclash',
-  52:'Pawniard__crownzenith',
-  58:'Litwick__lostorigin',
-  59:'Litwick__trickortrade2023',
-  64:'Sizzlipede__battlestyles',
-  65:'Salandit__battlestyles',
-  66:'Larvesta__obsidianflames',
-  67:'Larvesta__obsidianflames',
-  69:'Sandile__unbrokenbonds',
-  72:'Staryu__brilliantstars',
-  73:'Staryu__brilliantstars',
-  76:'Froakie__twilightmasquerade',
-  77:'Froakie__twilightmasquerade',
-  78:'Froakie__crimsonhazejp',
-  90:'Tynamo__fusionstrike',
-  103:'Loudred__exhiddenlegends',
-  106:'Taillow__exdeltaspecies',
-  110:'Bunnelby__darknessablaze',
-  116:'Pawniard__astralradiance',
-  122:'Trapinch__ancientorigins',
-  124:'Sandile__scarletviolet',
-  125:'Sandile__scarletviolet',
-  133:'Grubbin__rebelclash',
-  136:'Zubat__exdeltaspecies',
-  142:'Larvesta__steamsiege',
-  150:'Rowlet__obsidianflames',
-  151:'Rowlet__obsidianflames',
-  157:'Skrelp__crownzenith',
-  160:'Venipede__twilightmasquerade',
-  161:'Venipede__twilightmasquerade',
-  164:'Staryu__primalclash',
-  169:'Wailmer__cosmiceclipse',
-  182:'Zubat__battlestyles',
-  183:'Tynamo__burningshadows',
-  192:'Seedot__temporalforces',
-  193:'Seedot__temporalforces',
-  195:'Metapod__rebelclash',
-  196:'Grubbin__fusionstrike',
-  197:'Grubbin__fusionstrike',
-  204:'Dunsparce__journeytogether',
-  205:'Dunsparce__journeytogether',
-  206:'Dunsparce__battlepartnersjp',
-  207:'Litwick__lostthunder',
-  216:'Sandygast__twilightmasquerade',
-  217:'Sandygast__twilightmasquerade',
-  219:'Trapinch__darknessablaze',
-  222:'Tynamo__lostorigin',
-  228:'Sizzlipede__temporalforces',
-  229:'Sizzlipede__wildforcejp',
-  235:'Staryu__crimsoninvasion',
-  236:'Staryu__exdeoxys',
-  238:'Wailmer__vividvoltage',
-  242:'Weedle__crimsoninvasion',
-  244:'Fomantis__battlestyles',
-  254:'Sandygast__cosmiceclipse',
-  257:'Dunsparce__excrystalguardians',
-  267:'Loudred__paradoxrift',
-  268:'Loudred__paradoxrift',
-  269:'Loudred__ancientroarjp',
-  272:'Skrelp__breakpoint',
-  275:'Salandit__unifiedminds',
-  277:'Clefairy__brilliantstars',
-  281:'Venipede__burningshadows'
-};
-var TABS={ym:'Yuka Morii',tk:'Tomokazu Komiya',ai:'Asako Ito',yb:'Yukiko Baba'};
-var IDIOMAS_POR_TIPO={normal:['ENG','ESP','JP','FR'],reverse:['ENG','ESP'],jp:['JP'],stamped:['UNICO']};
-function shuffleArray(arr){
-  for(var i=arr.length-1;i>0;i--){
-    var j=Math.floor(Math.random()*(i+1));
-    var t=arr[i];arr[i]=arr[j];arr[j]=t;
-  }
-  return arr;
-}
-// Tipo base de la variante (a que bloque del inventario pertenece)
-function varianteTipo(v){
-  var l=v.toLowerCase();
-  if(l==='jp') return 'jp';
-  if(l.indexOf('reverse')>=0) return 'reverse';
-  if(l==='stamped') return 'stamped';
-  return 'normal';
-}
-// Rareza que entiende la planilla para una variante del catalogo
-function rarezaGAS(v){
-  var t=varianteTipo(v);
-  if(t==='jp') return 'Normal';
-  if(t==='reverse') return 'Reverse';
-  if(t==='stamped') return 'TrickOrTrade';
-  return 'Normal';
-}
-
-
+var IDIOMA_PRIORIDAD=['ENG','ESP','JAP','POR','CHI','FRA'];
+var RAREZAS_BRILLO=['REV-H'];
 
 /* ===================== ESTADO ===================== */
 var CARDS=[];            // [0]=uid [1]=nombre [2]=codSet [3]=numero [4]=rareza [5]=codInt [6]=setNombre [7]=nota [8]=imgId [9]=imgMulti [10]=categoria
@@ -894,60 +495,14 @@ var GAS_LOADED=false;
 /* ===================== HELPERS ===================== */
 function clp(n){return '$ '+Math.round(n).toLocaleString('es-CL');}
 function skey(uid,idioma){return uid+'|'+String(idioma).toUpperCase();}
-// ---- Claves de stock/precio IL: nombreClave|variante|idioma (no por uid) ----
-// Asi las homonimas (misma carta en distintos sets) no mezclan su stock,
-// y las variantes JP/Stamped leen del bloque correcto de la planilla.
-function nombreClaveIL(r){ return IDENTIDAD_PROPIA[r[0]]||r[1]; }
-function skeyIL(nombre,variante,idioma){
-  return String(nombre).trim().toLowerCase()+'|'+String(variante).toLowerCase()+'|'+String(idioma).toUpperCase();
-}
-function getStock(r,idioma){
-  var v=varianteTipo(r[4]); var nombre=nombreClaveIL(r);
-  if(v==='jp') return STOCK[skeyIL(nombre,'normal','JP')]||0;
-  if(v==='stamped') return STOCK[skeyIL(nombre,'stamped','UNICO')]||0;
-  return STOCK[skeyIL(nombre,v,idioma)]||0;
-}
-function getPrecio(r,idioma){
-  var v=varianteTipo(r[4]); var nombre=nombreClaveIL(r);
-  if(v==='jp') return PRICES[skeyIL(nombre,'normal','JP')]||0;
-  if(v==='stamped') return PRICES[skeyIL(nombre,'stamped','UNICO')]||0;
-  return PRICES[skeyIL(nombre,v,idioma)]||0;
-}
-// Solo idiomas con stock>0 Y precio>0
-function idiomasDisponibles(r){
-  var v=varianteTipo(r[4]);
-  var posibles=IDIOMAS_POR_TIPO[v]||['ENG'];
-  var d=[];
-  posibles.forEach(function(idm){ if(getStock(r,idm)>0&&getPrecio(r,idm)>0) d.push(idm); });
-  return d;
-}
-// Idiomas que existen en la carta (stock o precio) -> para saber si mostrar "agotado"
-function idiomasCargados(r){
-  var v=varianteTipo(r[4]);
-  var posibles=IDIOMAS_POR_TIPO[v]||['ENG'];
-  var d=[];
-  posibles.forEach(function(idm){ if(getStock(r,idm)>0||getPrecio(r,idm)>0) d.push(idm); });
-  return d;
-}
-// Nombre visible segun idioma (casos especiales, ej. nombre frances distinto)
-function nombreMostrar(r,idioma){
-  return (NOMBRES_ALT[r[0]]&&NOMBRES_ALT[r[0]][idioma])||r[1];
-}
-// Imagen: version del idioma activo si existe (IMGS_ALT), si no la estatica
-function imgUrlFor(r){
-  var idioma=null;
-  try{ idioma=idiomaActivo(r); }catch(e){}
-  if(idioma&&IMGS_ALT[r[0]]&&IMGS_ALT[r[0]][idioma]) return IMGS_ALT[r[0]][idioma];
-  var c=IMG_CAND[r[0]];
-  return (c&&c.length)?c[0]:null;
-}
-// El filtro "Tipo" de las otras carpetas aca es el filtro por ILUSTRADOR
-function tipoDeCarta(r){
-  return TABS[r[10]]||'';
-}
 /* Tipo de carta: unica fuente = columna "categoria" de la planilla (ej: "Pokemon Planta") */
 var TIPO_DESDE_CAT={'planta':'Planta','fuego':'Fuego','agua':'Agua','electrico':'El\u00e9ctrico','psiquico':'Ps\u00edquico','lucha':'Lucha','oscuridad':'Oscuridad','metal':'Metal','dragon':'Drag\u00f3n','incoloro':'Incoloro','hada':'Hada'};
-
+function tipoDeCarta(r){
+  var c=String(r[10]||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'');
+  if(c.indexOf('pokemon')<0) return null;
+  for(var k in TIPO_DESDE_CAT){ if(c.indexOf(k)>=0) return TIPO_DESDE_CAT[k]; }
+  return null;
+}
 
 function camelPK(s){
   s=String(s||'').trim().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9\s]/g,'');
@@ -988,7 +543,10 @@ function imgCandidatos(r,rarezasHermanas){
   c.forEach(function(u){if(out.indexOf(u)<0)out.push(u);});
   return out;
 }
-
+function imgUrlFor(r){
+  var c=IMG_CAND[r[0]];
+  return (c&&c.length)?c[0]:null;
+}
 // onerror para miniaturas del carrito: recorre la cadena y si falla, oculta
 function imgFallbackCart(el,uid,idx){
   var c=IMG_CAND[uid]||[];
@@ -1010,13 +568,25 @@ function imgFallback(el,uid,idx){
 }
 
 /* ===== stock / precio ===== */
-
-
+function getStock(r,idioma){return STOCK[skey(r[0],idioma)]||0;}
+function getPrecio(r,idioma){return PRICES[skey(r[0],idioma)]||0;}
 
 // Solo idiomas con stock>0 Y precio>0
-
+function idiomasDisponibles(r){
+  var d=[];
+  IDIOMAS.forEach(function(idm){
+    if(getStock(r,idm)>0&&getPrecio(r,idm)>0) d.push(idm);
+  });
+  return d;
+}
 // Idiomas que existen en la carta (stock o precio) -> para saber si mostrar "agotado"
-
+function idiomasCargados(r){
+  var d=[];
+  IDIOMAS.forEach(function(idm){
+    if(getStock(r,idm)>0||getPrecio(r,idm)>0) d.push(idm);
+  });
+  return d;
+}
 
 function idiomaActivo(r){
   var disp=idiomasDisponibles(r);
@@ -1039,16 +609,18 @@ function setIdioma(uid,idioma){
 /* ===== badges de rareza ===== */
 function vCls(rareza){
   var l=String(rareza).toUpperCase();
-  if(l==='REVERSE')return 'vrev';
-  if(l==='JP')return 'vjp';
-  if(l==='STAMPED')return 'vstm';
+  if(l==='REV-H')return 'vrev';
+  if(l==='HOLO')return 'vjp';
+  if(l==='UR')return 'vstm';
+  if(l==='CRKI')return 'vfr';
+  if(l.indexOf('TRT')===0)return 'ven';
   return 'vnrm';
 }
 /* Nombre completo de la rareza para mostrar al cliente.
-   El valor interno (Normal, Reverse, JP, Stamped) se sigue usando en
-   los datos y en el pedido que llega a la planilla; esto solo traduce lo visible. */
-var NOMBRES_RAREZA={'NORMAL':'Normal','REVERSE':'Reverse','JP':'Japon\u00e9s','STAMPED':'Trick or Trade'};
-var NOMBRES_IDIOMA={'ESP':'Espa\u00f1ol','ENG':'Ingl\u00e9s','JP':'Japon\u00e9s','FR':'Franc\u00e9s','UNICO':'\u00danico'};
+   El codigo interno (NRML, RETH, etc.) se sigue usando en los datos
+   y en el pedido que llega a la planilla; esto solo traduce lo visible. */
+var NOMBRES_RAREZA={'NRML':'Normal','RETH':'Reverse','REV-H':'Reverse','HOLO':'Hologr\u00e1fica'};
+var NOMBRES_IDIOMA={'ESP':'Espa\u00f1ol','ENG':'Ingl\u00e9s','JAP':'Japon\u00e9s','POR':'Portugu\u00e9s','CHI':'Chino','FRA':'Franc\u00e9s'};
 function nombreIdioma(i){
   return NOMBRES_IDIOMA[String(i||'').toUpperCase()]||i;
 }
@@ -1059,132 +631,80 @@ function nombreRareza(r){
 
 function vIcon(rareza){
   var l=String(rareza).toUpperCase();
-  if(l==='REVERSE')return '\u2B21 ';
-  if(l==='STAMPED')return '\u2605 ';
+  if(l==='REV-H')return '\u2B21 ';
+  if(l==='HOLO')return '\u2726 ';
+  if(l==='UR')return '\u2605 ';
+  if(l==='CRKI')return '\u25C6 ';
+  if(l.indexOf('TRT')===0)return '';
   return '';
 }
 
 /* ===================== CARGA DESDE GAS ===================== */
-/* ===================== CATALOGO (ESTATICO) + PRECIOS (GAS) ===================== */
-// Construye las estructuras XY (CARDS/STOCK/PRICES/IMGS/IMG_CAND) desde el
-// catalogo estatico. CARDS queda en la forma posicional estandar:
-// [0]=uid [1]=nombre [2]=codSet [3]=numero [4]=variante [5]=codInt('')
-// [6]=setNombre [7]=nota('') [8]=imgId(=uid) [9]=imgMulti [10]=codIlustrador
-function construirCatalogoIL(){
-  CARDS=[]; STOCK={}; PRICES={}; IMGS={}; IMG_CAND={}; CARD_IDIOMA={};
-  var orden=CARDS_IL.slice();
-  shuffleArray(orden);   // portada mezclada, como la pagina clasica
-
-  // multi: cuantas variantes comparten nombre+set+numero
-  var grupos={};
-  CARDS_IL.forEach(function(c){
-    var k=(c[1]+'|'+c[2]+'|'+c[3]).toLowerCase();
-    grupos[k]=(grupos[k]||0)+1;
-  });
-
-  orden.forEach(function(c){
-    var uid=c[0];
-    var k=(c[1]+'|'+c[2]+'|'+c[3]).toLowerCase();
-    CARDS.push([uid,c[1],c[2],String(c[3]),c[4],'',c[6],'',uid,grupos[k]>1?1:0,c[5]]);
-    var url=IMGS_IL[uid]||null;
-    if(!url&&varianteTipo(c[4])==='reverse'){
-      // las reverse sin foto propia usan la de su gemela Normal
-      for(var t=0;t<CARDS_IL.length;t++){
-        var p=CARDS_IL[t];
-        if(p[1]===c[1]&&p[2]===c[2]&&String(p[3])===String(c[3])&&varianteTipo(p[4])==='normal'&&IMGS_IL[p[0]]){
-          url=IMGS_IL[p[0]]; break;
-        }
-      }
-    }
-    IMG_CAND[uid]=url?[url]:[];
-    IMGS[uid]=url;
-  });
-
-  RAREZAS=[];
-  ['Normal','Reverse','JP','Stamped'].forEach(function(rn){
-    for(var i=0;i<CARDS.length;i++){ if(CARDS[i][4]===rn){ RAREZAS.push(rn); break; } }
-  });
-  IDIOMAS=['ESP','ENG','JP','FR'];
-}
-
-// Fusiona stock/precios de la planilla sobre el catalogo estatico.
-// Misma logica de emparejamiento de la pagina clasica: nombre+numero,
-// con desambiguacion de homonimas via IDENTIDAD_PROPIA y set_nombre.
 async function syncGAS(){
   var bar=document.getElementById('syncBar');
   bar.className='sync-bar show';
-  bar.textContent='Cargando precios y stock...';
+  bar.textContent='Cargando inventario...';
   try{
     var resp=await fetch(GAS_URL+'?carpeta='+CARPETA);
     var json=await resp.json();
     if(!json||!json.ok||!json.data) throw new Error('respuesta invalida');
 
-    STOCK={}; PRICES={};
-    json.data.forEach(function(item){
-      var nom=item.nombre;
-      var setNom=(item.set_nombre||'').trim().toLowerCase();
-      var num=String(item.numero||'').trim();
-      var rarItem=(item.rareza||'Normal').toLowerCase();
-      var candidatos=CARDS.filter(function(c){
-        return c[1].toLowerCase()===String(nom).toLowerCase()
-          && String(c[3]||'').trim()===num
-          && IDENTIDAD_PROPIA[c[0]];
+    IDIOMAS=[];
+    (json.idiomas||[]).forEach(function(i){var u=String(i).toUpperCase();if(IDIOMAS.indexOf(u)<0)IDIOMAS.push(u);});
+    if(!IDIOMAS.length) IDIOMAS=['ESP','ENG','JAP'];
+
+    RAREZAS=[];
+    (json.rarezas||[]).forEach(function(r){var u=String(r).trim();if(u&&RAREZAS.indexOf(u)<0)RAREZAS.push(u);});
+
+    CARDS=[]; STOCK={}; PRICES={}; IMGS={}; IMG_CAND={}; CARD_IDIOMA={};
+    var uid=0;
+    json.data.forEach(function(it){
+      uid++;
+      var nombre=String(it.nombre||'').trim();
+      var codSet=String(it.set||'').trim();
+      var numero=String(it.numero||'').trim();
+      var rareza=String(it.rareza||'').trim();
+      var setNombre=String(it.set_nombre||'').trim()||codSet;
+      var codInt=String(it.cod_int||'').trim();
+      var multi=!!it.img_multi;
+
+      CARDS.push([uid,nombre,codSet,numero,rareza,codInt,setNombre,'',codInt,multi,String(it.categoria||'').trim()]);
+
+      IDIOMAS.forEach(function(idm){
+        var lo=idm.toLowerCase();
+        var s=parseInt(it['stk_'+lo],10)||0;
+        var p=Number(it['prc_'+lo])||0;
+        STOCK[skey(uid,idm)]=s;
+        PRICES[skey(uid,idm)]=p;
       });
-      var vtGAS=(rarItem==='trickortrade'?'stamped':rarItem==='jp'?'jp':rarItem);
-      var match=candidatos.length>1
-        ? candidatos.find(function(c){
-            return (c[6]||'').trim().toLowerCase()===setNom && varianteTipo(c[4])===vtGAS;
-          })||candidatos.find(function(c){ return varianteTipo(c[4])===vtGAS; })||candidatos[0]
-        : candidatos[0];
-      if(match) nom=IDENTIDAD_PROPIA[match[0]];
-      var rar=rarItem;
-      if(rar==='trickortrade'){
-        var k=skeyIL(nom,'stamped','UNICO');
-        STOCK[k]=(STOCK[k]||0)+(item.stk_single||0);
-        if(item.prc_single>0) PRICES[k]=item.prc_single;
-      } else {
-        if((item.stk_esp||0)+(item.prc_esp||0)>0){
-          var k1=skeyIL(nom,rar,'ESP');
-          STOCK[k1]=(STOCK[k1]||0)+(item.stk_esp||0);
-          if(item.prc_esp>0) PRICES[k1]=item.prc_esp;
-        }
-        if((item.stk_eng||0)+(item.prc_eng||0)>0){
-          var k2=skeyIL(nom,rar,'ENG');
-          STOCK[k2]=(STOCK[k2]||0)+(item.stk_eng||0);
-          if(item.prc_eng>0) PRICES[k2]=item.prc_eng;
-        }
-        if(rar==='normal'&&(item.stk_jp||0)+(item.prc_jp||0)>0){
-          var k3=skeyIL(nom,'normal','JP');
-          STOCK[k3]=(STOCK[k3]||0)+(item.stk_jp||0);
-          if(item.prc_jp>0) PRICES[k3]=item.prc_jp;
-        }
-        if(rar==='normal'&&(item.stk_fr||0)+(item.prc_fr||0)>0){
-          var k4=skeyIL(nom,'normal','FR');
-          STOCK[k4]=(STOCK[k4]||0)+(item.stk_fr||0);
-          if(item.prc_fr>0) PRICES[k4]=item.prc_fr;
-        }
-      }
+    });
+
+    if(!RAREZAS.length){
+      CARDS.forEach(function(c){if(c[4]&&RAREZAS.indexOf(c[4])<0)RAREZAS.push(c[4]);});
+    }
+
+    // segunda pasada: rarezas hermanas por cod_int -> cadena de imagenes
+    var porCodInt={};
+    CARDS.forEach(function(c){
+      if(!porCodInt[c[5]]) porCodInt[c[5]]=[];
+      if(porCodInt[c[5]].indexOf(c[4])<0) porCodInt[c[5]].push(c[4]);
+    });
+    CARDS.forEach(function(c){
+      var hermanas=(porCodInt[c[5]]||[]).filter(function(rn){return rn!==c[4];});
+      IMG_CAND[c[0]]=imgCandidatos(c,hermanas);
+      IMGS[c[0]]=IMG_CAND[c[0]][0];
     });
 
     GAS_LOADED=true;
-    var now=new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
-    bar.textContent='Precios actualizados - '+now;
+    bar.textContent=CARDS.length+' variantes cargadas';
     setTimeout(function(){bar.className='sync-bar';},2500);
-    renderAll();
-    actualizarFooterLista();
+    build();
     if(!window._ESTADO_RESTAURADO){ window._ESTADO_RESTAURADO=true; restaurarEstado(); }
   }catch(e){
-    bar.textContent='No se pudieron cargar los precios. Recarga la pagina.';
-    setTimeout(function(){bar.className='sync-bar';},4000);
+    bar.textContent='No se pudo cargar el inventario. Recarga la pagina.';
     GAS_LOADED=false;
-    renderAll();
+    build();
   }
-}
-
-function bootIL(){
-  construirCatalogoIL();
-  build();      // pinta el catalogo al instante, aunque los precios aun no llegan
-  syncGAS();
 }
 
 /* ===================== BUILD UI ===================== */
@@ -1233,7 +753,7 @@ function build(){
     +buildIdiomasOptions()
     +'</select>'
     +'<select class="il-select" id="tipo-sel" onchange="setTF(this.value)">'
-    +'<option value="">Ilustrador</option'
+    +'<option value="">Tipo</option>'
     +buildTiposOptions()
     +'</select>'
     +'<select class="il-select" onchange="setDISPF(this.value)">'
@@ -1480,7 +1000,7 @@ function buildCardHtml(r){
     +'<div class="imgw">'+imgHtml+agotadoOverlay+'</div>'
     +vbdgHtml
     +'<div class="info">'
-    +'<div class="pn">'+escHtml(nombreMostrar(r,idioma))+'</div>'
+    +'<div class="pn">'+escHtml(r[1])+'</div>'
     +'<div class="sn">'+escHtml(r[6])+(r[3]?'<span class="sn-num">'+escHtml(r[3])+'</span>':'')+'</div>'
     +'<div class="rn">Rareza: '+escHtml(nombreRareza(r[4]))+'</div>'
     +langHtml
@@ -1549,7 +1069,7 @@ function buildRowHtml(r){
   }
 
   return '<td>'+imgHtml+'</td>'
-    +'<td><strong>'+escHtml(nombreMostrar(r,idioma))+'</strong></td>'
+    +'<td><strong>'+escHtml(r[1])+'</strong></td>'
     +'<td style="font-size:.78rem;color:var(--txm)">'+escHtml(r[6])+'</td>'
     +'<td><span class="vbdg '+vCls(r[4])+'" style="position:static;display:inline-block">'+vIcon(r[4])+nombreRareza(r[4])+'</span></td>'
     +(GAS_LOADED?'<td>'+langCell+'</td><td>'+precioCell+'</td><td>'+stkCell+'</td><td>'+cartCell+'</td>':'');
@@ -1655,12 +1175,12 @@ function cerrarPegarListado(){
    tokens libres que se cruzan contra nombre + codSet + nombre de set
    + numero + cod_int. Eso acepta los dos mundos:
 
-     Froakie sv6 56             (nombre + set + numero)
-     2 Loudred ex6 39           (cantidad + Limitless)
-     Venipede                   (solo nombre)
-     Froakie x2                 (cantidad al final)
-     Loudred 39                 (nombre + numero)
-     Venipede, 2                (cantidad tras coma)
+     4 Mareep EVS 54            (formato Limitless completo)
+     2 Mareep Evolving Skies    (nombre + set escrito largo)
+     Shroodle SSP 120           (sin cantidad)
+     Dunsparce x3               (cantidad al final)
+     Tynamo 59                  (nombre + numero)
+     Dunsparce                  (solo nombre)
 
    Busqueda en 3 fases, igual criterio que findGrupo de Metagame:
      Fase 1: todos los tokens calzan  -> match exacto
@@ -1688,14 +1208,14 @@ function parsearLineaPK(linea){
   var qty=null;
   var toks=l.split(/\s+/).filter(Boolean);
 
-  // cantidad al inicio: "2 Froakie ..."
+  // cantidad al inicio: "4 Mareep ..."
   if(toks.length>1 && /^\d{1,2}$/.test(toks[0])){
     var qIni=parseInt(toks[0],10);
-    if(qIni===0) return null;   // "0 Froakie": el cliente pidio cero, no una
+    if(qIni===0) return null;   // "0 Mareep": el cliente pidio cero, no una
     if(qIni<=99){ qty=qIni; toks=toks.slice(1); }
     // >99: se deja como token (puede ser numero de carta)
   }
-  // cantidad al inicio con x: "4x Froakie" o "x2 Froakie"
+  // cantidad al inicio con x: "4x Mareep" o "x4 Mareep"
   if(qty===null && toks.length>1){
     var mIni=toks[0].match(/^(\d{1,2})[xX]$/)||toks[0].match(/^[xX](\d{1,2})$/);
     if(mIni){ qty=parseInt(mIni[1],10); toks=toks.slice(1); }
@@ -1706,7 +1226,7 @@ function parsearLineaPK(linea){
     var m=ult.match(/^[xX](\d{1,2})$/);
     if(m){ qty=parseInt(m[1],10); toks=toks.slice(0,-1); }
   }
-  // cantidad tras coma: "Froakie, 2"
+  // cantidad tras coma: "Mareep, 2"
   if(qty===null){
     var mc=l.match(/,\s*(\d{1,2})\s*$/);
     if(mc){ qty=parseInt(mc[1],10); toks=l.replace(/,\s*\d{1,2}\s*$/,'').trim().split(/\s+/).filter(Boolean); }
@@ -1756,8 +1276,8 @@ function buscarItemPK(item){
   // calzaria con todas las que contengan ese numero.
   if(!item.textuales.length) return null;
   // Fase 0: los tokens textuales calzan en el NOMBRE de la carta.
-  // Sin esta fase, una palabra que tambien es codigo de set (ej. "sv6",
-  // codigo del set Twilight Masquerade) calzaba con TODAS las cartas de ese set y la
+  // Sin esta fase, una palabra que tambien es codigo de set (ej. "evs",
+  // codigo del set Evolving Skies) calzaba con TODAS las cartas de ese set y la
   // cotizacion devolvia la primera con stock (ej. Kakuna) en vez del
   // Pokemon con ese nombre. El nombre manda sobre los codigos internos.
   if(item.textuales.length){
@@ -1802,7 +1322,7 @@ function buscarItemPK(item){
 function elegirVariante(cands){
   var conStock=cands.filter(function(c){return idiomasDisponibles(c).length>0;});
   var pool=conStock.length?conStock:cands;
-  var nrml=pool.find(function(c){var u=String(c[4]).toUpperCase();return u==='NRML'||u==='NORMAL';});
+  var nrml=pool.find(function(c){return String(c[4]).toUpperCase()==='NRML';});
   return nrml||pool[0];
 }
 
@@ -1938,7 +1458,7 @@ function limpiarListaRealPK(){
 
 /* ---------- REPARTO DE STOCK ENTRE LINEAS ----------
    Dos lineas distintas pueden resolver a la MISMA carta
-   ("Froakie x2" y "2 Froakie").
+   ("2 Mareep EVS 54" y "2 Mareep Evolving Skies").
    Sin repartir, el resumen sumaba 4 unidades aunque el stock
    fuera 3, y despues el carrito topeaba en 3: los totales no
    coincidian. Aca se asigna en orden de aparicion y cada linea
@@ -2261,7 +1781,7 @@ function restaurarEstado(){
     var stk=getStock(r,it.idioma), prc=getPrecio(r,it.idioma);
     if(stk<=0||prc<=0) return;
     // Estados guardados por versiones antiguas podian traer la misma
-    // carta+idioma duplicada ("Froakie 2 veces"): se fusionan.
+    // carta+idioma duplicada ("Mareep 2 veces"): se fusionan.
     var dup=CARRITO.find(function(c){return c.cardId===r[0]&&c.idioma===it.idioma;});
     if(dup){ dup.qty=Math.min(dup.qty+it.qty,stk); return; }
     CARRITO.push({cardId:r[0],nombre:r[1],rareza:r[4],idioma:it.idioma,
@@ -2348,7 +1868,7 @@ function buildRiPK(e,idx){
       }).join('')+'</select>';
   }
   // Miniaturas visuales de las alternativas: cuando la linea calza con
-  // varias cartas (ej. escribieron solo "Froakie"), se muestran las
+  // varias cartas (ej. escribieron solo "Dunsparce"), se muestran las
   // imagenes de todas las opciones ADEMAS del menu desplegable. La
   // elegida queda en color y las demas en gris; un clic la selecciona.
   var thumbs='';
@@ -3137,7 +2657,7 @@ async function enviarPedidoPK(){
   }
 
   var orderItems=CARRITO.map(function(c){
-    return {nombre:c.nombre,set:c.set,numero:c.num,rareza:rarezaGAS(c.rareza),idioma:c.idioma,cantidad:c.qty,precio_clp:c.precio,subtotal:c.precio*c.qty};
+    return {nombre:c.nombre,set:c.set,numero:c.num,rareza:c.rareza,idioma:c.idioma,cantidad:c.qty,precio_clp:c.precio,subtotal:c.precio*c.qty};
   });
 
   var orderData={
@@ -3432,7 +2952,7 @@ if(taPersist) taPersist.addEventListener('input',persistirEstado);
 var tipZoomEl=document.getElementById('lista-tip-zoom');
 if(tipZoomEl) tipZoomEl.textContent='Consejo: '+TIP_ZOOM+'.';
 
-bootIL();
+syncGAS();
 </script>
 </body>
 </html>
