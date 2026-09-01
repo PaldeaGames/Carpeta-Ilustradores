@@ -453,6 +453,10 @@ header p{font-size:.75rem;color:var(--txm);margin-top:1px}
           <div class="lista-ej">4 Mareep EVS 54<br>2 Mareep Evolving Skies<br>Shroodle SSP 120<br>Dunsparce x3<br>Tynamo 59</div>
           <div class="lista-tip" id="lista-tip-zoom"></div>
         </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <label for="cot-ilus" style="font-size:.85rem;font-weight:700;white-space:nowrap">Ilustrador:</label>
+          <select id="cot-ilus" class="il-select" style="flex:1" onchange="COT_ILUS=this.value"></select>
+        </div>
         <textarea id="paste-textarea" placeholder="4 Mareep EVS 54&#10;2 Mareep Evolving Skies&#10;Dunsparce x3&#10;Tynamo 59"></textarea>
         <div style="display:flex;gap:8px">
           <button class="vb btn-cotizar" style="flex:1;padding:9px" onclick="cotizarListaPK()">Cotizar lista</button>
@@ -829,8 +833,7 @@ function setSF(v){SF=v;PAGE=1;renderAll();}
 function setLF(v){LF=v;PAGE=1;renderAll();}
 function setDISPF(v){DISPF=v;PAGE=1;renderAll();}
 function setORDF(v){ORDF=v;PAGE=1;renderAll();}
-function setTF(v){TF=v;PAGE=1;var e=document.getElementById('ilus-sel');if(e)e.value=v;renderAll();}
-function setIlustrador(v){TF=v;PAGE=1;var t=document.getElementById('tipo-sel');if(t)t.value=v;renderAll();}
+function setTF(v){TF=v;PAGE=1;renderAll();}
 function setPP(v){PER_PAGE=parseInt(v,10)||50;VER_TODAS=false;PAGE=1;actualizarVerTodasBtn();renderAll();}
 function toggleVerTodas(){VER_TODAS=!VER_TODAS;PAGE=1;actualizarVerTodasBtn();renderAll();}
 function actualizarVerTodasBtn(){
@@ -1151,6 +1154,10 @@ function abrirPegarListado(){
   // Misma regla espejo: abrir el listado cierra el carrito (guardando
   // el formulario si el cliente estaba a mitad de el).
   cerrarCarrito();
+  // Selector de ilustrador del cotizador: se reconstruye con los datos
+  // actuales y conserva la eleccion previa si sigue existiendo.
+  var sel=document.getElementById('cot-ilus');
+  if(sel){ sel.innerHTML='<option value="">Todos los ilustradores</option>'+buildTiposOptions(); sel.value=COT_ILUS; }
   document.getElementById('paste-panel').classList.add('show');
   persistirEstado();
   // Siempre se re-sincroniza con el carrito actual: si el cliente fue
@@ -1271,7 +1278,8 @@ function grupoDeCarta(c){
   });
 }
 
-function poolCartas(){ return TF?CARDS.filter(function(c){return tipoDeCarta(c)===TF;}):CARDS; }
+var COT_ILUS='';
+function poolCartas(){ return COT_ILUS?CARDS.filter(function(c){return tipoDeCarta(c)===COT_ILUS;}):CARDS; }
 function buscarItemPK(item){
   // Una linea sin texto (solo numeros) no identifica ninguna carta:
   // calzaria con todas las que contengan ese numero.
