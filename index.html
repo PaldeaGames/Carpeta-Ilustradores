@@ -498,10 +498,9 @@ function skey(uid,idioma){return uid+'|'+String(idioma).toUpperCase();}
 /* Filtro Ilustrador: unica fuente = columna "categoria" de la planilla (nombre del ilustrador) */
 var TIPO_DESDE_CAT={'planta':'Planta','fuego':'Fuego','agua':'Agua','electrico':'El\u00e9ctrico','psiquico':'Ps\u00edquico','lucha':'Lucha','oscuridad':'Oscuridad','metal':'Metal','dragon':'Drag\u00f3n','incoloro':'Incoloro','hada':'Hada'};
 function tipoDeCarta(r){
-  var c=String(r[10]||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'');
-  if(c.indexOf('pokemon')<0) return null;
-  for(var k in TIPO_DESDE_CAT){ if(c.indexOf(k)>=0) return TIPO_DESDE_CAT[k]; }
-  return null;
+  // En Ilustradores la columna CATEGORIA trae el NOMBRE DEL ILUSTRADOR.
+  var c=String(r[10]||'').trim();
+  return c||null;
 }
 
 function camelPK(s){
@@ -830,7 +829,8 @@ function setSF(v){SF=v;PAGE=1;renderAll();}
 function setLF(v){LF=v;PAGE=1;renderAll();}
 function setDISPF(v){DISPF=v;PAGE=1;renderAll();}
 function setORDF(v){ORDF=v;PAGE=1;renderAll();}
-function setTF(v){TF=v;PAGE=1;renderAll();}
+function setTF(v){TF=v;PAGE=1;var e=document.getElementById('ilus-sel');if(e)e.value=v;renderAll();}
+function setIlustrador(v){TF=v;PAGE=1;var t=document.getElementById('tipo-sel');if(t)t.value=v;renderAll();}
 function setPP(v){PER_PAGE=parseInt(v,10)||50;VER_TODAS=false;PAGE=1;actualizarVerTodasBtn();renderAll();}
 function toggleVerTodas(){VER_TODAS=!VER_TODAS;PAGE=1;actualizarVerTodasBtn();renderAll();}
 function actualizarVerTodasBtn(){
@@ -1271,6 +1271,7 @@ function grupoDeCarta(c){
   });
 }
 
+function poolCartas(){ return TF?CARDS.filter(function(c){return tipoDeCarta(c)===TF;}):CARDS; }
 function buscarItemPK(item){
   // Una linea sin texto (solo numeros) no identifica ninguna carta:
   // calzaria con todas las que contengan ese numero.
@@ -1281,7 +1282,7 @@ function buscarItemPK(item){
   // cotizacion devolvia la primera con stock (ej. Kakuna) en vez del
   // Pokemon con ese nombre. El nombre manda sobre los codigos internos.
   if(item.textuales.length){
-    var f0=CARDS.filter(function(c){
+    var f0=poolCartas().filter(function(c){
       var nom=normPK(c[1]);
       var okTxt=item.textuales.every(function(t){return nom.indexOf(t)>=0;});
       if(!okTxt) return false;
@@ -1303,16 +1304,16 @@ function buscarItemPK(item){
     }
   }
   // Fase 1: todos los tokens
-  var f1=CARDS.filter(function(c){return matchTokens(c,item.tokens);});
+  var f1=poolCartas().filter(function(c){return matchTokens(c,item.tokens);});
   if(f1.length) return {fase:1, matches:f1};
   // Fase 2: sin los numericos (mismo nombre/set, otro numero)
   if(item.textuales.length){
-    var f2=CARDS.filter(function(c){return matchTokens(c,item.textuales);});
+    var f2=poolCartas().filter(function(c){return matchTokens(c,item.textuales);});
     if(f2.length) return {fase:2, matches:f2};
   }
   // Fase 3: solo el primer token textual (normalmente el nombre)
   if(item.textuales.length>1){
-    var f3=CARDS.filter(function(c){return matchTokens(c,[item.textuales[0]]);});
+    var f3=poolCartas().filter(function(c){return matchTokens(c,[item.textuales[0]]);});
     if(f3.length) return {fase:3, matches:f3};
   }
   return null;
