@@ -495,7 +495,7 @@ var GAS_LOADED=false;
 /* ===================== HELPERS ===================== */
 function clp(n){return '$ '+Math.round(n).toLocaleString('es-CL');}
 function skey(uid,idioma){return uid+'|'+String(idioma).toUpperCase();}
-/* Tipo de carta: unica fuente = columna "categoria" de la planilla (ej: "Pokemon Planta") */
+/* Filtro Ilustrador: unica fuente = columna "categoria" de la planilla (nombre del ilustrador) */
 var TIPO_DESDE_CAT={'planta':'Planta','fuego':'Fuego','agua':'Agua','electrico':'El\u00e9ctrico','psiquico':'Ps\u00edquico','lucha':'Lucha','oscuridad':'Oscuridad','metal':'Metal','dragon':'Drag\u00f3n','incoloro':'Incoloro','hada':'Hada'};
 function tipoDeCarta(r){
   var c=String(r[10]||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'');
@@ -753,7 +753,7 @@ function build(){
     +buildIdiomasOptions()
     +'</select>'
     +'<select class="il-select" id="tipo-sel" onchange="setTF(this.value)">'
-    +'<option value="">Tipo</option>'
+    +'<option value="">Ilustrador</option>'
     +buildTiposOptions()
     +'</select>'
     +'<select class="il-select" onchange="setDISPF(this.value)">'
